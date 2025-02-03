@@ -1,0 +1,107 @@
+
+
+<div class="container mt-1">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+      <div class="card p-4 shadow-lg rounded-4">
+        <h3 class="text-center mb-4"><i class="bi bi-briefcase-fill text-success"></i>Registro de Comercio <i class="bi bi-briefcase-fill text-success"></i></h3>
+        <form [formGroup]="registroForm" (ngSubmit)="registrar()">
+          <!-- Dueño -->
+          <div class="mb-3">
+            <label class="form-label">Dueño</label>
+            <input type="text" class="form-control" formControlName="Dueno" placeholder="Nombre del dueño">
+            @if (registroForm.get('Dueno')?.invalid && registroForm.get('Dueno')?.touched) {
+              <small class="text-danger">
+                Debes ingresar el nombre del dueño.
+              </small>
+            }
+          </div>
+          <!-- Nombre del Comercio -->
+          <div class="mb-3">
+            <label class="form-label">Nombre del Comercio</label>
+            <input type="text" class="form-control" formControlName="Nombre" placeholder="Nombre del comercio">
+            @if (registroForm.get('Nombre')?.invalid && registroForm.get('Nombre')?.touched) {
+              <small class="text-danger">
+                Debes ingresar el nombre del comercio.
+              </small>
+            }
+          </div>
+
+          <!-- Ubicación -->
+          <div class="mb-3">
+            <label class="form-label">Ubicación</label>
+            <input type="text" class="form-control" formControlName="Ubicacion" placeholder="Ubicación del comercio">
+            @if (registroForm.get('Ubicacion')?.invalid && registroForm.get('Ubicacion')?.touched) {
+              <small class="text-danger">
+                Debes ingresar la ubicación.
+              </small>
+            }
+          </div>
+
+          <!-- Teléfonos (FormArray) -->
+          <div class="mb-3">
+            <label class="form-label">Teléfonos</label>
+            <span class="bi bi-plus text-success fw-bolder btn btn-outline-secondary" (click)="agregarTelefono()" ></span>
+
+            @if (registroForm.get('Telefonos')?.invalid && registroForm.get('Telefonos')?.touched) {
+              <small class="text-danger">
+                Debes ingresar al menos un numero de telefono
+              </small>
+            }
+            <div formArrayName="Telefonos">
+              @for (tel of telefonos.controls; track $index) {
+                <div [formGroupName]="$index" class="input-group mb-2">
+                  <input type="text" class="form-control" formControlName="telefono" placeholder="Número de teléfono">
+                  <button type="button" class="btn btn-danger" (click)="quitarTelefono($index)">
+                    <i class="bi bi-x"></i>
+                    </button>
+                </div>
+              }
+            </div>
+          </div>
+
+
+
+          <!-- Imágenes -->
+          <div class="mb-3">
+            <label class="form-label">Imágenes</label>
+            <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*" multiple>
+            @if (registroForm.get('Imagenes')?.invalid && registroForm.get('Imagenes')?.touched) {
+              <small class="text-danger">
+                Debes seleccionar al menos una imagen.
+              </small>
+            }
+          </div>
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" formControlName="email" placeholder="correo@ejemplo.com">
+            @if (registroForm.get('email')?.invalid && registroForm.get('email')?.touched) {
+              <small class="text-danger">
+                Ingresa un correo válido.
+              </small>
+            }
+          </div>
+
+          <!-- Contraseña -->
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="password" class="form-control" formControlName="password" placeholder="Mínimo 6 caracteres">
+            @if (registroForm.get('password')?.invalid && registroForm.get('password')?.touched) {
+              <small class="text-danger">
+                La contraseña debe tener al menos 6 caracteres.
+              </small>
+            }
+          </div>
+
+
+
+
+          <button type="submit" class="btn btn-primary w-100">Registrar</button>
+        </form>
+        <p class="text-center mt-3">Soy Cliente <a href="registrar/cliente">Regístrate</a></p>
+
+      </div>
+    </div>
+  </div>
+</div>

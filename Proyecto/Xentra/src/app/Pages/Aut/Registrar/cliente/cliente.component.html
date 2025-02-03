@@ -1,0 +1,98 @@
+<div class="container mt-5 ">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+      <div class="card p-4 shadow-lg rounded-4">
+        <i class="bi bi-person-badge"></i>
+        <h3 class="text-center mb-4">Registro de Cliente<i class="bi bi-person-badge"></i></h3>
+
+        <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+
+          <!--Nombre-->
+          <div class="row">
+            <div class="col-12 col-md-6 mb-3">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" formControlName="Nombre" placeholder="Nombre completo">
+              @if (registroForm.get('Nombre')?.invalid && registroForm.get('Nombre')?.touched) {
+                <small class="text-danger">
+                  Debes ingresar tu nombre completo.
+                </small>
+              }
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label class="form-label">Cédula</label>
+              <input type="text" class="form-control" formControlName="Cedula" placeholder="Número de identificación">
+              @if (registroForm.get('Cedula')?.invalid && registroForm.get('Cedula')?.touched) {
+                <small class="text-danger">
+                  Debes ingresar tu cedula
+                </small>
+              }
+            </div>
+          </div>
+          <!--Telefono-->
+
+          <div class="row">
+            <div class="col-12 col-md-6 mb-3">
+              <label class="form-label">Teléfono</label>
+              <input type="text" class="form-control" formControlName="Telefono" placeholder="Número de teléfono">
+              @if (registroForm.get('Telefono')?.invalid && registroForm.get('Telefono')?.touched) {
+                <small class="text-danger">
+                  Debes ingresar un telefono valido
+                </small>
+              }
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label class="form-label">Dirección</label>
+              <input type="text" class="form-control" formControlName="Direccion" placeholder="Dirección completa">
+              @if (registroForm.get('Direccion')?.invalid && registroForm.get('Direccion')?.touched) {
+                <small class="text-danger">
+                  Debes ingresar tu direccion.
+                </small>
+              }
+            </div>
+          </div>
+          <!--Imagen-->
+          <div class="mb-3">
+            <label class="form-label">Imagen</label>
+            <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*"
+                   formControlName="Imagen">
+            @if (registroForm.get('Imagen')?.invalid && registroForm.get('Imagen')?.touched) {
+              <small class="text-danger">
+                Debes ingresar una imagen de perfil
+              </small>
+            }
+          </div>
+          <!--Email-->
+
+          <div class="mb-3">
+            <label class="form-label"> Email</label>
+            <input type="email" class="form-control" formControlName="email" placeholder="correo@ejemplo.com">
+            @if (registroForm.get('email')?.invalid && registroForm.get('email')?.touched) {
+              <small class="text-danger">
+                Ingresa un correo válido.
+              </small>
+            }
+          </div>
+          <!--Password-->
+
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="password" class="form-control" formControlName="password" placeholder="Mínimo 6 caracteres">
+            @if (registroForm.get('password')?.invalid && registroForm.get('password')?.touched) {
+              <small class="text-danger">
+                La contraseña debe tener al menos 6 caracteres.
+              </small>
+            }
+          </div>
+          <button type="submit" class="btn btn-primary w-100">
+            Registrar
+          </button>
+        </form>
+        <p class="text-center mt-3"><i class="bi bi-briefcase-fill"></i> Soy comerciante <a href="registrar/comercio">Regístrate</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>

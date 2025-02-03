@@ -1,0 +1,13 @@
+.nav-link {
+  color: white;
+}
+.nav-link:hover {
+  background-color: #102237;
+}
+.sidebar {
+  height: 100vh;
+  background-color: #111e2e;
+}
+.avatar {
+  margin: 20px 0;
+}

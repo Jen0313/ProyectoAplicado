@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block sidebar">
+      @if (roleActual()) {
+        <div class="text-center avatar">
+          <img src="https://ypwzhqhwlmbgbirivqdc.supabase.co/storage/v1/object/public/Imagenes/Default/cliente.png" class="rounded-circle" alt="Ismael De La Cruz">
+          <h5 class="text-white mt-2">Tu suario</h5>
+        </div>
+      }
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Consultas</a>
+        </li> <li class="nav-item">
+          <a class="nav-link" routerLink="protegido">Protegido</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Negocios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Gestionar Crédito</a>
+        </li>
+        @if (roleActual()) {
+
+          <li class="nav-item">
+            <a class="nav-link" href="#">Historial de Transacciones</a>
+          </li>
+        }
+        <li class="nav-item mt-auto">
+          <span class="btn btn-outline-danger" (click)="btnSeccion()">{{ roleActual() ? "Cerrar" : "Iniciar" }}
+            Seccion</span>
+        </li>
+      </ul>
+    </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+<!--      <div-->
+<!--        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">-->
+<!--        <h1 class="h2">Dashboard</h1>-->
+<!--      </div>-->
+      <div class="content">
+        <router-outlet/>
+      </div>
+    </main>
+  </div>
+</div>

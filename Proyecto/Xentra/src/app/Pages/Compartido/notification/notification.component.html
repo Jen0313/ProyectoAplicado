@@ -1,0 +1,6 @@
+@if (notificar.Notificacion().mensaje) {
+  <div class="alert alert-{{ notificar.Notificacion().tipo }} alert-dismissible fade show" role="alert">
+    {{ notificar.Notificacion().mensaje }}
+    <span class="bi bi-x btn text-danger" (click)="notificar.quitar()"></span>
+  </div>
+}

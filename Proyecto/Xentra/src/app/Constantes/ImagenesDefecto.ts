@@ -1,0 +1,4 @@
+﻿export const ImagenesDefecto = {
+  Comercio: "https://ypwzhqhwlmbgbirivqdc.supabase.co/storage/v1/object/sign/Imagenes/Default/comercio.jpeg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJJbWFnZW5lcy9EZWZhdWx0L2NvbWVyY2lvLmpwZWciLCJpYXQiOjE3MzgzNDQ3NDQsImV4cCI6MTg5NjAyNDc0NH0.1srv07KCnIoM3xq6QU8Vy6XrAWAGDKvWgdfzROPaYJo",
+  Cliente: "https://ypwzhqhwlmbgbirivqdc.supabase.co/storage/v1/object/sign/Imagenes/Default/cliente.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJJbWFnZW5lcy9EZWZhdWx0L2NsaWVudGUucG5nIiwiaWF0IjoxNzM4MzQ0OTExLCJleHAiOjE4OTYwMjQ5MTF9.8jGdEwDwzuypQnJBCuz5J7MfK2BUb6HoNu65m_LKli8",
+}

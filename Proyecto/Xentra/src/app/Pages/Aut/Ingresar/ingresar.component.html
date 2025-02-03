@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+      <div class="login-container">
+        <h2 class="text-center">Ingresar</h2>
+        <form [formGroup]="formulario" (ngSubmit)="Ingresar()">
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter your email"
+                   required>
+            @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
+              <small class="text-danger">Introduce un email valido...</small>
+            }
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" formControlName="password" class="form-control" id="password"
+                   placeholder="Enter your password" required>
+            @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {
+              <small class="text-danger">Introduce un email valido...</small>
+            }
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+        </form>
+
+        <!-- Registrarse -->
+        <p class="text-center mt-3">¿Aún no tienes cuenta? <a href="registrar/cliente">Regístrate</a></p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,20 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "paths": {
+      "@environment/*": [
+        "./src/environments/*"
+      ],
+      "@constantes/*": [
+        "./src/app/Constantes/*"
+      ],
+      "@modelos/*": [
+        "./src/app/Modelos/*"
+      ],
+      "@servicios/*": [
+        "./src/app/Servicios/*"
+      ]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
