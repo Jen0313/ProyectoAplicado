@@ -1,0 +1,44 @@
+<a href="/comercios"> <i class="bi bi-caret-left"></i> Comercios </a>
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+@if (comercio != null) {
+  <div class="col-md-4 col-sm-6 col-12 rounded border border-primary">
+    <div class="card text-center shadow-sm p-4 border-0">
+      <div class="card-body">
+
+        <img [src]="comercio.Imagenes[0]"
+             class="rounded-circle mx-auto d-block border border-2 border-secondary"
+             style="width: 100px; height: 100px; object-fit: cover;"
+             alt="Profile">
+
+        <h5 class="mt-3 fw-bold text-dark">{{ comercio.Nombre | titlecase }}</h5>
+
+        <p class="text-muted mb-2">
+          <i class="bi bi-geo-alt-fill text-danger"></i> {{ comercio.Ubicacion | titlecase }}
+        </p>
+        @for (tel of comercio.Telefonos; track $index) {
+          <div class="mb-2">
+            <p class="mb-0">
+              <i class="bi bi-telephone text-success"></i>
+              <span class="fw-semibold"> {{ tel }}</span>
+            </p>
+          </div>
+        }
+        <hr class="my-3">
+
+        <p class="text-muted">
+          <i class="bi bi-person-fill text-secondary"></i>
+          <strong>Dueño:</strong> {{ comercio.Dueno }}
+        </p>
+
+        <span class="text-decoration-underline text-primary fw-bold" role="button"
+              [routerLink]="['/comercios', 'solicitar', comercio.id]">
+        Solicitar
+      </span>
+      </div>
+    </div>
+  </div>
+} @else {
+  <h2 class="alert alert-danger">Comercio no encontrado</h2>
+}
+</div>

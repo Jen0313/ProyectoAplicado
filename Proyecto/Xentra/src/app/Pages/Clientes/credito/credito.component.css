@@ -1,0 +1,28 @@
+.search-container {
+  max-width: 400px;
+  margin: 20px auto;
+  position: relative;
+}
+.search-container input {
+  width: 100%;
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+.search-container i {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+}
+.status-activo { background-color: green; }
+.status-maximo { background-color: orange; }
+.status-cancelado { background-color: red; }

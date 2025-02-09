@@ -1,0 +1,10 @@
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+}
+.status-aceptada { background-color: green; }
+.status-pendiente { background-color: orange; }
+.status-rechazada { background-color: red; }
