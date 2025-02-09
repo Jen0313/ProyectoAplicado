@@ -1,13 +1,103 @@
+/*.nav-link {*/
+/*  color: white;*/
+/*}*/
+
+/*.nav-link:hover {*/
+/*  background-color: #102237;*/
+/*}*/
+
+/*.sidebar {*/
+/*  height: 100vh;*/
+/*  background-color: #111e2e;*/
+/*}*/
+
+/*.avatar {*/
+/*  margin: 20px 0;*/
+/*}*/
+
+/*.rutaActual {*/
+/*  color: red;*/
+/*}*/
+/* Estilos del sidebar */
+.sidebar {
+  background-color: #2d5c8a;
+  height: 100vh;
+  padding: 20px;
+  color: white;
+  position: fixed;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos del avatar */
+.avatar {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.avatar h5, .avatar small {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+}
+
+/* Estilos de la lista de navegación */
+.nav {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.nav-item {
+  width: 100%;
+}
+
 .nav-link {
   color: white;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  text-decoration: none;
+  transition: background 0.3s;
 }
-.nav-link:hover {
-  background-color: #102237;
+
+.nav-link:hover, .rutaActual {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
 }
-.sidebar {
-  height: 100vh;
-  background-color: #111e2e;
+
+.nav-link i {
+  margin-right: 10px;
+  font-size: 20px;
 }
-.avatar {
-  margin: 20px 0;
+
+/* Botón de cerrar sesión */
+.btn {
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s;
+  position: absolute;
+  bottom: 20px;
+  left: 45%;
+  transform: translateX(-50%);
 }
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
