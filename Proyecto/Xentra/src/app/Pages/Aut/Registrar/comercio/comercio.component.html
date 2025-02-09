@@ -1,10 +1,9 @@
 
-
 <div class="container mt-1">
   <div class="row justify-content-center">
-    <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+    <div class=" col-12 col-sm-10 col-md-6 col-lg-5">
       <div class="card p-4 shadow-lg rounded-4">
-        <h3 class="text-center mb-4"><i class="bi bi-briefcase-fill text-success"></i>Registro de Comercio <i class="bi bi-briefcase-fill text-success"></i></h3>
+        <h3 class="text-center mb-4">Registro de Comercio <i class="bi bi-briefcase-fill text-success"></i></h3>
         <form [formGroup]="registroForm" (ngSubmit)="registrar()">
           <!-- Dueño -->
           <div class="mb-3">
@@ -41,7 +40,7 @@
           <!-- Teléfonos (FormArray) -->
           <div class="mb-3">
             <label class="form-label">Teléfonos</label>
-            <span class="bi bi-plus text-success fw-bolder btn btn-outline-secondary" (click)="agregarTelefono()" ></span>
+            <span class="bi bi-plus text-light fw-bolder btn btn-success" (click)="agregarTelefono()" ></span>
 
             @if (registroForm.get('Telefonos')?.invalid && registroForm.get('Telefonos')?.touched) {
               <small class="text-danger">
@@ -50,15 +49,16 @@
             }
             <div formArrayName="Telefonos">
               @for (tel of telefonos.controls; track $index) {
-                <div [formGroupName]="$index" class="input-group mb-2">
+                <div [formGroupName]="$index" class="mb-2 d-flex justify-content-between">
                   <input type="text" class="form-control" formControlName="telefono" placeholder="Número de teléfono">
-                  <button type="button" class="btn btn-danger" (click)="quitarTelefono($index)">
+                  <span  class="btn btn-danger d-inline" (click)="quitarTelefono($index)">
                     <i class="bi bi-x"></i>
-                    </button>
+                  </span>
                 </div>
               }
             </div>
           </div>
+
 
 
 
@@ -105,3 +105,6 @@
     </div>
   </div>
 </div>
+
+
+`
