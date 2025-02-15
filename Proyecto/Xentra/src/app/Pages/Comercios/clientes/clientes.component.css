@@ -1,0 +1,26 @@
+.card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  text-align: center;
+}
+.status-indicator {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.status-green { background-color: green; }
+.status-yellow { background-color: yellow; }
+.status-red { background-color: red; }
+.maximo, .cancelado {
+  font-size: 0.9em;
+  color: gray;
+}
+.client-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}

@@ -1,0 +1,90 @@
+/* Fondo general */
+body {
+  background-color: #2d5c8a;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Contenedor del formulario */
+.container {
+  margin-top: 100px;
+}
+
+/* Tarjeta del formulario */
+.card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Título */
+h3 {
+  color: #2d5c8a;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.form-control {
+  width: 100%;
+  border: 2px solid #2d5c8a;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1rem;
+  color: #333; /* Texto más legible */
+  background-color: #fff;
+}
+
+.form-control:focus {
+  border-color: #1e4569;
+  box-shadow: 0 0 5px rgba(45, 92, 138, 0.5);
+}
+
+/* Etiquetas */
+.form-label {
+  font-weight: bold;
+  color: #2d5c8a;
+}
+
+/* Botón de Registro */
+.btn-primary {
+  background: #2d5c8a;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 15px;
+  transition: background 0.3s;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1e4569;
+}
+
+/* Enlace de registro */
+.text-center a {
+  color: #2d5c8a;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.text-center a:hover {
+  text-decoration: underline;
+}
+
+/* Ajuste del texto */
+p {
+  font-size: 1rem;
+  color: #333;
+}

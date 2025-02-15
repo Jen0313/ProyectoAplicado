@@ -1,0 +1,30 @@
+.btn-new {
+  background-color: #d4e3d4;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+.btn-new:hover {
+  background-color: #c0d1c0;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.search-container input {
+  border-radius: 20px;
+  border: 1px solid #ced4da;
+  padding: 5px 15px;
+  width: 100%;
+  max-width: 300px;
+  margin-right: 10px;
+}
+.search-container svg {
+  cursor: pointer;
+}
+.table thead th {
+  background-color: #e9ecef;
+}
