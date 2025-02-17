@@ -24,11 +24,7 @@ export class MenuComponent {
   constructor(private autenticacion: ServicioAutenticacion, private route: ActivatedRoute, private router: Router) {
     // this.roleActual = this.autenticacion.roleActual;
     this.usuarioActual = this.autenticacion.usuarioActual;
-    if (this.usuarioActual() instanceof Cliente) {
-      console.log("cliente");
-    } else {
-      console.warn("comercio")
-    }
+
   }
 
 
@@ -40,7 +36,6 @@ export class MenuComponent {
   EsComercio() {
     return this.usuarioActual()?.Rol === Roles.Comercio ? (this.usuarioActual() as Comercio) : null;
   }
-
 
   btnSeccion() {
     if (this.usuarioActual()) {

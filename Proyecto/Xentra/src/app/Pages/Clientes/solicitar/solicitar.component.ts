@@ -1,28 +1,32 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Comercio} from '@modelos/Comercio';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ClientesServicio} from '@servicios/clientes-servicio.service';
 import {NotificacionServicio} from '@servicios/NotificacionServicio';
 import {TitleCasePipe} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-solicitar-credito',
   imports: [
-    TitleCasePipe
+    TitleCasePipe,
+    FormsModule
   ],
   templateUrl: './solicitar.component.html',
   styleUrl: './solicitar.component.css'
 })
 export class SolicitarCreditoComponent implements OnInit {
+  private rutaActual = inject(ActivatedRoute);
+  private router = inject(Router);
+  private clienteServicio = inject(ClientesServicio);
+  private notificar = inject(NotificacionServicio);
+
+
   id: string | null = null;
   comercio: Comercio | null = null;
   MontoSolicitar = 1000;
 
-  constructor(private rutaActual: ActivatedRoute,
-              private router: Router,
-              private clienteServicio: ClientesServicio,
-              private notificar: NotificacionServicio,
-  ) {
+  constructor() {
     this.id = this.rutaActual.snapshot.params['id'];
   }
 
@@ -41,8 +45,14 @@ export class SolicitarCreditoComponent implements OnInit {
     }
   }
 
-  async Solicitar(){
-
+  async Solicitar() {
+    const result = await this.clienteServicio.Solicitar(this.id ?? "", this.MontoSolicitar);
+    if (result) {
+      this.notificar.Ok("Solicitud enviada");
+      await this.router.navigate(['clientes', "solicitudes"]);
+    } else {
+      this.notificar.Error("Error al enviar la solicitud..");
+    }
   }
 
 }

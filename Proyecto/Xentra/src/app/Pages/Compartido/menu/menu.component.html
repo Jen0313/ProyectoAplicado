@@ -21,38 +21,55 @@
 
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link" routerLink="inicio" routerLinkActive="rutaActual"><i class="bi bi-house-door"></i> Inicio </a>
+          <a class="nav-link" routerLink="inicio" routerLinkActive="rutaActual"><i class="bi bi-house-door"></i> Inicio
+          </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="comercios" routerLinkActive="rutaActual"><i class="bi bi-shop"></i> Comercios</a>
-        </li>
-
+        @if (usuarioActual()?.Rol != Roles.Comercio) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="comercios" routerLinkActive="rutaActual"><i class="bi bi-shop"></i>
+              Comercios</a>
+          </li>
+        }
         <!--         Acceso solo para clientes -->
         @if (usuarioActual()?.Rol == Roles.Cliente) {
+
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/clientes/credito']" routerLinkActive="rutaActual"><i class="bi bi-credit-card"></i> Mi Crédito</a>
+            <a class="nav-link" [routerLink]="['/clientes/comprar']" routerLinkActive="rutaActual"><i
+              class="bi bi-credit-card"></i> Comprar</a>
+          </li><li class="nav-item">
+            <a class="nav-link" [routerLink]="['/clientes/credito']" routerLinkActive="rutaActual"><i
+              class="bi bi-credit-card"></i> Mi Crédito</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/clientes/historialTransacciones']" routerLinkActive="rutaActual"><i class="bi bi-file-earmark-text"></i> Transacciones</a>
+            <a class="nav-link" [routerLink]="['/clientes/historialTransacciones']" routerLinkActive="rutaActual"><i
+              class="bi bi-file-earmark-text"></i> Transacciones</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/clientes/solicitudes']" routerLinkActive="rutaActual"><i class="bi bi-pencil-square"></i> Solicitudes Crédito</a>
+            <a class="nav-link" [routerLink]="['/clientes/solicitudes']" routerLinkActive="rutaActual"><i
+              class="bi bi-pencil-square"></i> Mis Solicitudes</a>
           </li>
         }
         <!--         Acceso solo para Comercios -->
         @if (usuarioActual()?.Rol == Roles.Comercio) {
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/AdminComercios/clientes']" routerLinkActive="rutaActual"><i class="bi bi-person-lines-fill"></i> Clientes</a>
+            <a class="nav-link" [routerLink]="['/AdminComercios/clientes']" routerLinkActive="rutaActual"><i
+              class="bi bi-person-lines-fill"></i> Clientes</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/AdminComercios/solicitudes']"
                routerLinkActive="rutaActual"> <i class="bi bi-person-plus-fill"></i> Solicitudes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/AdminComercios/transacciones']" routerLinkActive="rutaActual"><i class="bi bi-currency-dollar"></i>Transacciones</a>
+            <a class="nav-link" [routerLink]="['/AdminComercios/transacciones']" routerLinkActive="rutaActual"><i
+              class="bi bi-currency-dollar"></i>Transacciones</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/AdminComercios/reportes']" routerLinkActive="rutaActual"><i class="bi bi-bar-chart-line"></i> Reportes</a>
+            <a class="nav-link" [routerLink]="['/AdminComercios/reportes']" routerLinkActive="rutaActual"><i
+              class="bi bi-bar-chart-line"></i> Reportes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/articulos',usuarioActual()?.id]" routerLinkActive="rutaActual"><i
+              class="bi bi-bar-chart-line"></i> Articulos</a>
           </li>
         }
 

@@ -1,0 +1,132 @@
+<div class="container mt-4">
+  <h2 class="text-center fw-bold">🛒 Lista de Artículos</h2>
+
+  <!--  Para comercios -->
+  @if (authServ.roleActual() == Roles.Comercio) {
+    <div class="card p-4 mb-4 shadow-sm">
+      <h4 class="mb-3">Agregar Nuevo Artículo</h4>
+      <form [formGroup]="formAdd">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" id="nombre" class="form-control" formControlName="nombre"
+                 placeholder="Nombre del artículo">
+          @if (formAdd.get('nombre')?.invalid && formAdd.get('nombre')?.touched) {
+            <small class="text-danger">El nombre debe tener al menos 3 caracteres.</small>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción</label>
+          <textarea id="descripcion" class="form-control" formControlName="descripcion"
+                    placeholder="Descripción del artículo"></textarea>
+          @if (formAdd.get('descripcion')?.invalid && formAdd.get('descripcion')?.touched) {
+            <small class="text-danger">Debe tener al menos 10 caracteres.</small>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="precio" class="form-label">Precio</label>
+          <input type="number" id="precio" class="form-control" formControlName="precio" placeholder="Precio">
+          @if (formAdd.get('precio')?.invalid && formAdd.get('precio')?.touched) {
+            <small class="text-danger">El precio debe ser mayor a 0.</small>
+          }
+        </div>
+
+        <button (click)="agregarArticulo()" type="submit" class="btn btn-primary">
+          <i class="bi bi-plus-circle"></i> Agregar Artículo
+        </button>
+      </form>
+    </div>
+  }
+  <!--  Para comercios -->
+
+  <!-- Detalles credito -->
+  @if (clienteActual) {
+    <div class="row">
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card border-start border-4 p-3 shadow-sm status-{{clienteActual.Estado}}">
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+              <div>
+                <h6 class="text-muted m-0">Comercio</h6>
+                <h5 class="fw-bold">{{ clienteActual.Comercios.Nombre }}</h5>
+              </div>
+            </div>
+
+            <p class="mb-2"><strong>Monto:</strong> ${{ clienteActual.Monto }}</p>
+            <p class="mb-3"><strong>Disponible:</strong> ${{ clienteActual.Restante }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+  <!-- Lista de artículos -->
+
+  <div class="row mt-4">
+    @for (articulo of Articulos; track $index) {
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="fw-bold">{{ articulo.Nombre }}</h5>
+            <p class="text-muted">Precio: <strong>${{ articulo.Precio }}</strong></p>
+            @if (authServ.roleActual() == Roles.Cliente) {
+              <button [disabled]="(clienteActual?.Restante ?? 0) <= (calcularTotal() + articulo.Precio)"
+                      class="btn btn-outline-primary w-100" (click)="agregarAlCarrito(articulo)">
+                <i class="bi bi-cart-plus"></i> Agregar al carrito
+              </button>
+              @if ((clienteActual?.Restante ?? 0) <= (calcularTotal() + articulo.Precio)) {
+                <small class="text-danger">No te alcanzara con tu credito disponible.</small>
+              }
+            }
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <h4 class="text-danger text-center">🚫 ¡Sin artículos publicados!</h4>
+    }
+  </div>
+
+  <!-- Carrito de compras -->
+  @if (authServ.roleActual() == Roles.Cliente) {
+    <div class="card p-4 mt-5 shadow-sm">
+      <h2 class="fw-bold">🛍️ Carrito</h2>
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead class="table-light">
+          <tr>
+            <th>Cantidad</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+            <th>Acción</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (item of carrito(); track $index) {
+              <tr>
+                <td>
+                  <input type="number" class="form-control text-center" [(ngModel)]="item.cantidad"
+                         [ngModelOptions]="{standalone:true}"
+                         (change)="actualizarCantidad(item.articulo.id, item.cantidad)" min="1">
+                </td>
+                <td>{{ item.articulo.Nombre }}</td>
+                <td>${{ item.articulo.Precio }}</td>
+                <td>${{ item.cantidad * item.articulo.Precio }}</td>
+                <td>
+                  <button class="btn btn-outline-danger btn-sm" (click)="eliminarDelCarrito(item.articulo.id)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="text-end">Total: <span class="text-success fw-bold">${{ calcularTotal() }}</span></h3>
+      <button [disabled]="carrito().length==0" class="btn btn-success w-100">
+        <i class="bi bi-bag-check"></i> Comprar
+      </button>
+    </div>
+  }
+</div>

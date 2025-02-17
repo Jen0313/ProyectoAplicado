@@ -17,6 +17,8 @@ import {ClientesComercioComponent} from './Pages/Comercios/clientes/clientes.com
 import {TransaccionesComercioComponent} from './Pages/Comercios/transacciones/transacciones.component';
 import {SolicitudesComercioComponent} from './Pages/Comercios/solicitudes/solicitudes.component';
 import {ReportesComponent} from './Pages/Comercios/reportes/reportes.component';
+import {ArticulosComponent} from './Pages/Compartido/articulos/articulos.component';
+import {ComprarComponent} from './Pages/Clientes/comprar/comprar.component';
 
 export const routes: Routes = [
 
@@ -33,17 +35,22 @@ export const routes: Routes = [
     component: ComercioRegistrarComponent,
   },
   {
+    path: 'articulos/:id',
+    component: ArticulosComponent
+  },
+  // Comercios
+  {
     path: "comercios",
     children: [
       {path: "", component: ComerciosComponent},
       {path: ":id", component: DetalleComercioComponent},
       {
-     //   canActivate: [roleGuardGuard([Roles.Cliente])],
+        //   canActivate: [roleGuardGuard([Roles.Cliente])],
         path: "solicitar/:id", component: SolicitarCreditoComponent
       }
     ]
   },
-  // CLIENTES
+  // para los CLIENTES
   {
     path: "clientes",
     canActivate: [roleGuardGuard([Roles.Cliente])],
@@ -52,6 +59,8 @@ export const routes: Routes = [
       {path: "credito", component: CreditoComponent},
       {path: "historialTransacciones", component: TransaccionesClienteComponent},
       {path: "solicitudes", component: SolicitudesClienteComponent},
+      {path: "comprar", component: ComprarComponent},
+
     ]
   },
   // para los comerciantes

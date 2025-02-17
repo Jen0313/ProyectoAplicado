@@ -1,0 +1,21 @@
+
+.table thead th {
+  text-align: center;
+}
+
+.table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.btn-outline-danger i {
+  font-size: 1rem;
+}
+
+form .form-control {
+  border-radius: 10px;
+}
+
+.card {
+  border-radius: 12px;
+}

@@ -1,83 +1,42 @@
 <div class="container mt-5">
-  <h3 class="text-center">Mi Crédito</h3>
+  <h2 class="text-center fw-bold">💳 Mi Crédito</h2>
+  <p class="text-center text-muted">Consulta el estado y disponibilidad de tus créditos</p>
 
-  <div class="search-container">
-    <input type="text" class="form-control" placeholder="Buscar">
-    <i class="bi bi-search"></i>
+  <div class="input-group mb-4 w-50 mx-auto">
+    <input type="text" class="form-control" placeholder="Buscar crédito...">
+    <button class="btn btn-primary"><i class="bi bi-search"></i></button>
   </div>
 
-  <div class="row mt-4 justify-content-center">
-    <!-- Card 1 -->
-    <div class="col-md-5 mb-3">
-      <div class="card p-3 shadow-sm">
-        <div class="d-flex justify-content-between">
-          <div>
-            <p class="text-muted small">Comercio</p>
-            <h6><strong>Colmadon</strong></h6>
-          </div>
-          <div>
-            <p class="text-muted small">Estado</p>
-            <h6><strong>Activo</strong> <span class="status-dot status-activo"></span></h6>
-          </div>
-        </div>
-        <p><strong>Monto:</strong> 500</p>
-        <p><strong>Disponible:</strong> 450</p>
-        <button class="btn btn-outline-secondary btn-sm">Detalles</button>
-      </div>
-    </div>
+  <div class="row mt-4">
+    @for (credito of creditos; track $index) {
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card border-start border-4 p-3 shadow-sm status-{{credito.Estado}}">
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+              <div>
+                <h6 class="text-muted m-0">Comercio</h6>
+                <h5 class="fw-bold">{{ credito.Comercios.Nombre }}</h5>
+              </div>
+              <div class="text-end">
+                <h6 class="text-muted m-0">Estado</h6>
+                <span class="badge status-badge status-{{credito.Estado}}">
+                  <i class="bi bi-circle-fill me-1"></i> {{ credito.Estado }}
+                </span>
+              </div>
+            </div>
 
-    <div class="col-md-5 mb-3">
-      <div class="card p-3 shadow-sm">
-        <div class="d-flex justify-content-between">
-          <div>
-            <p class="text-muted small">Comercio</p>
-            <h6><strong>Carnicería</strong></h6>
-          </div>
-          <div>
-            <p class="text-muted small">Estado</p>
-            <h6><strong>Máximo</strong> <span class="status-dot status-maximo"></span></h6>
-          </div>
-        </div>
-        <p><strong>Monto:</strong> 500</p>
-        <p><strong>Disponible:</strong> 0</p>
-        <button class="btn btn-outline-secondary btn-sm">Detalles</button>
-      </div>
-    </div>
+            <p class="mb-2"><strong>Monto:</strong> ${{ credito.Monto }}</p>
+            <p class="mb-3"><strong>Disponible:</strong> ${{ credito.Restante }}</p>
 
-    <div class="col-md-5 mb-3">
-      <div class="card p-3 shadow-sm">
-        <div class="d-flex justify-content-between">
-          <div>
-            <p class="text-muted small">Comercio</p>
-            <h6><strong>Floristería</strong></h6>
-          </div>
-          <div>
-            <p class="text-muted small">Estado</p>
-            <h6><strong>Cancelado</strong> <span class="status-dot status-cancelado"></span></h6>
+            <div class="text-end">
+              <button class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-eye"></i> Ver detalles
+              </button>
+            </div>
           </div>
         </div>
-        <p><strong>Monto:</strong> 500</p>
-        <p><strong>Disponible:</strong> 0</p>
-        <button class="btn btn-outline-secondary btn-sm">Detalles</button>
       </div>
-    </div>
-
-    <div class="col-md-5 mb-3">
-      <div class="card p-3 shadow-sm">
-        <div class="d-flex justify-content-between">
-          <div>
-            <p class="text-muted small">Comercio</p>
-            <h6><strong>Papelería</strong></h6>
-          </div>
-          <div>
-            <p class="text-muted small">Estado</p>
-            <h6><strong>Activo</strong> <span class="status-dot status-activo"></span></h6>
-          </div>
-        </div>
-        <p><strong>Monto:</strong> 500</p>
-        <p><strong>Disponible:</strong> 500</p>
-        <button class="btn btn-outline-secondary btn-sm">Detalles</button>
-      </div>
-    </div>
+    }
   </div>
 </div>
+
