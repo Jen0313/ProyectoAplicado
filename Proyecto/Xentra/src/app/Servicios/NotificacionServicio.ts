@@ -11,21 +11,29 @@ export class NotificacionServicio {
 
 
   Error(mensaje: string) {
-    this._notificacion.set({mensaje: mensaje, tipo: "danger"});
+    this._notificacion.set({mensaje: mensaje, tipo: "danger"})
+    setTimeout(() => {
+      this.quitar()
+    }, 5000);
   }
 
-  Informacion(mensaje: string) {
-    this._notificacion.set({mensaje: mensaje, tipo: "info"});
-  }
 
   Ok(mensaje: string) {
     this._notificacion.set({mensaje: mensaje, tipo: "success"});
+    setTimeout(() => {
+      this.quitar()
+    }, 5000);
   }
 
   Advertencia(mensaje: string) {
     this._notificacion.set({mensaje: mensaje, tipo: "warning"});
+    setTimeout(() => {
+      this.quitar()
+    }, 5000);
   }
-  quitar(){
+
+  quitar() {
     this._notificacion.set({mensaje: null, tipo: "info"});
+
   }
 }

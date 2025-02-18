@@ -10,7 +10,6 @@ import {JsonPipe} from '@angular/common';
   selector: 'app-comprar',
   imports: [
     RouterLink,
-    JsonPipe
   ],
   templateUrl: './comprar.component.html',
   styleUrl: './comprar.component.css'

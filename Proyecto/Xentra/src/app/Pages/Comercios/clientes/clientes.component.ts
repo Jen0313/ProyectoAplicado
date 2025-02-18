@@ -8,7 +8,6 @@ import {EstadoAcreditado} from '@constantes/EstadoAcreditado';
 @Component({
   selector: 'app-clientes',
   imports: [
-    JsonPipe,
     CurrencyPipe
   ],
   templateUrl: './clientes.component.html',

@@ -20,7 +20,6 @@ interface CarritoItem {
 @Component({
   selector: 'app-articulos',
   imports: [
-    CurrencyPipe,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -55,11 +54,7 @@ export class ArticulosComponent implements OnInit {
       this.notificar.Advertencia("Debes inciar seccion");
       await this.router.navigate(['login']);
     }
-    const resultado = await this.comercioServ.ObtenerProductosComercio(idComercio?.toString() ?? "");
-    this.Articulos = resultado.articulos;
-    if (resultado.error) {
-      this.notificar.Error("Error al cargar los articulos!");
-    }
+    await this.CargarArticulos();
     if (this.authServ.roleActual() == Roles.Cliente) {
       const result = await this.clienteServ.ObtenerCreditoComercio(idComercio?.toString() ?? "");
       this.clienteActual = result.credito;
@@ -68,6 +63,15 @@ export class ArticulosComponent implements OnInit {
       }
     }
 
+  }
+
+  async CargarArticulos() {
+    const idComercio = this.activeRoute.snapshot.params['id'];
+    const resultado = await this.comercioServ.ObtenerProductosComercio(idComercio?.toString() ?? "");
+    this.Articulos = resultado.articulos;
+    if (resultado.error) {
+      this.notificar.Error("Error al cargar los articulos!");
+    }
   }
 
   agregarAlCarrito(articulo: Articulo) {
@@ -100,6 +104,16 @@ export class ArticulosComponent implements OnInit {
     return this.carrito().reduce((total, item) => total + item.cantidad * item.articulo.Precio, 0);
   }
 
+  async comprar() {
+    const result = await this.clienteServ.RealizarCompra(this.carrito(), this.clienteActual?.Restante ?? 0);
+    if (result) {
+      this.notificar.Ok("Compra realizada.");
+      this.carrito.set([]);
+    } else {
+      this.notificar.Error("Error al realizar la Comprar");
+    }
+  }
+
 
   // comercios
   async agregarArticulo() {
@@ -117,10 +131,11 @@ export class ArticulosComponent implements OnInit {
     }
     const result = await this.comercioServ.GuardarArticulo(registrar);
 
-    if (result) {
-      this.notificar.Ok("Errir al guardar al articulo");
+    if (!result) {
+      this.notificar.Error("Error al guardar al articulo");
     } else {
       this.notificar.Ok("Articulo Guardado correctamente");
+      await this.CargarArticulos();
       this.formAdd.reset();
 
     }
