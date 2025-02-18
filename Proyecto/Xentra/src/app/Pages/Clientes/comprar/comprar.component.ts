@@ -22,7 +22,6 @@ export class ComprarComponent implements OnInit {
   async ngOnInit() {
     const result = await this.clienteServ.ObtenerCredito();
     this.Comercios = result.data;
-    console.log(this.Comercios);
     if (result.error) {
       this.notificar.Error("Error al obtener los comercios...")
     }

@@ -6,6 +6,7 @@ import {EstadoSolicitud} from '@constantes/EstadoSolicitud';
 import {ServicioAutenticacion} from '@servicios/ServicioAutenticacion';
 import {SolicitudCliente} from '@modelos/Solicitud';
 import {Articulo} from '@modelos/Articulo';
+import {Transaccion} from '@modelos/Transaccion';
 
 
 @Injectable({providedIn: 'root'})
@@ -15,6 +16,38 @@ export class ClientesServicio {
 
   constructor() {
     this.supabase = createClient(environment.SupabaseUrl, environment.SupabaseKey);
+  }
+
+  async ObtenerComerciosCreditoCliente() {
+    const clienteId = this.AutServicio.usuarioActual()?.id;
+    let result = await this.supabase
+      .from('Acreditados')
+      .select('comercioId')
+      .eq("clientId", clienteId);
+
+    return result.data as { comercioId: number }[];
+  }
+
+  async ObtenerComprasUsuario() {
+
+    const clienteId = this.AutServicio.usuarioActual()?.id;
+    let resultadoAcreditado = await this.supabase
+      .from('Acreditados')
+      .select('id')
+      .eq("clientId", clienteId);
+    if (resultadoAcreditado.data === null) {
+      return false;
+    }
+    const result = resultadoAcreditado as { data: { id: string }[], error: any };
+
+    const acreditadoId = result.data[0].id;
+
+    let {data: Transacciones, error} = await this.supabase
+      .from('Transacciones')
+      .select("*,Acreditados(Comercios(Nombre))")
+      .eq("AcreditadoId", acreditadoId) as { data: Transaccion[], error: any };
+    return Transacciones;
+
   }
 
   async ObtenerTodosComercios() {
