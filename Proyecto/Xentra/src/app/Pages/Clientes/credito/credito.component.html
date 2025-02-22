@@ -28,10 +28,9 @@
             <p class="mb-2"><strong>Monto:</strong> ${{ credito.Monto }}</p>
             <p class="mb-3"><strong>Disponible:</strong> ${{ credito.Restante }}</p>
 
-            <div class="text-end">
-              <button class="btn btn-outline-primary btn-sm">
-                <i class="bi bi-eye"></i> Ver detalles
-              </button>
+            <div>
+              <button> Pagar</button>
+              <button [routerLink]="['/articulos',credito.comercioId]"> Comprar</button>
             </div>
           </div>
         </div>

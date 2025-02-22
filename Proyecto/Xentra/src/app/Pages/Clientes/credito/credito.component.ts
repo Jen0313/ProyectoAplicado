@@ -2,10 +2,13 @@ import {Component, inject, OnInit} from '@angular/core';
 import {ClientesServicio} from '@servicios/clientes-servicio.service';
 import {SolicitudCliente} from '@modelos/Solicitud';
 import {NotificacionServicio} from '@servicios/NotificacionServicio';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-credito',
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './credito.component.html',
   styleUrl: './credito.component.css'
 })

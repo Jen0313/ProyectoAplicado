@@ -9,6 +9,7 @@ import {SolicitudAdmin} from '@modelos/Solicitud';
 import {EstadoAcreditado} from '@constantes/EstadoAcreditado';
 import {EstadoSolicitud} from '@constantes/EstadoSolicitud';
 import {ClienteComercio} from '@modelos/Cliente';
+import {Transaccion} from '@modelos/Transaccion';
 
 export interface RespuestaSolicitud {
   id: number
@@ -17,6 +18,22 @@ export interface RespuestaSolicitud {
   ComercioId: number
   Monto: number
   Estado: string
+}
+
+export interface Acreditado {
+  id: number
+  fecha: string
+  clientId: number
+  comercioId: number
+  Monto: number
+  Restante: number
+  Estado: string
+}
+
+export interface TransaccionRespuestas {
+  Monto: number
+  fecha: string
+  Acreditados: Acreditado[]
 }
 
 
@@ -104,4 +121,42 @@ export class ComercioServicio {
 
   }
 
+  async ObtenerReporte() {
+    const comercioId = this.authServ.usuarioActual()?.id ?? 0;
+
+    let {data: acreditados, error} = await this.supabase
+      .from('Acreditados')
+      .select('*')
+      .eq("comercioId", comercioId) as { data: Acreditado[], error: any };
+    const resultTransacciones = await this.ReporteTransacciones();
+    return {
+      ventasDiarias: resultTransacciones,
+      totalMonto: acreditados.reduce((total, item) => total + item.Monto, 0),
+      totalRestante: acreditados.reduce((total, item) => total + item.Restante, 0),
+      totalRegistros: acreditados.length,
+      estadosCount: acreditados.reduce((acc, item) => {
+        acc[item.Estado] = (acc[item.Estado] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>)
+    };
+  }
+
+  private async ReporteTransacciones() {
+    const comercioId = this.authServ.usuarioActual()?.id ?? 0;
+
+    let {data, error} = await this.supabase
+      .from('Transacciones')
+      .select("Monto,fecha,Acreditados(*)")
+      .eq("Acreditados.comercioId", comercioId) as { data: TransaccionRespuestas[], error: any };
+
+    const resultado: Record<string, number> = {};
+
+    data.forEach(transaccion => {
+      const fechaCorta = transaccion.fecha.split("T")[0];
+      resultado[fechaCorta] = (resultado[fechaCorta] || 0) + transaccion.Monto;
+    });
+
+    return Object.entries(resultado).map(([fecha, totalMonto]) => ({fecha, totalMonto}));
+
+  }
 }
