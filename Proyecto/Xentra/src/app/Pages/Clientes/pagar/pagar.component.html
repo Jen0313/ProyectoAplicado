@@ -1,22 +1,158 @@
-<div class="col-lg-4 col-md-6 mb-4">
-  <div class="card border-start border-4 p-3 shadow-sm status-{{credito.Estado}}">
-    <div class="card-body">
-      <div class="d-flex justify-content-between mb-3">
-        <div>
-          <h6 class="text-muted m-0">Comercio</h6>
-          <h5 class="fw-bold">{{ credito.Comercios.Nombre }}</h5>
-        </div>
-        <div class="text-end">
-          <h6 class="text-muted m-0">Estado</h6>
-          <span class="badge status-badge status-{{credito.Estado}}">
-                  <i class="bi bi-circle-fill me-1"></i> {{ credito.Estado }}
-                </span>
-        </div>
-      </div>
+<!--<div class="container min-vh-100 d-flex flex-column justify-content-center">-->
+<!--  &lt;!&ndash;  Título &ndash;&gt;-->
+<!--  <h2 class="fw-bold text-center text-primary mb-4">💳 Realizar Abono</h2>-->
 
-      <p class="mb-2"><strong>Monto:</strong> ${{ credito.Monto }}</p>
-      <p class="mb-3"><strong>Disponible:</strong> ${{ credito.Restante }}</p>
-      <p class="mb-3"><strong>Total a pagar:</strong> ${{ credito.Monto - credito.Restante }}</p>
+<!--  <div class="row w-100 d-flex align-items-center">-->
+<!--    &lt;!&ndash;  Tarjeta de Crédito (Izquierda) &ndash;&gt;-->
+<!--    <div class="col-md-6 d-flex justify-content-center">-->
+<!--      <card-credito [credito]="credito">-->
+<!--        <p class="mb-3"><strong>Total a pagar:</strong> ${{ credito.Monto - credito.Restante }}</p>-->
+<!--      </card-credito>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash;  Formulario de Pago  &ndash;&gt;-->
+<!--    <div class="col-md-6">-->
+<!--      <div class="card p-4 shadow-sm">-->
+<!--        <h5 class="fw-bold text-primary mb-3">💰 Pago con Tarjeta</h5>-->
+
+<!--        &lt;!&ndash;  Formulario de Tarjeta &ndash;&gt;-->
+<!--        @if (!procesandoPago && !pagoExitoso) {-->
+<!--          <div class="mb-3">-->
+<!--            <label for="numeroTarjeta" class="form-label fw-bold">Número de tarjeta</label>-->
+<!--            <input type="text" id="numeroTarjeta" class="form-control" placeholder="•••• •••• •••• ••••"-->
+<!--                   [(ngModel)]="numeroTarjeta" maxlength="19">-->
+<!--          </div>-->
+
+<!--          <div class="row">-->
+<!--            <div class="col-6">-->
+<!--              <label for="fechaExp" class="form-label fw-bold">Fecha de expiración</label>-->
+<!--              <input type="text" id="fechaExp" class="form-control" placeholder="MM/YY" [(ngModel)]="fechaExp">-->
+<!--            </div>-->
+<!--            <div class="col-6">-->
+<!--              <label for="cvv" class="form-label fw-bold">CVV</label>-->
+<!--              <input type="text" id="cvv" class="form-control" placeholder="•••" [(ngModel)]="cvv" maxlength="3">-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="mt-3">-->
+<!--            <label for="abono" class="form-label fw-bold">Monto a abonar</label>-->
+<!--            <input type="number" id="abono" class="form-control"-->
+<!--                   [ngClass]="{'is-invalid': abono > (credito.Monto - credito.Restante)}"-->
+<!--                   [(ngModel)]="abono"-->
+<!--                   [max]="credito.Monto - credito.Restante"-->
+<!--                   min="0"-->
+<!--                   placeholder="Ingrese el monto">-->
+<!--            @if (abono > (credito.Monto - credito.Restante)) {-->
+<!--              <div class="invalid-feedback">-->
+<!--                ⚠️ No puedes abonar más de ${{ credito.Monto - credito.Restante }}.-->
+<!--              </div>-->
+<!--            }-->
+<!--          </div>-->
+
+<!--          <button class="btn btn-success w-100 mt-3"-->
+<!--                  [disabled]="abono <= 0 || abono > (credito.Monto - credito.Restante)"-->
+<!--                  (click)="simularPago()">-->
+<!--            <i class="bi bi-credit-card"></i> Pagar-->
+<!--          </button>-->
+<!--        }-->
+
+<!--        &lt;!&ndash;  Animación de Procesamiento &ndash;&gt;-->
+<!--        @if (procesandoPago) {-->
+<!--          <div class="text-center">-->
+<!--            <div class="spinner-border text-primary" role="status"></div>-->
+<!--            <p class="mt-2 text-muted">Procesando pago...</p>-->
+<!--          </div>-->
+<!--        }-->
+
+<!--        &lt;!&ndash;  Mensaje de Pago Exitoso &ndash;&gt;-->
+<!--        @if (pagoExitoso) {-->
+<!--          <div class="text-center">-->
+<!--            <h4 class="text-success fw-bold"><i class="bi bi-check-circle"></i> Pago realizado con éxito</h4>-->
+<!--            <p>Gracias por tu pago. Tu crédito ha sido actualizado.</p>-->
+<!--          </div>-->
+<!--        }-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="container min-vh-100 d-flex flex-column justify-content-center">
+  <h2 class="fw-bold text-center text-primary mb-4">💳 Realizar Abono</h2>
+
+  <div class="row d-flex align-items-center">
+    <!--  Tarjeta de Crédito -->
+    <div class="col-md-6 d-flex justify-content-center">
+      <card-credito [credito]="credito">
+        <p class="mb-3"><strong>Total a pagar:</strong> ${{ credito.Monto - credito.Restante }}</p>
+      </card-credito>
+    </div>
+
+    <!--  Formulario de Pago -->
+    <div class="col-md-6">
+      <form [formGroup]="pagoForm" (ngSubmit)="simularPago()" class="card p-4 shadow-sm">
+        <h5 class="fw-bold text-primary mb-3">💰 Pago con Tarjeta</h5>
+
+        <!--  Número de Tarjeta -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">Número de tarjeta</label>
+          <input type="text" class="form-control" placeholder="•••• •••• •••• ••••"
+                 formControlName="numeroTarjeta">
+          @if (pagoForm.controls.numeroTarjeta.invalid && pagoForm.get("numeroTarjeta")?.touched) {
+            <div class="invalid-feedback d-block">⚠️ Ingrese un número de tarjeta válido.</div>
+          }
+        </div>
+
+        <!--  Fecha de Expiración y CVV -->
+        <div class="row">
+          <div class="col-6">
+            <label class="form-label fw-bold">Fecha de expiración</label>
+            <input type="text" class="form-control" placeholder="MM/YY"
+                   formControlName="fechaExp">
+            @if (pagoForm.controls.fechaExp.invalid && pagoForm.get("fechaExp")?.touched) {
+              <div class="invalid-feedback d-block">⚠️ Ingrese una fecha válida (MM/YY).</div>
+            }
+          </div>
+          <div class="col-6">
+            <label class="form-label fw-bold">CVV</label>
+            <input type="text" class="form-control" placeholder="•••"
+                   formControlName="cvv">
+            @if (pagoForm.controls.cvv.invalid && pagoForm.get("cvv")?.touched) {
+              <div class="invalid-feedback d-block">⚠️ Ingrese un CVV válido (3 dígitos).</div>
+            }
+          </div>
+        </div>
+
+        <!--  Monto a Abonar -->
+        <div class="mt-3">
+          <label class="form-label fw-bold">Monto a abonar</label>
+          <input type="number" class="form-control"
+                 formControlName="abono" [max]="credito.Monto - credito.Restante">
+          @if (pagoForm.controls.abono.invalid && pagoForm.get("abono")?.touched) {
+            <div class="invalid-feedback d-block">⚠️ Ingresa un monto válido dentro del límite.</div>
+          }
+        </div>
+
+        <!--  Botón de Pago -->
+        <button class="btn btn-success w-100 mt-3"
+                [disabled]="pagoForm.invalid">
+          <i class="bi bi-credit-card"></i> Pagar
+        </button>
+
+        <!--  Animación de Procesamiento -->
+        @if (procesandoPago) {
+          <div class="text-center mt-3">
+            <div class="spinner-border text-primary"></div>
+            <p class="mt-2 text-muted">Procesando pago...</p>
+          </div>
+        }
+
+        <!--  Mensaje de Pago Exitoso -->
+        @if (pagoExitoso) {
+          <div class="text-center mt-3">
+            <h4 class="text-success fw-bold"><i class="bi bi-check-circle"></i> Pago realizado con éxito</h4>
+            <p>Gracias por tu pago. Tu crédito ha sido actualizado.</p>
+          </div>
+        }
+      </form>
     </div>
   </div>
 </div>

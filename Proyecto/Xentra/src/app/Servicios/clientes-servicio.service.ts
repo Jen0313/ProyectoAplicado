@@ -134,17 +134,38 @@ export class ClientesServicio {
       return false;
     }
     // reducir el monto de la transaccion al monto disponible del acreditado
-    return await this.ReducirMontoCredito((restante - monto));
+    return await this.ActualizarRestanteCredito((restante - monto));
+  }
+
+  async RealizarPago(acreditadoId: string, Monto: number, Metodo: string, TotalRestante: number) {
+
+    const {data, error} = await this.supabase
+      .from('Pagos')
+      .insert(
+        {
+          "AcreditadoId": acreditadoId,
+          "Monto": Monto,
+          "Metodo": Metodo
+        }
+      ).select();
+    if (error) {
+      return false;
+    }
+    console.log("Resultando de hacer el pago", data)
+    console.error("Resultando de hacer el pago ::::", error)
+    return await this.ActualizarRestanteCredito(TotalRestante);
+
   }
 
 // REDUCE EL MONTO DE LA TRANSACCION AL CREDITO DEL ACREDITADO
-  private async ReducirMontoCredito(total: number) {
+  private async ActualizarRestanteCredito(total: number) {
     const clienteId = this.AutServicio.usuarioActual()?.id;
     let resultActualizar = await this.supabase
       .from('Acreditados')
       .update({'Restante': total})
       .eq("clientId", clienteId)
       .select();
+    console.log("Resultado de actualizar el restante", resultActualizar);
     return resultActualizar.error === null;
   };
 
