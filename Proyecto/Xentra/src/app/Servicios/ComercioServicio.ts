@@ -134,10 +134,12 @@ export class ComercioServicio {
       totalMonto: acreditados.reduce((total, item) => total + item.Monto, 0),
       totalRestante: acreditados.reduce((total, item) => total + item.Restante, 0),
       totalRegistros: acreditados.length,
-      estadosCount: acreditados.reduce((acc, item) => {
-        acc[item.Estado] = (acc[item.Estado] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>)
+      estadosCount: Object.entries(
+        acreditados.reduce((acc, acreditado) => {
+          acc[acreditado.Estado] = (acc[acreditado.Estado] || 0) + 1;
+          return acc;
+        }, {} as { [key: string]: number })
+      ).map(([estado, cantidad]) => ({ estado, cantidad }))
     };
   }
 
