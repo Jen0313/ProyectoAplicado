@@ -1,0 +1,16 @@
+
+.credito-card {
+  max-width: 100%;
+  min-width: 330px;
+  padding: 1rem;
+}
+
+.status-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.status-Activo { background-color: green; }
+.status-Maximo { background-color: yellow; }
+.status-Cancelado { background-color: red; }

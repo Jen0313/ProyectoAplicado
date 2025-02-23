@@ -10,6 +10,7 @@ import {CurrencyPipe} from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ClientesServicio} from '@servicios/clientes-servicio.service';
 import {SolicitudCliente} from '@modelos/Solicitud';
+import {CardCreditoComponent} from '../../Reutilizables/card-credito/card-credito.component';
 
 
 interface CarritoItem {
@@ -21,7 +22,8 @@ interface CarritoItem {
   selector: 'app-articulos',
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CardCreditoComponent
   ],
   templateUrl: './articulos.component.html',
   styleUrl: './articulos.component.css'

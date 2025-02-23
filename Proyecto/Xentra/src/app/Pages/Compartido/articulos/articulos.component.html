@@ -42,23 +42,7 @@
 
   <!-- Detalles credito -->
   @if (clienteActual) {
-    <div class="row">
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card border-start border-4 p-3 shadow-sm status-{{clienteActual.Estado}}">
-          <div class="card-body">
-            <div class="d-flex justify-content-between mb-3">
-              <div>
-                <h6 class="text-muted m-0">Comercio</h6>
-                <h5 class="fw-bold">{{ clienteActual.Comercios.Nombre }}</h5>
-              </div>
-            </div>
-
-            <p class="mb-2"><strong>Monto:</strong> ${{ clienteActual.Monto }}</p>
-            <p class="mb-3"><strong>Disponible:</strong> ${{ clienteActual.Restante }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <card-credito [credito]="clienteActual"></card-credito>
   }
   <!-- Lista de artículos -->
 

@@ -5,11 +5,13 @@ import {NotificacionServicio} from '@servicios/NotificacionServicio';
 import {RouterLink} from '@angular/router';
 import {EstadoAcreditado} from '@constantes/EstadoAcreditado';
 import {JsonPipe} from '@angular/common';
+import {CardCreditoComponent} from '../../Reutilizables/card-credito/card-credito.component';
 
 @Component({
   selector: 'app-comprar',
   imports: [
     RouterLink,
+    CardCreditoComponent,
   ],
   templateUrl: './comprar.component.html',
   styleUrl: './comprar.component.css'

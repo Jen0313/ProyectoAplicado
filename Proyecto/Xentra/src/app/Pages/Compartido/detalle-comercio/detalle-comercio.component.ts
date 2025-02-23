@@ -4,6 +4,8 @@ import {Comercio} from '@modelos/Comercio';
 import {ClientesServicio} from '@servicios/clientes-servicio.service';
 import {NotificacionServicio} from '@servicios/NotificacionServicio';
 import {TitleCasePipe} from "@angular/common";
+import {ServicioAutenticacion} from '@servicios/ServicioAutenticacion';
+import {ComercioServicio} from '@servicios/ComercioServicio';
 
 @Component({
   selector: 'app-detalle-comercio',
@@ -17,11 +19,13 @@ import {TitleCasePipe} from "@angular/common";
 export class DetalleComercioComponent implements OnInit {
   id: string | null = null;
   comercio: Comercio | null = null;
+  comerciosAcreditados:  number[] = [];
 
   constructor(private rutaActual: ActivatedRoute,
               private router: Router,
-              private comercioServicio: ClientesServicio,
+              private clientesComercio: ClientesServicio,
               private notificar: NotificacionServicio,
+              private comercioServicio : ComercioServicio
   ) {
     this.id = this.rutaActual.snapshot.params['id'];
   }
@@ -31,7 +35,7 @@ export class DetalleComercioComponent implements OnInit {
       this.notificar.Advertencia("No encontramo dicho comercio.");
       await this.router.navigate(['comercios']);
     } else {
-      const result = await this.comercioServicio.ObtenerComercioPorId(this.id);
+      const result = await this.clientesComercio.ObtenerComercioPorId(this.id);
       if (result.data) {
         this.comercio = result.data;
       } else {
@@ -39,6 +43,8 @@ export class DetalleComercioComponent implements OnInit {
         await this.router.navigate(['comercios']);
       }
     }
+    const resultAcreditado= await this.clientesComercio.ObtenerComerciosCreditoCliente();
+    this.comerciosAcreditados =  resultAcreditado.map(x=>x.comercioId);
   }
 
 

@@ -31,10 +31,17 @@
           <strong>Dueño:</strong> {{ comercio.Dueno }}
         </p>
 
-        <span class="text-decoration-underline text-primary fw-bold" role="button"
-              [routerLink]="['/comercios', 'solicitar', comercio.id]">
-        Solicitar
-      </span>
+        @if (comerciosAcreditados.includes(comercio.id)) {
+          <a class="btn btn-sm btn-outline-warning text-warning-emphasis fw-semibold px-3"
+             routerLink='/clientes/credito'>
+            Ya tienes credito!<i class="bi bi-eye"></i>
+          </a>
+        } @else {
+          <a class="btn btn-sm btn-success text-white fw-semibold px-3"
+             [routerLink]="['/comercios/solicitar',comercio.id]">
+            Solicitar
+          </a>
+        }
       </div>
     </div>
   </div>
