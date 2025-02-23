@@ -59,7 +59,7 @@ export class ReportesComponent implements OnInit {
           label: `Clientes ${result.estadosCount.map(x => x.estado)}`,
           data: result.estadosCount.map(x => x.cantidad),
           fill: false,
-          borderColor: 'rgb(45, 5, 5)',
+          borderColor: 'rgb(0, 0, 0)',
           tension: 0.1
         }]
 

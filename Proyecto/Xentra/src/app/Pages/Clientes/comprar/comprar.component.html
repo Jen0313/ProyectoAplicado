@@ -6,26 +6,23 @@
 
   <div class="row mt-4">
     @for (credito of Comercios; track $index) {
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card border-start border-4 p-3 shadow-sm status-{{credito.Estado}}">
+      <div class="col mb-4 col-lg-4 col-md-6 ">
+        <div class="card border border-primary rounded-3 shadow-sm">
           <div class="card-body">
-            <div class="d-flex justify-content-between mb-3">
-              <div>
-                <h6 class="text-muted m-0">Comercio</h6>
-                <h5 class="fw-bold">{{ credito.Comercios.Nombre }}</h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="card-title fw-bold mb-0 text-decoration-underline" [routerLink]="['/comercios',credito.comercioId]" role="button">{{ credito.Comercios.Nombre }}</h5>
+              <div class="d-flex align-items-center">
+                <span class="status-circle status-{{credito.Estado}} me-2"></span>
+                <p class="text-muted mb-0">{{ credito.Estado }}</p>
               </div>
             </div>
 
-            <p class="mb-2"><strong>Monto:</strong> ${{ credito.Monto }}</p>
-            <p class="mb-3"><strong>Disponible:</strong> ${{ credito.Restante }}</p>
-
-            <div class="text-end">
-              <button [disabled]="credito.Estado!==EstadoAcreditado.Activo"
-                      [routerLink]="['/articulos',credito.comercioId]"
-                      class="btn btn-outline-primary btn-sm">
-                <i class="bi bi-bag-check-fill"></i> Comprar
-
-
+            <p class="card-text mb-2"><strong>Monto:</strong> ${{ credito.Monto }}</p>
+            <p class="card-text mb-3 "><strong>Disponible:</strong> ${{ credito.Restante }}</p>
+            <div class="d-grid gap-2">
+              <button [disabled]="credito.Estado!==EstadoAcreditado.Activo || credito.Restante===0"  [routerLink]="['/articulos',credito.comercioId]" class="btn btn-outline-primary">
+                  <i class="bi bi-cart me-1"></i>
+                Comprar
               </button>
               @if (credito.Restante === 0) {
                 <small class="text-danger">No tienes credito disponible:(</small>
@@ -34,6 +31,7 @@
           </div>
         </div>
       </div>
+
     }
   </div>
 </section>

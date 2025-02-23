@@ -19,6 +19,7 @@ import {SolicitudesComercioComponent} from './Pages/Comercios/solicitudes/solici
 import {ReportesComponent} from './Pages/Comercios/reportes/reportes.component';
 import {ArticulosComponent} from './Pages/Compartido/articulos/articulos.component';
 import {ComprarComponent} from './Pages/Clientes/comprar/comprar.component';
+import {PagarComponent} from './Pages/Clientes/pagar/pagar.component';
 
 export const routes: Routes = [
 
@@ -60,7 +61,7 @@ export const routes: Routes = [
       {path: "historialTransacciones", component: TransaccionesClienteComponent},
       {path: "solicitudes", component: SolicitudesClienteComponent},
       {path: "comprar", component: ComprarComponent},
-
+      {path: "pagar/:id", component: PagarComponent},
     ]
   },
   // para los comerciantes

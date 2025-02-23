@@ -1,1 +1,22 @@
-<p>pagar works!</p>
+<div class="col-lg-4 col-md-6 mb-4">
+  <div class="card border-start border-4 p-3 shadow-sm status-{{credito.Estado}}">
+    <div class="card-body">
+      <div class="d-flex justify-content-between mb-3">
+        <div>
+          <h6 class="text-muted m-0">Comercio</h6>
+          <h5 class="fw-bold">{{ credito.Comercios.Nombre }}</h5>
+        </div>
+        <div class="text-end">
+          <h6 class="text-muted m-0">Estado</h6>
+          <span class="badge status-badge status-{{credito.Estado}}">
+                  <i class="bi bi-circle-fill me-1"></i> {{ credito.Estado }}
+                </span>
+        </div>
+      </div>
+
+      <p class="mb-2"><strong>Monto:</strong> ${{ credito.Monto }}</p>
+      <p class="mb-3"><strong>Disponible:</strong> ${{ credito.Restante }}</p>
+      <p class="mb-3"><strong>Total a pagar:</strong> ${{ credito.Monto - credito.Restante }}</p>
+    </div>
+  </div>
+</div>

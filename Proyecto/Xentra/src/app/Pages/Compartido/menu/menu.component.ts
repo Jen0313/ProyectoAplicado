@@ -37,11 +37,13 @@ export class MenuComponent {
     return this.usuarioActual()?.Rol === Roles.Comercio ? (this.usuarioActual() as Comercio) : null;
   }
 
-  btnSeccion() {
+  async btnSeccion() {
     if (this.usuarioActual()) {
-      this.autenticacion.CerrarSeccion();
+      await this.autenticacion.CerrarSeccion();
+      await this.router.navigate(['inicio']);
+
     } else {
-      this.router.navigate(['logIn']);
+      await this.router.navigate(['logIn']);
     }
   }
 
