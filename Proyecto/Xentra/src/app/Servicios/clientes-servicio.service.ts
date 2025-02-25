@@ -7,6 +7,7 @@ import {ServicioAutenticacion} from '@servicios/ServicioAutenticacion';
 import {SolicitudCliente} from '@modelos/Solicitud';
 import {Articulo} from '@modelos/Articulo';
 import {Transaccion} from '@modelos/Transaccion';
+import {EstadoPedido} from '@constantes/EstadoPedido';
 
 
 @Injectable({providedIn: 'root'})
@@ -41,12 +42,22 @@ export class ClientesServicio {
     const result = resultadoAcreditado as { data: { id: string }[], error: any };
 
     const acreditadoId = result.data[0].id;
-
-    let {data: Transacciones, error} = await this.supabase
+    let {data: r, error} = await this.supabase
+      .from('DetalleTransacion')
+      .select("*,Transacciones(*,Acreditados(*,Comercios(id,Nombre))),Articulos(*)")
+      .eq("Transacciones.AcreditadoId", acreditadoId);
+    console.info(r);
+    console.error(error)
+    // let {data: Transacciones, error} = await this.supabase
+    //   .from('Transacciones')
+    //   .select("*,Acreditados(Comercios(Nombre))")
+    //   .eq("AcreditadoId", acreditadoId) as { data: Transaccion[], error: any };
+    // return Transacciones;
+    let resultado  = await this.supabase
       .from('Transacciones')
       .select("*,Acreditados(Comercios(Nombre))")
       .eq("AcreditadoId", acreditadoId) as { data: Transaccion[], error: any };
-    return Transacciones;
+    return resultado;
 
   }
 
@@ -191,7 +202,8 @@ export class ClientesServicio {
       .insert([
         {
           "AcreditadoId": acreditadoId,
-          "Monto": Monto
+          "Monto": Monto,
+          "Estado": EstadoPedido.Pendiente
         },
       ]).select('id') as { data: { id: string }[], error: any };
 

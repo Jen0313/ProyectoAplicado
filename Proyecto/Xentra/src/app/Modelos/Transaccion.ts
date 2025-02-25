@@ -3,5 +3,7 @@
   fecha: string;
   AcreditadoId: number;
   Monto: number;
+  Estado: string;
   Acreditados?: { Comercios: { Nombre: string } };
 }
+

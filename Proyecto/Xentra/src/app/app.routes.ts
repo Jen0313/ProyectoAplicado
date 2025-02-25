@@ -19,6 +19,7 @@ import {ReportesComponent} from './Pages/Comercios/reportes/reportes.component';
 import {ArticulosComponent} from './Pages/Compartido/articulos/articulos.component';
 import {ComprarComponent} from './Pages/Clientes/comprar/comprar.component';
 import {PagarComponent} from './Pages/Clientes/pagar/pagar.component';
+import {PedidosClienteComponent} from './Pages/Clientes/pedidos/pedidos.component';
 
 export const routes: Routes = [
 
@@ -60,6 +61,7 @@ export const routes: Routes = [
       {path: "solicitudes", component: SolicitudesClienteComponent},
       {path: "comprar", component: ComprarComponent},
       {path: "pagar/:id", component: PagarComponent},
+      {path: "pedidos", component: PedidosClienteComponent},
     ]
   },
   // para los comerciantes
