@@ -82,7 +82,7 @@ export class PagarComponent implements OnInit {
       this.procesandoPago = true;
 
       const abono = this.pagoForm.get("abono")?.value ?? 0;
-      const resultado = await this.clienteServicio.RealizarPago(this.credito.id.toString(), abono, "Pago en linea", (this.credito.Monto - abono))
+      const resultado = await this.clienteServicio.RealizarPago(this.credito.id.toString(), abono, "Pago en linea", (this.credito.Restante + abono))
 
       if (resultado) {
         this.pagoExitoso = true;

@@ -1,14 +1,16 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {ClientesServicio} from '@servicios/clientes-servicio.service';
 import {NotificacionServicio} from '@servicios/NotificacionServicio';
 import {SolicitudCliente} from '@modelos/Solicitud';
-import {DatePipe} from '@angular/common';
+import {DatePipe, TitleCasePipe} from '@angular/common';
 
 @Component({
   selector: 'app-solicitudes',
   imports: [
-    DatePipe
+    DatePipe,
+    RouterLink,
+    TitleCasePipe
   ],
   templateUrl: './solicitudes.component.html',
   styleUrl: './solicitudes.component.css'

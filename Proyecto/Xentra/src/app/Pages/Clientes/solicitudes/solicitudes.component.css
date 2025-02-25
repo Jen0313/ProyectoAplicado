@@ -5,7 +5,7 @@
   display: inline-block;
   margin-left: 5px;
 }
-.status-Aceptada { background-color: green; }
+.status-Aprobada { background-color: green; }
 .status-Pendiente { background-color: orange; }
-.status-Rechazada { background-color: red; }
+.status-Denegada { background-color: red; }
 

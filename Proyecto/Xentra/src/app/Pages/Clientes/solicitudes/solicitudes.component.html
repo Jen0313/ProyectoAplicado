@@ -1,29 +1,33 @@
 
-
 <div class="container mt-5">
-  <h3 class="text-center">Mis solicitudes</h3>
+  <h3 class="text-center mb-4">Mis solicitudes</h3>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <button class="btn btn-light btn-sm" routerLink="/comercios">
+      <i class="bi bi-shop"></i> Ir a comercios
+    </button>
+  </div>
   <div class="row mt-4 justify-content-center">
     @for (sol of Solicitudes; track $index) {
       <div class="col-md-4 mb-3">
-        <div class="card p-3 shadow-sm">
-          <div class="d-flex justify-content-between">
+        <div class="card p-3 shadow-sm border-0">
+          <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
-              <p class="text-muted small">Comercio</p>
-              <h6><strong>{{ sol.Comercios.Nombre }}</strong></h6>
+              <p class="text-muted small mb-1">Comercio</p>
+              <h6 class="fw-bold text-primary">{{ sol.Comercios.Nombre | titlecase }}</h6>
             </div>
-            <div>
-              <p class="text-muted small">Estado</p>
-              <h6><strong>{{ sol.Estado }}</strong> <span class="status-dot status-{{sol.Estado}}"></span></h6>
+            <div class="text-end">
+              <p class="text-muted small mb-1">Estado</p>
+              <h6 class="fw-bold">{{ sol.Estado }} <span class="status-dot status-{{sol.Estado}}"></span></h6>
             </div>
           </div>
-          <p><strong>Monto:</strong> {{ sol.Monto }}</p>
-          <p><strong>Fecha:</strong>{{ sol.fecha | date }}</p>
+          <p class="mb-1"><strong>Monto:</strong> ${{ sol.Monto }}</p>
+          <p class="text-muted small"><strong>Fecha:</strong> {{ sol.fecha | date }}</p>
         </div>
       </div>
     }
-
   </div>
 </div>
+
 
 
 

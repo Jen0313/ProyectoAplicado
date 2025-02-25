@@ -11,7 +11,6 @@ import {SolicitarCreditoComponent} from './Pages/Clientes/solicitar/solicitar.co
 import {ComerciosComponent} from './Pages/Compartido/comercios/comercios.component';
 import {DetalleComercioComponent} from './Pages/Compartido/detalle-comercio/detalle-comercio.component';
 import {CreditoComponent} from './Pages/Clientes/credito/credito.component';
-import {TransaccionesClienteComponent} from './Pages/Clientes/transacciones/transacciones.component';
 import {SolicitudesClienteComponent} from './Pages/Clientes/solicitudes/solicitudes.component';
 import {ClientesComercioComponent} from './Pages/Comercios/clientes/clientes.component';
 import {TransaccionesComercioComponent} from './Pages/Comercios/transacciones/transacciones.component';
@@ -58,7 +57,6 @@ export const routes: Routes = [
     children: [
       {path: "", redirectTo: 'credito', pathMatch: 'full'},
       {path: "credito", component: CreditoComponent},
-      {path: "historialTransacciones", component: TransaccionesClienteComponent},
       {path: "solicitudes", component: SolicitudesClienteComponent},
       {path: "comprar", component: ComprarComponent},
       {path: "pagar/:id", component: PagarComponent},

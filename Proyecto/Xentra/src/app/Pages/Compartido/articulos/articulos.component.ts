@@ -23,7 +23,8 @@ interface CarritoItem {
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    CardCreditoComponent
+    CardCreditoComponent,
+    CurrencyPipe
   ],
   templateUrl: './articulos.component.html',
   styleUrl: './articulos.component.css'
@@ -41,6 +42,7 @@ export class ArticulosComponent implements OnInit {
 
   carrito = signal<CarritoItem[]>([]);
   formAdd: FormGroup;
+  private idComercio = "";
 
   constructor() {
     this.formAdd = new FormGroup({
@@ -51,20 +53,24 @@ export class ArticulosComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const idComercio = this.activeRoute.snapshot.params['id'];
-    if (idComercio == null) {
+    this.idComercio = this.activeRoute.snapshot.params['id'];
+    if (this.idComercio == null) {
       this.notificar.Advertencia("Debes inciar seccion");
       await this.router.navigate(['login']);
     }
     await this.CargarArticulos();
+    await this.CargarCreditoUsuario();
+
+  }
+
+  async CargarCreditoUsuario() {
     if (this.authServ.roleActual() == Roles.Cliente) {
-      const result = await this.clienteServ.ObtenerCreditoComercio(idComercio?.toString() ?? "");
+      const result = await this.clienteServ.ObtenerCreditoComercio(this.idComercio);
       this.clienteActual = result.credito;
       if (result.error) {
         this.notificar.Error("Error al cargar el credito del cliente...")
       }
     }
-
   }
 
   async CargarArticulos() {
@@ -110,6 +116,7 @@ export class ArticulosComponent implements OnInit {
     const result = await this.clienteServ.RealizarCompra(this.carrito(), this.clienteActual?.Restante ?? 0);
     if (result) {
       this.notificar.Ok("Compra realizada.");
+      await this.CargarCreditoUsuario();
       this.carrito.set([]);
     } else {
       this.notificar.Error("Error al realizar la Comprar");
