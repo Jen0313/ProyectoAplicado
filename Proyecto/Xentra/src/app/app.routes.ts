@@ -13,7 +13,6 @@ import {DetalleComercioComponent} from './Pages/Compartido/detalle-comercio/deta
 import {CreditoComponent} from './Pages/Clientes/credito/credito.component';
 import {SolicitudesClienteComponent} from './Pages/Clientes/solicitudes/solicitudes.component';
 import {ClientesComercioComponent} from './Pages/Comercios/clientes/clientes.component';
-import {TransaccionesComercioComponent} from './Pages/Comercios/transacciones/transacciones.component';
 import {SolicitudesComercioComponent} from './Pages/Comercios/solicitudes/solicitudes.component';
 import {ReportesComponent} from './Pages/Comercios/reportes/reportes.component';
 import {ArticulosComponent} from './Pages/Compartido/articulos/articulos.component';
@@ -35,8 +34,10 @@ export const routes: Routes = [
     path: 'registrar/comercio',
     component: ComercioRegistrarComponent,
   },
+
   {
     path: 'articulos/:id',
+    canActivate: [roleGuardGuard([Roles.Comercio, Roles.Cliente])],
     component: ArticulosComponent
   },
   // Comercios
@@ -71,7 +72,6 @@ export const routes: Routes = [
     children: [
       {path: "", redirectTo: 'clientes', pathMatch: 'full'},
       {path: "clientes", component: ClientesComercioComponent},
-      {path: "transacciones", component: TransaccionesComercioComponent},
       {path: "solicitudes", component: SolicitudesComercioComponent},
       {path: "reportes", component: ReportesComponent},
     ]

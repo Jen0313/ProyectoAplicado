@@ -5,6 +5,7 @@ import {Cliente} from '@modelos/Cliente';
 import {Comercio} from '@modelos/Comercio';
 import {Roles} from '@constantes/Roles';
 import {InstantiateExpr} from '@angular/compiler';
+import {NgOptimizedImage} from '@angular/common';
 
 
 @Component({
@@ -12,7 +13,8 @@ import {InstantiateExpr} from '@angular/compiler';
   imports: [
     RouterLink,
     RouterOutlet,
-    RouterLinkActive
+    RouterLinkActive,
+    NgOptimizedImage
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'

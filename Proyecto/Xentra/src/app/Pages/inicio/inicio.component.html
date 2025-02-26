@@ -1,1 +1,108 @@
-<p>inicio works!</p>
+
+<div class="main-wrapper">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top rounded">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <i class="bi bi-credit-card-2-front me-2"></i>
+        <span>Xentra</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link text-white fw-semibold active" href="#inicio">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#funciones">Funciones</a></li>
+          <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#comercios">Comercios</a></li>
+          <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#clientes">Clientes</a></li>
+        </ul>
+        <div class="ms-lg-3 mt-3 mt-lg-0 d-flex">
+          <button routerLink="/logIn" class="btn btn-outline-light me-2">Iniciar Sesión</button>
+          <button [routerLink]="['/registrar,','cliente']" class="btn btn-light">Registrarse</button>
+        </div>
+      </div>
+
+
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="inicio" class="hero-section bg-primary text-white py-5">
+    <div class="container text-center py-4">
+      <h1 class="display-5 fw-bold">Crédito simple para compras, gestión eficiente para negocios</h1>
+      <p class="lead">Conectamos comercios con clientes a través de una plataforma de crédito y pedidos.</p>
+      <div class="d-flex justify-content-center gap-3 mt-3">
+        <button routerLink="/logIn"  class="btn btn-light" ><i class="bi bi-person-plus me-2"></i>Soy Cliente</button>
+        <button routerLink="/logIn" class="btn btn-outline-light"><i class="bi bi-shop me-2"></i>Soy Comercio</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Características -->
+  <section id="funciones" class="py-5">
+    <div class="container text-center">
+      <h2 class="fw-bold mb-4">Todo lo que necesitas en una plataforma</h2>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm border-0 text-center p-4">
+            <i class="bi bi-credit-card-2-front text-primary fs-1 mb-3"></i>
+            <h5 class="card-title">Solicita Crédito</h5>
+            <p class="card-text">Accede a crédito rápido con nuestros comercios afiliados.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm border-0 text-center p-4">
+            <i class="bi bi-cart-check text-primary fs-1 mb-3"></i>
+            <h5 class="card-title">Realiza Pedidos</h5>
+            <p class="card-text">Haz pedidos directamente desde la aplicación.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm border-0 text-center p-4">
+            <i class="bi bi-shop text-primary fs-1 mb-3"></i>
+            <h5 class="card-title">Crea tu Comercio</h5>
+            <p class="card-text">Registra tu negocio y ofrece crédito a tus clientes.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm border-0 text-center p-4">
+            <i class="bi bi-graph-up text-primary fs-1 mb-3"></i>
+            <h5 class="card-title">Gestiona Créditos</h5>
+            <p class="card-text">Administra los créditos de forma sencilla.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="py-5 bg-primary text-white text-center">
+    <div class="container">
+      <h2 class="fw-bold">¿Listo para comenzar?</h2>
+      <p class="lead">Únete a nuestra plataforma y disfruta de todos los beneficios</p>
+      <div class="d-flex justify-content-center gap-3">
+        <button [routerLink]="['/registrar','cliente']" class="btn btn-light"><i class="bi bi-person-plus me-2"></i>Registrarme como Cliente</button>
+        <button [routerLink]="['/registrar','comercio']" class="btn btn-outline-light"><i class="bi bi-shop me-2"></i>Registrar mi Comercio</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-4 bg-dark text-white">
+    <div class="container text-center">
+      <a class="d-flex justify-content-center align-items-center text-white text-decoration-none mb-3" href="#">
+        <i class="bi bi-credit-card-2-front me-2"></i><span class="fs-5">Xentra</span>
+      </a>
+      <p class="text-white">Conectamos comercios con clientes a través de una plataforma de crédito simple y segura.</p>
+
+      <div class="d-flex justify-content-center gap-4">
+        <a href="#" class="text-white"><i class="bi bi-facebook fs-4"></i></a>
+        <a href="#" class="text-white"><i class="bi bi-twitter fs-4"></i></a>
+        <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+      </div>
+
+      <p class="mt-3 text-white">© 2025 Xentra. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+</div>

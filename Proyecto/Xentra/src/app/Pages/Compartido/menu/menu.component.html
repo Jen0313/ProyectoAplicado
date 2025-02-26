@@ -1,3 +1,114 @@
+<!--<div class="container-fluid">-->
+<!--  <div class="row">-->
+<!--    &lt;!&ndash; Botón para abrir el menú en móviles &ndash;&gt;-->
+<!--    <button class="btn btn-primary d-md-none my-2" type="button" data-bs-toggle="offcanvas"-->
+<!--            data-bs-target="#sidebarMenu">-->
+<!--      <i class="bi bi-list"></i> Menú-->
+<!--    </button>-->
+
+<!--    &lt;!&ndash; Menú lateral (Offcanvas en móviles, fijo en pantallas grandes) &ndash;&gt;-->
+<!--    <nav id="sidebarMenu" class="sidebar col-md-2 d-md-block  offcanvas-md offcanvas-start ">-->
+<!--      <div class="offcanvas-header d-md-none">-->
+<!--        <h5 class="offcanvas-title text-white">Menú</h5>-->
+<!--        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>-->
+<!--      </div>-->
+<!--      <div class="offcanvas-body  ">-->
+<!--        <ul class="nav flex-column text-center">-->
+<!--          @if (usuarioActual()) {-->
+<!--            <div class="text-center avatar">-->
+<!--              @if (EsComercio(); as com) {-->
+<!--                <img [src]="com.Imagenes[0]"-->
+<!--                     class="rounded-circle" alt="Imagen Comercio...">-->
+<!--                <h5 class="text-white mt-2">{{ usuarioActual()?.Nombre }} </h5>-->
+<!--                <p style="font-size: 12px">Comercio</p>-->
+<!--              }-->
+
+<!--              @if (EsCliente(); as cliente) {-->
+<!--                <img [src]="cliente.Imagen"-->
+<!--                     class="rounded-circle" alt="Imagen Cliente...">-->
+<!--                <h5 class="text-white mt-2">{{ usuarioActual()?.Nombre }} </h5>-->
+<!--                <p style="font-size: 12px">Cliente</p>-->
+<!--              }-->
+<!--            </div>-->
+<!--          }-->
+
+<!--          <li class="nav-item ">-->
+<!--            <a class="nav-link" routerLink="inicio" routerLinkActive="rutaActual"><i class="bi bi-house-door"></i>-->
+<!--              Inicio</a>-->
+<!--          </li>-->
+<!--          @if (usuarioActual()?.Rol != Roles.Comercio) {-->
+
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" routerLink="comercios" routerLinkActive="rutaActual"><i class="bi bi-shop"></i>-->
+<!--                Comercios</a>-->
+<!--            </li>-->
+<!--          }-->
+<!--          &lt;!&ndash;         Acceso solo para clientes &ndash;&gt;-->
+<!--          @if (usuarioActual()?.Rol == Roles.Cliente) {-->
+
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" [routerLink]="['/clientes/comprar']" routerLinkActive="rutaActual"><i-->
+<!--                class="bi bi-credit-card"></i> Comprar</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" [routerLink]="['/clientes/credito']" routerLinkActive="rutaActual"><i-->
+<!--                class="bi bi-credit-card"></i> Mi Crédito</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" [routerLink]="['/clientes/pedidos']" routerLinkActive="rutaActual"><i-->
+<!--                class="bi bi-credit-card"></i> Mis Pedidos</a>-->
+<!--            </li>-->
+
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" [routerLink]="['/clientes/solicitudes']" routerLinkActive="rutaActual"><i-->
+<!--                class="bi bi-pencil-square"></i> Mis Solicitudes</a>-->
+<!--            </li>-->
+<!--          }-->
+<!--          &lt;!&ndash;         Acceso solo para Comercios &ndash;&gt;-->
+<!--          @if (usuarioActual()?.Rol == Roles.Comercio) {-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" [routerLink]="['/AdminComercios/clientes']" routerLinkActive="rutaActual"><i-->
+<!--                class="bi bi-person-lines-fill"></i> Clientes</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" [routerLink]="['/AdminComercios/solicitudes']"-->
+<!--                 routerLinkActive="rutaActual"> <i class="bi bi-person-plus-fill"></i> Solicitudes</a>-->
+<!--            </li>-->
+
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" [routerLink]="['/AdminComercios/reportes']" routerLinkActive="rutaActual"><i-->
+<!--                class="bi bi-bar-chart-line"></i> Reportes</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" [routerLink]="['/articulos',usuarioActual()?.id]" routerLinkActive="rutaActual">-->
+<!--                <i class="bi bi-shop-window"></i>-->
+<!--                Articulos</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" routerLinkActive="rutaActual">-->
+<!--                <i class="bi bi-truck"></i> Pedidos</a>-->
+<!--            </li>-->
+<!--          }-->
+
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link btn btn-outline-danger w-100 mt-3" (click)="btnSeccion()">-->
+<!--              <i class="bi bi-box-arrow-in-right"></i> {{ usuarioActual() !== null ? 'Cerrar' : 'Iniciar' }} Sesión-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </nav>-->
+
+<!--    &lt;!&ndash; Contenido principal, asegurando que comience después del menú &ndash;&gt;-->
+<!--    <main role="main" class="col-md-10 ms-sm-auto px-4">-->
+<!--      <div class="content mt-3">-->
+<!--        <router-outlet></router-outlet>-->
+<!--      </div>-->
+<!--    </main>-->
+<!--  </div>-->
+<!--</div>-->
+
+
 <div class="container-fluid">
   <div class="row">
     <!-- Botón para abrir el menú en móviles -->
@@ -7,13 +118,22 @@
     </button>
 
     <!-- Menú lateral (Offcanvas en móviles, fijo en pantallas grandes) -->
-    <nav id="sidebarMenu" class="sidebar col-md-2 d-md-block  offcanvas-md offcanvas-start ">
+    <nav id="sidebarMenu" class="sidebar col-md-2 d-md-block offcanvas-md offcanvas-start fixed-top">
       <div class="offcanvas-header d-md-none">
         <h5 class="offcanvas-title text-white">Menú</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
       </div>
-      <div class="offcanvas-body  ">
-        <ul class="nav flex-column">
+
+      <div class="text-center py-3 border-bottom border-secondary">
+        @if (usuarioActual() == null) {
+          <img src="/logo.jpg" alt="Logo" width="40" height="40" class="d-inline-block mb-2 rounded-circle">
+        }
+        <h5 class="text-white m-0">Xentra</h5>
+      </div>
+
+      <div class="offcanvas-body">
+        <ul class="nav flex-column text-center">
+          <!-- Sección de avatar/perfil -->
           @if (usuarioActual()) {
             <div class="text-center avatar">
               @if (EsComercio(); as com) {
@@ -32,62 +152,159 @@
             </div>
           }
 
+          <!-- Enlace de Inicio - visible para todos -->
           <li class="nav-item">
-            <a class="nav-link" routerLink="inicio" routerLinkActive="rutaActual"><i class="bi bi-house-door"></i>
-              Inicio</a>
+            <a class="nav-link" routerLink="inicio" routerLinkActive="rutaActual">
+              <i class="bi bi-house-door"></i> Inicio
+            </a>
           </li>
-          @if (usuarioActual()?.Rol != Roles.Comercio) {
 
-          <li class="nav-item">
-            <a class="nav-link" routerLink="comercios" routerLinkActive="rutaActual"><i class="bi bi-shop"></i>
-              Comercios</a>
-          </li>
+          <!-- Enlace de Comercios - visible para todos excepto comercios -->
+          @if (usuarioActual()?.Rol != Roles.Comercio || !usuarioActual()) {
+            <li class="nav-item">
+              <a class="nav-link" routerLink="comercios" routerLinkActive="rutaActual">
+                <i class="bi bi-shop"></i> Comercios
+
+              </a>
+            </li>
           }
-          <!--         Acceso solo para clientes -->
+
+          <!-- SECCIÓN CLIENTE - Visible solo para clientes o usuarios no registrados -->
+
+          @if (!usuarioActual()) {
+            <li class="nav-item mt-4 mb-2">
+              <span class="text-white-50 small text-uppercase">Área Cliente</span>
+            </li>
+
+            <!-- Enlaces de cliente para usuarios no registrados (con candado) -->
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/clientes/comprar']" routerLinkActive="rutaActual">
+                <i class="bi bi-credit-card"></i> Comprar
+                <i class="bi bi-lock-fill ms-2 text-warning" style="font-size: 0.8rem;"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/clientes/credito']" routerLinkActive="rutaActual">
+                <i class="bi bi-credit-card"></i> Mi Crédito
+                <i class="bi bi-lock-fill ms-2 text-warning" style="font-size: 0.8rem;"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/clientes/pedidos']" routerLinkActive="rutaActual">
+                <i class="bi bi-box-seam"></i> Mis Pedidos
+                <i class="bi bi-lock-fill ms-2 text-warning" style="font-size: 0.8rem;"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/clientes/solicitudes']" routerLinkActive="rutaActual">
+                <i class="bi bi-pencil-square"></i> Mis Solicitudes
+                <i class="bi bi-lock-fill ms-2 text-warning" style="font-size: 0.8rem;"></i>
+              </a>
+            </li>
+          }
+
+          <!-- Enlaces de cliente para usuarios con rol Cliente -->
           @if (usuarioActual()?.Rol == Roles.Cliente) {
-
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/clientes/comprar']" routerLinkActive="rutaActual"><i
-                class="bi bi-credit-card"></i> Comprar</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/clientes/credito']" routerLinkActive="rutaActual"><i
-                class="bi bi-credit-card"></i> Mi Crédito</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/clientes/pedidos']" routerLinkActive="rutaActual"><i
-                class="bi bi-credit-card"></i> Mis Pedidos</a>
+            <li class="nav-item mt-4 mb-2">
+              <span class="text-white-50 small text-uppercase">Área Cliente</span>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/clientes/solicitudes']" routerLinkActive="rutaActual"><i
-                class="bi bi-pencil-square"></i> Mis Solicitudes</a>
+              <a class="nav-link" [routerLink]="['/clientes/comprar']" routerLinkActive="rutaActual">
+                <i class="bi bi-credit-card"></i> Comprar
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/clientes/credito']" routerLinkActive="rutaActual">
+                <i class="bi bi-credit-card"></i> Mi Crédito
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/clientes/pedidos']" routerLinkActive="rutaActual">
+                <i class="bi bi-box-seam"></i> Mis Pedidos
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/clientes/solicitudes']" routerLinkActive="rutaActual">
+                <i class="bi bi-pencil-square"></i> Mis Solicitudes
+              </a>
             </li>
           }
-          <!--         Acceso solo para Comercios -->
+
+          <!-- SECCIÓN COMERCIO - Visible solo para comercios o usuarios no registrados -->
+          <!-- Título de sección para comercios - siempre visible para no registrados -->
+          @if (!usuarioActual()) {
+            <li class="nav-item mt-4 mb-2">
+              <span class="text-white-50 small text-uppercase">Área Comercio</span>
+            </li>
+
+            <!-- Enlaces de comercio para usuarios no registrados (con candado) -->
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/AdminComercios/clientes']" routerLinkActive="rutaActual">
+                <i class="bi bi-person-lines-fill"></i> Clientes
+                <i class="bi bi-lock-fill ms-2 text-warning" style="font-size: 0.8rem;"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/AdminComercios/solicitudes']" routerLinkActive="rutaActual">
+                <i class="bi bi-person-plus-fill"></i> Solicitudes
+                <i class="bi bi-lock-fill ms-2 text-warning" style="font-size: 0.8rem;"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/AdminComercios/reportes']" routerLinkActive="rutaActual">
+                <i class="bi bi-bar-chart-line"></i> Reportes
+                <i class="bi bi-lock-fill ms-2 text-warning" style="font-size: 0.8rem;"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/articulos','']" routerLinkActive="rutaActual">
+                <i class="bi bi-shop-window"></i> Artículos
+                <i class="bi bi-lock-fill ms-2 text-warning" style="font-size: 0.8rem;"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="rutaActual">
+                <i class="bi bi-truck"></i> Pedidos
+                <i class="bi bi-lock-fill ms-2 text-warning" style="font-size: 0.8rem;"></i>
+              </a>
+            </li>
+          }
+
+          <!-- Enlaces de comercio para usuarios con rol Comercio -->
           @if (usuarioActual()?.Rol == Roles.Comercio) {
+            <li class="nav-item mt-4 mb-2">
+              <span class="text-white-50 small text-uppercase">Área Comercio</span>
+            </li>
+
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/AdminComercios/clientes']" routerLinkActive="rutaActual"><i
-                class="bi bi-person-lines-fill"></i> Clientes</a>
+              <a class="nav-link" [routerLink]="['/AdminComercios/clientes']" routerLinkActive="rutaActual">
+                <i class="bi bi-person-lines-fill"></i> Clientes
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/AdminComercios/solicitudes']"
-                 routerLinkActive="rutaActual"> <i class="bi bi-person-plus-fill"></i> Solicitudes</a>
+              <a class="nav-link" [routerLink]="['/AdminComercios/solicitudes']" routerLinkActive="rutaActual">
+                <i class="bi bi-person-plus-fill"></i> Solicitudes
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/AdminComercios/transacciones']" routerLinkActive="rutaActual"><i
-                class="bi bi-currency-dollar"></i>Transacciones</a>
+              <a class="nav-link" [routerLink]="['/AdminComercios/reportes']" routerLinkActive="rutaActual">
+                <i class="bi bi-bar-chart-line"></i> Reportes
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/AdminComercios/reportes']" routerLinkActive="rutaActual"><i
-                class="bi bi-bar-chart-line"></i> Reportes</a>
+              <a class="nav-link" [routerLink]="['/articulos',usuarioActual()?.id]" routerLinkActive="rutaActual">
+                <i class="bi bi-shop-window"></i> Artículos
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/articulos',usuarioActual()?.id]" routerLinkActive="rutaActual"><i
-                class="bi bi-bar-chart-line"></i> Articulos</a>
+              <a class="nav-link" routerLinkActive="rutaActual">
+                <i class="bi bi-truck"></i> Pedidos
+              </a>
             </li>
           }
 
+          <!-- Botón de inicio/cierre de sesión -->
           <li class="nav-item">
             <a class="nav-link btn btn-outline-danger w-100 mt-3" (click)="btnSeccion()">
               <i class="bi bi-box-arrow-in-right"></i> {{ usuarioActual() !== null ? 'Cerrar' : 'Iniciar' }} Sesión

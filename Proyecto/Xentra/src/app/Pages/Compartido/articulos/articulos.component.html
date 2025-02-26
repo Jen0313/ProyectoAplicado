@@ -1,3 +1,112 @@
+<!--<div class="container mt-5">-->
+<!--  <h2 class="text-center fw-bold mb-4">🛒 Lista de Artículos</h2>-->
+
+<!--  <div class="row">-->
+<!--    &lt;!&ndash; Carrito de Compras y Crédito del cliente&ndash;&gt;-->
+<!--    @if (authServ.roleActual() == Roles.Cliente) {-->
+<!--      <div class="col-lg-4 col-md-12 mb-4">-->
+<!--        @if (clienteActual) {-->
+
+<!--          <card-credito [credito]="clienteActual" class="mb-3 shadow-lg"></card-credito>-->
+<!--        }-->
+<!--        <div class="card p-4 shadow-lg">-->
+<!--          <h2 class="fw-bold text-center">🛍️ Carrito</h2>-->
+<!--          <h2 class="fs-6 text-center">{{ carrito().length }} Articulos</h2>-->
+<!--          <div class="list-group">-->
+<!--            @for (item of carrito(); track $index) {-->
+<!--              <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">-->
+<!--                <div class="d-flex align-items-center w-100">-->
+<!--                  <input type="number" class="form-control text-center me-2" [(ngModel)]="item.cantidad"-->
+<!--                         [ngModelOptions]="{standalone:true}"-->
+<!--                         (change)="actualizarCantidad(item.articulo.id, item.cantidad)" min="1" style="width: 60px;">-->
+<!--                  <div class="flex-grow-1">-->
+<!--                    <h6 class="mb-0">{{ item.articulo.Nombre }}</h6>-->
+<!--                    <small class="text-muted">${{ item.articulo.Precio }} x {{ item.cantidad }}</small>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <strong-->
+<!--                    class="text-success">{{ item.cantidad * item.articulo.Precio | currency :"USD" : 'symbol' : '1.0-0' }}</strong>-->
+<!--                  <button class="btn btn-outline-danger btn-sm ms-2" (click)="eliminarDelCarrito(item.articulo.id)">-->
+<!--                    <i class="bi bi-trash"></i>-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            }-->
+<!--          </div>-->
+<!--          <h3 class="text-end mt-3">Total: <span class="text-success fw-bold">${{ calcularTotal() }}</span></h3>-->
+<!--          <button [disabled]="carrito().length==0" (click)="comprar()" class="btn btn-success w-100">-->
+<!--            <i class="bi bi-bag-check"></i> Comprar-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    }-->
+
+<!--    &lt;!&ndash; Lista de Artículos para comercios&ndash;&gt;-->
+<!--    <div class="col-lg-8 col-md-12">-->
+<!--      @if (authServ.roleActual() == Roles.Comercio) {-->
+<!--        <div class="card p-4 mb-4 shadow-lg">-->
+<!--          <h4 class="mb-3">Agregar Nuevo Artículo</h4>-->
+<!--          <form [formGroup]="formAdd">-->
+<!--            <div class="mb-3">-->
+<!--              <label for="nombre" class="form-label fw-semibold">Nombre</label>-->
+<!--              <input type="text" id="nombre" class="form-control" formControlName="nombre"-->
+<!--                     placeholder="Nombre del artículo">-->
+<!--              @if (formAdd.get('nombre')?.invalid && formAdd.get('nombre')?.touched) {-->
+<!--                <small class="text-danger">El nombre debe tener al menos 3 caracteres.</small>-->
+<!--              }-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--              <label for="descripcion" class="form-label fw-semibold">Descripción</label>-->
+<!--              <textarea id="descripcion" class="form-control" formControlName="descripcion"-->
+<!--                        placeholder="Descripción del artículo"></textarea>-->
+<!--              @if (formAdd.get('descripcion')?.invalid && formAdd.get('descripcion')?.touched) {-->
+<!--                <small class="text-danger">Debe tener al menos 10 caracteres.</small>-->
+<!--              }-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--              <label for="precio" class="form-label fw-semibold">Precio</label>-->
+<!--              <input type="number" id="precio" class="form-control" formControlName="precio" placeholder="Precio">-->
+<!--              @if (formAdd.get('precio')?.invalid && formAdd.get('precio')?.touched) {-->
+<!--                <small class="text-danger">El precio debe ser mayor a 0.</small>-->
+<!--              }-->
+<!--            </div>-->
+<!--            <button (click)="agregarArticulo()" type="submit" class="btn btn-primary w-100">-->
+<!--              <i class="bi bi-plus-circle"></i> Agregar Artículo-->
+<!--            </button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--      }-->
+<!--      <div class="row g-4">-->
+<!--        @for (articulo of Articulos; track $index) {-->
+<!--          <div class="col-lg-6 col-md-6 col-sm-12">-->
+<!--            <div class="card h-100 shadow-sm border-0">-->
+<!--              <div class="card-body">-->
+<!--                <h5 class="fw-bold text-primary">{{ articulo.Nombre }}</h5>-->
+<!--                <p class="small text-muted">{{ articulo.Descripcion }}</p>-->
+<!--                <p class="text-dark fw-semibold">-->
+<!--                  Precio: {{ articulo.Precio | currency :"USD" : 'symbol' : '1.0-0' }}</p>-->
+<!--                @if (authServ.roleActual() == Roles.Cliente) {-->
+<!--                  <button [disabled]="(clienteActual?.Restante ?? 0) <= (calcularTotal() + articulo.Precio)"-->
+<!--                          class="btn btn-outline-primary w-100" (click)="agregarAlCarrito(articulo)">-->
+<!--                    <i class="bi bi-cart-plus"></i> Agregar al carrito-->
+<!--                  </button>-->
+<!--                  @if ((clienteActual?.Restante ?? 0) <= (calcularTotal() + articulo.Precio)) {-->
+<!--                    <small class="text-danger">No te alcanzará con tu crédito disponible.</small>-->
+<!--                  }-->
+<!--                }-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        } @empty {-->
+<!--          <h4 class="text-danger text-center">🚫 ¡Sin artículos publicados!</h4>-->
+<!--        }-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
 <div class="container mt-5">
   <h2 class="text-center fw-bold mb-4">🛒 Lista de Artículos</h2>
 
@@ -6,12 +115,11 @@
     @if (authServ.roleActual() == Roles.Cliente) {
       <div class="col-lg-4 col-md-12 mb-4">
         @if (clienteActual) {
-
           <card-credito [credito]="clienteActual" class="mb-3 shadow-lg"></card-credito>
         }
         <div class="card p-4 shadow-lg">
           <h2 class="fw-bold text-center">🛍️ Carrito</h2>
-          <h2 class="fs-6 text-center">{{ carrito().length }} Articulos</h2>
+          <h2 class="fs-6 text-center">{{ carrito().length }} Artículos</h2>
           <div class="list-group">
             @for (item of carrito(); track $index) {
               <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -42,8 +150,9 @@
       </div>
     }
 
-    <!-- Lista de Artículos para comercios-->
-    <div class="col-lg-8 col-md-12">
+    <!-- Lista de Artículos -->
+    <div class="  {{authServ.roleActual() == Roles.Cliente ? 'col-lg-8 ' : 'col-lg-12' }}  col-md-12">
+<!--      Agregar nuevo articulo [ comercios ]-->
       @if (authServ.roleActual() == Roles.Comercio) {
         <div class="card p-4 mb-4 shadow-lg">
           <h4 class="mb-3">Agregar Nuevo Artículo</h4>
@@ -81,23 +190,62 @@
         @for (articulo of Articulos; track $index) {
           <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="card h-100 shadow-sm border-0">
-              <div class="card-body">
+              <div class="card-body position-relative">
+                <!-- Título del artículo -->
                 <h5 class="fw-bold text-primary">{{ articulo.Nombre }}</h5>
                 <p class="small text-muted">{{ articulo.Descripcion }}</p>
                 <p class="text-dark fw-semibold">
-                  Precio: {{ articulo.Precio | currency :"USD" : 'symbol' : '1.0-0' }}</p>
+                  Precio: {{ articulo.Precio | currency :"USD" : 'symbol' : '1.0-0' }}
+                </p>
+
+<!--                boton de eliminar-->
+                @if(authServ.roleActual() == Roles.Comercio) {
+                  <button (click)="EliminarArticuloAdmin(articulo)"
+                          class="btn text-danger position-absolute top-0 end-0 m-2 p-2 rounded-circle"
+                          title="Eliminar">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                }
+
+                <!-- Botón de agregar al carrito para clientes -->
                 @if (authServ.roleActual() == Roles.Cliente) {
                   <button [disabled]="(clienteActual?.Restante ?? 0) <= (calcularTotal() + articulo.Precio)"
-                          class="btn btn-outline-primary w-100" (click)="agregarAlCarrito(articulo)">
+                          class="btn btn-outline-primary w-100"
+                          (click)="agregarAlCarrito(articulo)">
                     <i class="bi bi-cart-plus"></i> Agregar al carrito
                   </button>
+
                   @if ((clienteActual?.Restante ?? 0) <= (calcularTotal() + articulo.Precio)) {
-                    <small class="text-danger">No te alcanzará con tu crédito disponible.</small>
+                    <small class="text-danger d-block mt-2">
+                      No te alcanzará con tu crédito disponible.
+                    </small>
                   }
                 }
               </div>
             </div>
           </div>
+
+          <!--          <div class="col-lg-6 col-md-6 col-sm-12">-->
+<!--            <div class="card h-100 shadow-sm border-0">-->
+<!--              <div class="card-body">-->
+<!--                <h5 class="fw-bold text-primary">{{ articulo.Nombre }}</h5>-->
+<!--                <p class="small text-muted">{{ articulo.Descripcion }}</p>-->
+<!--                <p class="text-dark fw-semibold">-->
+<!--                  Precio: {{ articulo.Precio | currency :"USD" : 'symbol' : '1.0-0' }}</p>-->
+<!--                @if (authServ.roleActual() == Roles.Cliente) {-->
+<!--                  <button [disabled]="(clienteActual?.Restante ?? 0) <= (calcularTotal() + articulo.Precio)"-->
+<!--                          class="btn btn-outline-primary w-100" (click)="agregarAlCarrito(articulo)">-->
+<!--                    <i class="bi bi-cart-plus"></i> Agregar al carrito-->
+<!--                  </button>-->
+<!--                  @if ((clienteActual?.Restante ?? 0) <= (calcularTotal() + articulo.Precio)) {-->
+<!--                    <small class="text-danger">No te alcanzará con tu crédito disponible.</small>-->
+<!--                  }-->
+<!--                }@else if(authServ.roleActual() == Roles.Comercio){-->
+<!--                <button (click)="EliminarArticuloAdmin(articulo)"><i class="bi bi-trash"></i></button>-->
+<!--                }-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
         } @empty {
           <h4 class="text-danger text-center">🚫 ¡Sin artículos publicados!</h4>
         }
@@ -105,5 +253,3 @@
     </div>
   </div>
 </div>
-
-

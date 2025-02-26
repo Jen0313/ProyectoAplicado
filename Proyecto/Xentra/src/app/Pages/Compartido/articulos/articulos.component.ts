@@ -151,6 +151,17 @@ export class ArticulosComponent implements OnInit {
 
   }
 
+  async EliminarArticuloAdmin(articulo: Articulo) {
+    const resultError = await this.comercioServ.EliminarArticulo(articulo.id);
+    if (resultError) {
+      console.info(resultError);
+      this.notificar.Error("Error al quitar el articulo");
+    } else {
+      this.notificar.Advertencia(`${articulo.Nombre} dejo de estar disponible`);
+      await this.CargarArticulos();
+
+    }
+  }
 
   protected readonly Roles = Roles;
 

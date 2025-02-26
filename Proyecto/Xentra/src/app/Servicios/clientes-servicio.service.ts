@@ -46,13 +46,6 @@ export class ClientesServicio {
       .from('DetalleTransacion')
       .select("*,Transacciones(*,Acreditados(*,Comercios(id,Nombre))),Articulos(*)")
       .eq("Transacciones.AcreditadoId", acreditadoId);
-    console.info(r);
-    console.error(error)
-    // let {data: Transacciones, error} = await this.supabase
-    //   .from('Transacciones')
-    //   .select("*,Acreditados(Comercios(Nombre))")
-    //   .eq("AcreditadoId", acreditadoId) as { data: Transaccion[], error: any };
-    // return Transacciones;
     let resultado  = await this.supabase
       .from('Transacciones')
       .select("*,Acreditados(Comercios(Nombre))")

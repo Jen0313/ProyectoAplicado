@@ -101,7 +101,8 @@ export class ComercioServicio {
     let {data: Articulos, error} = await this.supabase
       .from('Articulos')
       .select('*')
-      .eq("ComercioId", comercioId) as { data: Articulo[], error: any };
+      .eq("ComercioId", comercioId)
+      .eq("Activo", true) as { data: Articulo[], error: any };
     return {articulos: Articulos, error: error};
   }
 
@@ -118,7 +119,14 @@ export class ComercioServicio {
       )
       .select();
     return error !== null;
+  }
 
+  async EliminarArticulo(articuloId: number) {
+    const {data, error} = await this.supabase
+      .from('Articulos')
+      .update({"Activo": false})
+      .eq('id', articuloId);
+    return error;
   }
 
   async ObtenerReporte() {
@@ -139,7 +147,7 @@ export class ComercioServicio {
           acc[acreditado.Estado] = (acc[acreditado.Estado] || 0) + 1;
           return acc;
         }, {} as { [key: string]: number })
-      ).map(([estado, cantidad]) => ({ estado, cantidad }))
+      ).map(([estado, cantidad]) => ({estado, cantidad}))
     };
   }
 
