@@ -1,0 +1,97 @@
+<!--  <div class="card p-3 shadow-sm border-0">-->
+<!--    <div class="d-flex justify-content-between align-items-center mb-2">-->
+<!--      <div>-->
+<!--        <p class="text-muted small mb-1">Comercio</p>-->
+<!--        <h6 class="fw-bold text-primary">{{ pedido.comercio | titlecase }}</h6>-->
+<!--      </div>-->
+<!--      <div class="text-end">-->
+<!--        <p class="text-muted small mb-1">Estado</p>-->
+<!--        <h6 class="fw-bold text-warning">{{ pedido.estado | titlecase }}-->
+<!--          {{-->
+<!--            pedido.estado == EstadoPedido.Pendiente ? '🕒' :-->
+<!--              pedido.estado == EstadoPedido.EnCamino ? '🚚' :-->
+<!--                pedido.estado == EstadoPedido.Entregado ? '✅' :-->
+<!--                  '❌'-->
+<!--          }} </h6>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <p><strong>Artículos:</strong></p>-->
+<!--    <ul>-->
+<!--      @for (art of pedido.articulos; track $index) {-->
+<!--        <li>{{ art.nombre }} ({{ art.cantidad }})</li>-->
+<!--      }-->
+
+<!--    </ul>-->
+<!--    <p class="mb-1"><strong>Total:</strong> {{ pedido.monto | currency }}</p>-->
+<!--    <small> {{ pedido.fecha | date : 'medium' }}</small>-->
+<!--    <ng-content></ng-content>-->
+<!--  </div>-->
+
+  <div class="card p-3 shadow-sm border-0 h-100">
+    <!-- Encabezado con comercio y estado -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <p class="text-muted small mb-1">Comercio</p>
+        <h6 class="fw-bold text-primary">{{ pedido.comercio | titlecase }}</h6>
+      </div>
+      <div class="text-end">
+        <p class="text-muted small mb-1">Estado</p>
+        <span class="badge rounded-pill"
+              [ngClass]="{
+              'bg-warning text-dark': pedido.estado == EstadoPedido.Pendiente,
+              'bg-info': pedido.estado == EstadoPedido.EnCamino,
+              'bg-success': pedido.estado == EstadoPedido.Entregado,
+              'bg-danger': pedido.estado != EstadoPedido.Pendiente &&
+                          pedido.estado != EstadoPedido.EnCamino &&
+                          pedido.estado != EstadoPedido.Entregado
+            }">
+        {{ pedido.estado | titlecase }}
+          {{
+            pedido.estado == EstadoPedido.Pendiente ? '🕒' :
+              pedido.estado == EstadoPedido.EnCamino ? '🚚' :
+                pedido.estado == EstadoPedido.Entregado ? '✅' :
+                  '❌'
+          }}
+      </span>
+      </div>
+    </div>
+
+    <!-- Información de fecha con ícono -->
+    <div class="mb-3 d-flex align-items-center">
+      <i class="bi bi-calendar3 text-muted me-2"></i>
+      <small class="text-muted">{{ pedido.fecha | date : 'medium' }}</small>
+    </div>
+
+    <!-- Lista de artículos  -->
+    <div class="mb-3">
+      <h6 class="fw-bold">Artículos ({{ pedido.articulos.length }})</h6>
+      <ul class="list-group list-group-flush mt-2">
+        @for (art of mostrarTodos ? pedido.articulos : pedido.articulos.slice(0, articulosLimite); track art.id) {
+          <li class="list-group-item px-0 py-2 d-flex justify-content-between align-items-center border-0">
+            <div>
+              <span>{{ art.nombre }}</span>
+              <div class="text-muted small">{{ art.precio | currency }} x {{ art.cantidad }}</div>
+            </div>
+            <span class="fw-bold">{{ art.subtotal | currency }}</span>
+          </li>
+        }
+      </ul>
+
+      <!-- Botón para mostrar más artículos -->
+      @if (pedido.articulos.length > articulosLimite) {
+        <button class="btn btn-sm btn-outline-secondary w-100 mt-1" (click)="toggleMostrarTodos()">
+          {{ mostrarTodos ? 'Ver menos' : 'Ver todos los artículos (' + (pedido.articulos.length - articulosLimite) + ' más)' }}
+        </button>
+      }
+    </div>
+
+    <!-- Total -->
+    <div class="mt-auto pt-2 border-top">
+      <div class="d-flex justify-content-between align-items-center">
+        <h6 class="mb-0 fw-bold">Total:</h6>
+        <h5 class="mb-0 text-success fw-bold">{{ pedido.monto | currency }}</h5>
+      </div>
+    </div>
+
+    <ng-content></ng-content>
+  </div>

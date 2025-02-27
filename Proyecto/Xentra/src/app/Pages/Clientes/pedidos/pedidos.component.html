@@ -1,71 +1,12 @@
-
 <div class="container mt-5">
   <h3 class="text-center mb-4">Pedidos</h3>
   <div class="row mt-4 justify-content-center">
-    <div class="col-md-4 mb-3">
-      <div class="card p-3 shadow-sm border-0">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <div>
-            <p class="text-muted small mb-1">Comercio</p>
-            <h6 class="fw-bold text-primary">Tienda Electrónica</h6>
-          </div>
-          <div class="text-end">
-            <p class="text-muted small mb-1">Estado</p>
-            <h6 class="fw-bold text-warning">Pendiente 🕒</h6>
-          </div>
-        </div>
-        <p><strong>Artículos:</strong></p>
-        <ul>
-          <li>Laptop (1)</li>
-          <li>Mouse (2)</li>
-          <li>Teclado (1)</li>
-        </ul>
-        <p class="mb-1"><strong>Total:</strong> $1,200</p>
-      </div>
-    </div>
 
-    <div class="col-md-4 mb-3">
-      <div class="card p-3 shadow-sm border-0">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <div>
-            <p class="text-muted small mb-1">Comercio</p>
-            <h6 class="fw-bold text-primary">Supermercado 24H</h6>
-          </div>
-          <div class="text-end">
-            <p class="text-muted small mb-1">Estado</p>
-            <h6 class="fw-bold text-info">En Camino 🚚</h6>
-          </div>
-        </div>
-        <p><strong>Artículos:</strong></p>
-        <ul>
-          <li>Pan (1)</li>
-          <li>Leche (2)</li>
-          <li>Huevos (12)</li>
-        </ul>
-        <p class="mb-1"><strong>Total:</strong> $25</p>
+    @for (pedido of pedidos; track $index) {
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+        <card-pedido [pedido]="pedido"></card-pedido>
       </div>
-    </div>
+    }
 
-    <div class="col-md-4 mb-3">
-      <div class="card p-3 shadow-sm border-0">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <div>
-            <p class="text-muted small mb-1">Comercio</p>
-            <h6 class="fw-bold text-primary">Ropa Express</h6>
-          </div>
-          <div class="text-end">
-            <p class="text-muted small mb-1">Estado</p>
-            <h6 class="fw-bold text-success">Entregado ✅</h6>
-          </div>
-        </div>
-        <p><strong>Artículos:</strong></p>
-        <ul>
-          <li>Camisa (2)</li>
-          <li>Pantalón (1)</li>
-          <li>Zapatos (1)</li>
-        </ul>
-        <p class="mb-1"><strong>Total:</strong> $80</p>
-      </div>
-    </div>
   </div>
 </div>

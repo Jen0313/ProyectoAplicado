@@ -6,6 +6,7 @@ import {EstadoSolicitud} from '@constantes/EstadoSolicitud';
 import {ServicioAutenticacion} from '@servicios/ServicioAutenticacion';
 import {SolicitudCliente} from '@modelos/Solicitud';
 import {Articulo} from '@modelos/Articulo';
+import {Pedido, PedidoSolicitud} from '@modelos/Pedido';
 import {Transaccion} from '@modelos/Transaccion';
 import {EstadoPedido} from '@constantes/EstadoPedido';
 
@@ -37,21 +38,57 @@ export class ClientesServicio {
       .select('id')
       .eq("clientId", clienteId);
     if (resultadoAcreditado.data === null) {
-      return false;
+      return null;
     }
-    const result = resultadoAcreditado as { data: { id: string }[], error: any };
 
+    const result = resultadoAcreditado as { data: { id: string }[], error: any }
     const acreditadoId = result.data[0].id;
+
+
     let {data: r, error} = await this.supabase
       .from('DetalleTransacion')
-      .select("*,Transacciones(*,Acreditados(*,Comercios(id,Nombre))),Articulos(*)")
-      .eq("Transacciones.AcreditadoId", acreditadoId);
-    let resultado  = await this.supabase
-      .from('Transacciones')
-      .select("*,Acreditados(Comercios(Nombre))")
-      .eq("AcreditadoId", acreditadoId) as { data: Transaccion[], error: any };
-    return resultado;
+      .select("*,Articulos(Nombre),Transacciones(*,Acreditados(id,Comercios(id,Nombre)))")
+      .eq("Transacciones.AcreditadoId", acreditadoId) as { data: PedidoSolicitud[], error: any };
+    if (error !== null) {
+      return null;
+    }
+    return this.FormatearDatosPedidos(r);
+  }
 
+  private FormatearDatosPedidos(pedidos: PedidoSolicitud[]) {
+    const pedidosPorTransaccion: { [key: number]: PedidoSolicitud[] } = {};
+
+    pedidos.forEach(pedido => {
+      if (!pedidosPorTransaccion[pedido.TransactionId]) {
+        pedidosPorTransaccion[pedido.TransactionId] = [];
+      }
+      pedidosPorTransaccion[pedido.TransactionId].push(pedido);
+    });
+
+    const transaccionesConArticulos: Pedido[] = [];
+
+    Object.entries(pedidosPorTransaccion).forEach(([transactionId, pedidosDeTransaccion]) => {
+      const infoTransaccion = pedidosDeTransaccion[0].Transacciones;
+
+      const articulos = pedidosDeTransaccion.map(pedido => ({
+        id: pedido.ArticuloId,
+        nombre: pedido.Articulos.Nombre,
+        cantidad: pedido.Cantidad,
+        precio: pedido.Precio,
+        subtotal: pedido.Cantidad * pedido.Precio
+      }));
+
+      transaccionesConArticulos.push({
+        id: infoTransaccion.id,
+        monto: infoTransaccion.Monto,
+        fecha: infoTransaccion.fecha,
+        estado: infoTransaccion.Estado,
+        comercio: infoTransaccion.Acreditados?.Comercios?.Nombre || 'No cargado...',
+        acreditadoId: infoTransaccion.AcreditadoId,
+        articulos: articulos
+      });
+    });
+    return transaccionesConArticulos;
   }
 
   async ObtenerTodosComercios() {
