@@ -4,8 +4,7 @@ import {SolicitudCliente} from '@modelos/Solicitud';
 import {NotificacionServicio} from '@servicios/NotificacionServicio';
 import {RouterLink} from '@angular/router';
 import {EstadoAcreditado} from '@constantes/EstadoAcreditado';
-import {JsonPipe} from '@angular/common';
-import {CardCreditoComponent} from '../../Reutilizables/card-credito/card-credito.component';
+import {CardCreditoComponent} from '@reutilizables/card-credito/card-credito.component';
 
 @Component({
   selector: 'app-comprar',

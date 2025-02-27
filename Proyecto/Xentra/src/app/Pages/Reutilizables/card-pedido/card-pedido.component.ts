@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Pedido} from '@modelos/Pedido';
 import {CurrencyPipe, DatePipe, NgClass, TitleCasePipe} from '@angular/common';
 import {EstadoPedido} from '@constantes/EstadoPedido';
+import {ImprimirComponent} from '@reutilizables/imprimir/imprimir.component';
 
 @Component({
   selector: 'card-pedido',
@@ -9,7 +10,8 @@ import {EstadoPedido} from '@constantes/EstadoPedido';
     CurrencyPipe,
     DatePipe,
     TitleCasePipe,
-    NgClass
+    NgClass,
+    ImprimirComponent
   ],
   templateUrl: './card-pedido.component.html',
   styleUrl: './card-pedido.component.css'

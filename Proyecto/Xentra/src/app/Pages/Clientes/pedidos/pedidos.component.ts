@@ -1,12 +1,13 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {ClientesServicio} from '@servicios/clientes-servicio.service';
 import {NotificacionServicio} from '@servicios/NotificacionServicio';
 import {Transaccion} from '@modelos/Transaccion';
 import {CurrencyPipe, DatePipe, TitleCasePipe} from '@angular/common';
 import {Pedido} from '@modelos/Pedido';
 import {EstadoPedido} from '@constantes/EstadoPedido';
-import {CardPedidoComponent} from '../../Reutilizables/card-pedido/card-pedido.component';
+import {CardPedidoComponent} from '@reutilizables/card-pedido/card-pedido.component';
+import {PedidoServicio} from '@servicios/PedidoServicio';
 
 @Component({
   selector: 'app-pedidos',
@@ -14,19 +15,20 @@ import {CardPedidoComponent} from '../../Reutilizables/card-pedido/card-pedido.c
     DatePipe,
     TitleCasePipe,
     CurrencyPipe,
-    CardPedidoComponent
+    CardPedidoComponent,
+    RouterLink
   ],
   templateUrl: './pedidos.component.html',
   styleUrl: './pedidos.component.css'
 })
 export class PedidosClienteComponent implements OnInit {
   private router = inject(Router);
-  private clienteServicio = inject(ClientesServicio);
+  private pedidosServ = inject(PedidoServicio);
   private notificar = inject(NotificacionServicio);
    pedidos: Pedido[] = [];
 
   async ngOnInit() {
-    const result = await this.clienteServicio.ObtenerComprasUsuario();
+    const result = await this.pedidosServ.ObtenerPedidosCliente();
     if (result) {
       this.pedidos = result;
     } else {

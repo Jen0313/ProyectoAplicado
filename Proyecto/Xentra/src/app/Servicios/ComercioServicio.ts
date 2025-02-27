@@ -54,7 +54,6 @@ export class ComercioServicio {
       .eq("ComercioId", comercioId) as { data: SolicitudAdmin[], error: any };
     return {solicitudes: Solicitudes, error};
   }
-
   async ObtenerClientesComercio() {
     const comercioId = this.authServ.usuarioActual()?.Rol === Roles.Comercio ? (this.authServ.usuarioActual() as Comercio).id : null;
 
@@ -66,8 +65,6 @@ export class ComercioServicio {
     return {clientes: data as ClienteComercio[], error: error};
 
   }
-
-
   async CambiarEstadoSolicitud(idSolicitud: string, estado: string) {
     const {data, error} = await this.supabase
       .from('Solicitudes')
@@ -77,7 +74,6 @@ export class ComercioServicio {
     if (error !== null) {
       return false;
     }
-    console.info(data[0]);
     if (data[0].Estado == EstadoSolicitud.Aprobada) {
       const result = await this.supabase
         .from('Acreditados')
@@ -96,7 +92,6 @@ export class ComercioServicio {
       return true;
     }
   }
-
   async ObtenerProductosComercio(comercioId: string) {
     let {data: Articulos, error} = await this.supabase
       .from('Articulos')
@@ -105,7 +100,6 @@ export class ComercioServicio {
       .eq("Activo", true) as { data: Articulo[], error: any };
     return {articulos: Articulos, error: error};
   }
-
   async GuardarArticulo(articulo: Articulo) {
     const {data, error} = await this.supabase
       .from('Articulos')
@@ -120,7 +114,6 @@ export class ComercioServicio {
       .select();
     return error !== null;
   }
-
   async EliminarArticulo(articuloId: number) {
     const {data, error} = await this.supabase
       .from('Articulos')
@@ -128,7 +121,6 @@ export class ComercioServicio {
       .eq('id', articuloId);
     return error;
   }
-
   async ObtenerReporte() {
     const comercioId = this.authServ.usuarioActual()?.id ?? 0;
 
@@ -150,7 +142,6 @@ export class ComercioServicio {
       ).map(([estado, cantidad]) => ({estado, cantidad}))
     };
   }
-
   private async ReporteTransacciones() {
     const comercioId = this.authServ.usuarioActual()?.id ?? 0;
 
@@ -169,4 +160,5 @@ export class ComercioServicio {
     return Object.entries(resultado).map(([fecha, totalMonto]) => ({fecha, totalMonto}));
 
   }
+
 }

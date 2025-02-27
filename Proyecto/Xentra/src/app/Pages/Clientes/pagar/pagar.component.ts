@@ -4,7 +4,7 @@ import {ClientesServicio} from '@servicios/clientes-servicio.service';
 import {NotificacionServicio} from '@servicios/NotificacionServicio';
 import {Comercio} from '@modelos/Comercio';
 import {SolicitudCliente} from '@modelos/Solicitud';
-import {CardCreditoComponent} from '../../Reutilizables/card-credito/card-credito.component';
+import {CardCreditoComponent} from '@reutilizables/card-credito/card-credito.component';
 import {NgClass} from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 

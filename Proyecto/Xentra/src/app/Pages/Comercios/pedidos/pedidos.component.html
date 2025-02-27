@@ -1,0 +1,170 @@
+<div class="container mt-5">
+  <h3 class="text-center mb-4">Pedidos</h3>
+  <div class="row mt-4 justify-content-center">
+
+    @for (pedido of pedidos; track $index) {
+      <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
+        <div class="card p-3 shadow-sm border-0 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <p class="text-muted small mb-1">Pedido #</p>
+              <h6 class="fw-bold">{{ pedido.id }}</h6>
+            </div>
+            <div class="text-end">
+              <p class="text-muted small mb-1">Estado</p>
+              <div class="dropdown">
+                <button class="badge rounded-pill dropdown-toggle"
+                        type="button"
+                        id="dropdownEstado"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        [ngClass]="{
+            'bg-warning text-dark': pedido.estado == EstadoPedido.Pendiente,
+            'bg-info': pedido.estado == EstadoPedido.EnCamino,
+            'bg-success': pedido.estado == EstadoPedido.Entregado,
+            'bg-danger': pedido.estado != EstadoPedido.Pendiente &&
+                        pedido.estado != EstadoPedido.EnCamino &&
+                        pedido.estado != EstadoPedido.Entregado
+          }">
+                  {{ pedido.estado | titlecase }}
+                  {{
+                    pedido.estado == EstadoPedido.Pendiente ? '🕒' :
+                      pedido.estado == EstadoPedido.EnCamino ? '🚚' :
+                        pedido.estado == EstadoPedido.Entregado ? '✅' :
+                          '❌'
+                  }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownEstado">
+                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.Pendiente, pedido.id)">Pendiente
+                    🕒</a></li>
+                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.EnCamino, pedido.id)">En Camino 🚚</a>
+                  </li>
+                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.Entregado, pedido.id)">Entregado
+                    ✅</a></li>
+                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.Cancelado, pedido.id)">Cancelado
+                    ❌</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fecha -->
+          <div class="mb-3 d-flex align-items-center">
+            <i class="bi bi-calendar3 text-muted me-2"></i>
+            <small class="text-muted">{{ pedido.fecha | date : 'medium' }}</small>
+          </div>
+
+          <!-- Informacion del cliente -->
+          <div class="mb-3 p-3 bg-light rounded">
+            <h6 class="fw-bold mb-3">Información del Cliente</h6>
+            <div class="row">
+              <div class="col-md-8">
+                <p class="mb-1"><strong>Nombre:</strong> {{ pedido.cliente.Nombre }}</p>
+                <p class="mb-1"><strong>Cédula:</strong> {{ pedido.cliente.Cedula }}</p>
+                <p class="mb-1"><strong>Teléfono:</strong> <a href="tel:{{ pedido.cliente.Telefono }}"
+                                                              class="text-decoration-none">{{ pedido.cliente.Telefono }}</a>
+                </p>
+                <p class="mb-1"><strong>Dirección:</strong> {{ pedido.cliente.Direccion }}</p>
+              </div>
+              <div class="col-md-4 text-center">
+                <img [ngSrc]="pedido.cliente.Imagen"
+                     class="rounded-circle img-thumbnail"
+                     style="width: 80px; height: 80px; object-fit: cover;"
+                     alt="Foto del cliente" fill>
+              </div>
+            </div>
+          </div>
+
+          <!-- lista articulos -->
+          <div class="mb-3">
+            <h6 class="fw-bold">Artículos ({{ pedido.articulos.length }})</h6>
+            <ul class="list-group list-group-flush mt-2">
+              @for (art of mostrarTodos ? pedido.articulos : pedido.articulos.slice(0, articulosLimite); track art.id) {
+                <li class="list-group-item px-0 py-2 d-flex justify-content-between align-items-center border-0">
+                  <div>
+                    <span>{{ art.nombre }}</span>
+                    <div class="text-muted small">{{ art.precio | currency }} x {{ art.cantidad }}</div>
+                  </div>
+                  <span class="fw-bold">{{ art.subtotal | currency }}</span>
+                </li>
+              }
+            </ul>
+
+            <!--Mostrar mas articulos -->
+            @if (pedido.articulos.length > articulosLimite) {
+              <button class="btn btn-sm btn-outline-secondary w-100 mt-1" (click)="toggleMostrarTodos()">
+                {{ mostrarTodos ? 'Ver menos' : 'Ver todos los artículos (' + (pedido.articulos.length - articulosLimite) + ' más)' }}
+              </button>
+            }
+          </div>
+
+          <!-- Imprimir factura / contactar cliente -->
+          <div class="mb-3 d-flex gap-2">
+            <app-imprimir [pedido]="pedido"></app-imprimir>
+            <button class="btn btn-sm btn-outline-success flex-grow-1" (click)="contactarWhatsApp(pedido)">
+              <i class="bi bi-whatsapp me-1"></i> Contactar
+            </button>
+          </div>
+
+          <!-- Total -->
+          <div class="mt-auto pt-2 border-top">
+            <div class="d-flex justify-content-between align-items-center">
+              <h6 class="mb-0 fw-bold">Total:</h6>
+              <h5 class="mb-0 text-success fw-bold">{{ pedido.monto | currency }}</h5>
+            </div>
+          </div>
+
+          <ng-content></ng-content>
+        </div>
+      </div>
+    } @empty {
+      <div class="container my-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+              <div class="card-body text-center p-4">
+                <i class="bi bi-shop text-primary mb-3" style="font-size: 3rem;"></i>
+                <h2 class="mb-3">¡Impulsa tu comercio!</h2>
+                <p class="text-muted mb-4"> Agrega productos para aumentar tus ventas.</p>
+
+                <button [routerLink]="['/articulos',comercioId]" class="btn btn-primary btn-lg px-4">
+                  <i class="bi bi-plus-circle me-2"></i>Agregar productos
+                </button>
+
+                <div class="mt-3">
+                  <a href="#" class="text-decoration-none text-muted">
+                    <i class="bi bi-question-circle me-1"></i>Guía para comerciantes
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sección de solicitudes de crédito -->
+            <div class="card shadow-sm border-warning border-start border-4">
+              <div class="card-body p-4">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
+                      <i class="bi bi-credit-card text-warning" style="font-size: 2rem;"></i>
+                    </div>
+                  </div>
+                  <div class="col text-start">
+                    <h4>Solicitudes de crédito </h4>
+                    <p class="text-muted mb-0">Puede que tengas algunas solicitudes de credito esperando ⏰⏱️</p>
+                  </div>
+                  <div class="col-md-3 mt-3 mt-md-0 text-md-end">
+                    <button routerLink="/AdminComercios/solicitudes" class="btn btn-outline-warning px-4">
+                      <i class="bi bi-arrow-right-circle me-2"></i>Verificar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    }
+  </div>
+</div>

@@ -23,41 +23,6 @@ export class ServicioAutenticacion {
     this.ChequearCambioUsuario();
   }
 
-  async ObtenerUsuarioActual() {
-    let devolver: Cliente | Comercio | null = null;
-    const {data: {user}} = await this.supabase.auth.getUser();
-
-    if (user?.id === null || user?.id === undefined || this.roleActual() === null) {
-      devolver = null;
-    } else {
-      if (this.roleActual() == Roles.Cliente) {
-        const result = await this.supabase
-          .from("Clientes")
-          .select("*")
-          .eq("UsuarioId", user.id)
-          .limit(1) as { data: Cliente[], error: any };
-        if (result.data == null) {
-          devolver = null;
-        } else {
-          devolver = result.data?.[0];
-        }
-      } else if (this.roleActual() == Roles.Comercio) {
-        const result = await this.supabase
-          .from("Comercios")
-          .select("*")
-          .eq("UserId", user.id)
-          .limit(1) as { data: Comercio[], error: any };
-        if (result.data == null) {
-          devolver = null;
-        } else {
-          devolver = result.data?.[0];
-        }
-      }
-    }
-    return devolver;
-
-  }
-
   async IniciarSeccion(email: string, password: string) {
 
     const result = await this.supabase.auth.signInWithPassword({

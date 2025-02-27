@@ -10,7 +10,8 @@ import {CurrencyPipe} from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ClientesServicio} from '@servicios/clientes-servicio.service';
 import {SolicitudCliente} from '@modelos/Solicitud';
-import {CardCreditoComponent} from '../../Reutilizables/card-credito/card-credito.component';
+import {CardCreditoComponent} from '@reutilizables/card-credito/card-credito.component';
+import {PedidoServicio} from '@servicios/PedidoServicio';
 
 
 interface CarritoItem {
@@ -33,6 +34,7 @@ export class ArticulosComponent implements OnInit {
 
   private comercioServ = inject(ComercioServicio);
   private clienteServ = inject(ClientesServicio);
+  private pedidoServ = inject(PedidoServicio);
   private router = inject(Router);
   private activeRoute = inject(ActivatedRoute);
   private notificar = inject(NotificacionServicio);
@@ -113,7 +115,7 @@ export class ArticulosComponent implements OnInit {
   }
 
   async comprar() {
-    const result = await this.clienteServ.RealizarCompra(this.carrito(), this.clienteActual?.Restante ?? 0);
+    const result = await this.pedidoServ.RealizarCompra(this.carrito(), this.clienteActual?.Restante ?? 0);
     if (result) {
       this.notificar.Ok("Compra realizada.");
       await this.CargarCreditoUsuario();
@@ -155,7 +157,6 @@ export class ArticulosComponent implements OnInit {
     const resultError = await this.comercioServ.EliminarArticulo(articulo.id);
     if (resultError) {
       console.info(resultError);
-      this.notificar.Error("Error al quitar el articulo");
     } else {
       this.notificar.Advertencia(`${articulo.Nombre} dejo de estar disponible`);
       await this.CargarArticulos();

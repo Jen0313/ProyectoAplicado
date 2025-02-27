@@ -16,6 +16,9 @@
       ],
       "@servicios/*": [
         "./src/app/Servicios/*"
+      ],
+      "@reutilizables/*": [
+        "./src/app/Pages/Reutilizables/*"
       ]
     },
     "strict": true,

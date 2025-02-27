@@ -19,6 +19,7 @@ import {ArticulosComponent} from './Pages/Compartido/articulos/articulos.compone
 import {ComprarComponent} from './Pages/Clientes/comprar/comprar.component';
 import {PagarComponent} from './Pages/Clientes/pagar/pagar.component';
 import {PedidosClienteComponent} from './Pages/Clientes/pedidos/pedidos.component';
+import {PedidosComercioComponent} from './Pages/Comercios/pedidos/pedidos.component';
 
 export const routes: Routes = [
 
@@ -40,7 +41,7 @@ export const routes: Routes = [
     canActivate: [roleGuardGuard([Roles.Comercio, Roles.Cliente])],
     component: ArticulosComponent
   },
-  // Comercios
+  // Comercios - publico
   {
     path: "comercios",
     children: [
@@ -49,7 +50,7 @@ export const routes: Routes = [
       {
         //   canActivate: [roleGuardGuard([Roles.Cliente])],
         path: "solicitar/:id", component: SolicitarCreditoComponent
-      }
+      },
     ]
   },
   // para los CLIENTES
@@ -74,6 +75,7 @@ export const routes: Routes = [
       {path: "clientes", component: ClientesComercioComponent},
       {path: "solicitudes", component: SolicitudesComercioComponent},
       {path: "reportes", component: ReportesComponent},
+      {path: "pedidos", component: PedidosComercioComponent}
     ]
   },
   // no tiene permiso
@@ -82,7 +84,6 @@ export const routes: Routes = [
     component: SinPermisoComponent,
   },
   // Inicio
-
   {
     path: 'inicio',
     component: InicioComponent,

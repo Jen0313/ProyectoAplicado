@@ -5,21 +5,18 @@ import {Comercio} from '@modelos/Comercio';
 import {EstadoSolicitud} from '@constantes/EstadoSolicitud';
 import {ServicioAutenticacion} from '@servicios/ServicioAutenticacion';
 import {SolicitudCliente} from '@modelos/Solicitud';
-import {Articulo} from '@modelos/Articulo';
-import {Pedido, PedidoSolicitud} from '@modelos/Pedido';
-import {Transaccion} from '@modelos/Transaccion';
-import {EstadoPedido} from '@constantes/EstadoPedido';
+import {PedidoServicio} from '@servicios/PedidoServicio';
 
 
 @Injectable({providedIn: 'root'})
 export class ClientesServicio {
   private supabase: SupabaseClient;
   private AutServicio = inject(ServicioAutenticacion);
+  private pedidoServ = inject(PedidoServicio);
 
   constructor() {
     this.supabase = createClient(environment.SupabaseUrl, environment.SupabaseKey);
   }
-
   async ObtenerComerciosCreditoCliente() {
     const clienteId = this.AutServicio.usuarioActual()?.id;
     let result = await this.supabase
@@ -28,67 +25,6 @@ export class ClientesServicio {
       .eq("clientId", clienteId);
 
     return result.data as { comercioId: number }[];
-  }
-
-  async ObtenerComprasUsuario() {
-
-    const clienteId = this.AutServicio.usuarioActual()?.id;
-    let resultadoAcreditado = await this.supabase
-      .from('Acreditados')
-      .select('id')
-      .eq("clientId", clienteId);
-    if (resultadoAcreditado.data === null) {
-      return null;
-    }
-
-    const result = resultadoAcreditado as { data: { id: string }[], error: any }
-    const acreditadoId = result.data[0].id;
-
-
-    let {data: r, error} = await this.supabase
-      .from('DetalleTransacion')
-      .select("*,Articulos(Nombre),Transacciones(*,Acreditados(id,Comercios(id,Nombre)))")
-      .eq("Transacciones.AcreditadoId", acreditadoId) as { data: PedidoSolicitud[], error: any };
-    if (error !== null) {
-      return null;
-    }
-    return this.FormatearDatosPedidos(r);
-  }
-
-  private FormatearDatosPedidos(pedidos: PedidoSolicitud[]) {
-    const pedidosPorTransaccion: { [key: number]: PedidoSolicitud[] } = {};
-
-    pedidos.forEach(pedido => {
-      if (!pedidosPorTransaccion[pedido.TransactionId]) {
-        pedidosPorTransaccion[pedido.TransactionId] = [];
-      }
-      pedidosPorTransaccion[pedido.TransactionId].push(pedido);
-    });
-
-    const transaccionesConArticulos: Pedido[] = [];
-
-    Object.entries(pedidosPorTransaccion).forEach(([transactionId, pedidosDeTransaccion]) => {
-      const infoTransaccion = pedidosDeTransaccion[0].Transacciones;
-
-      const articulos = pedidosDeTransaccion.map(pedido => ({
-        id: pedido.ArticuloId,
-        nombre: pedido.Articulos.Nombre,
-        cantidad: pedido.Cantidad,
-        precio: pedido.Precio,
-        subtotal: pedido.Cantidad * pedido.Precio
-      }));
-
-      transaccionesConArticulos.push({
-        id: infoTransaccion.id,
-        monto: infoTransaccion.Monto,
-        fecha: infoTransaccion.fecha,
-        estado: infoTransaccion.Estado,
-        comercio: infoTransaccion.Acreditados?.Comercios?.Nombre || 'No cargado...',
-        acreditadoId: infoTransaccion.AcreditadoId,
-        articulos: articulos
-      });
-    });
-    return transaccionesConArticulos;
   }
 
   async ObtenerTodosComercios() {
@@ -157,26 +93,6 @@ export class ClientesServicio {
 
   }
 
-  async RealizarCompra(Articulos: { articulo: Articulo, cantidad: number }[], restante: number) {
-
-    const monto = Articulos.map(x => x.articulo.Precio * x.cantidad).reduce((p, c) => p + c);
-    // intenta crear la transaccion
-    const transaccionId = await this.CrearTransaccion(monto);
-    if (transaccionId === null) {
-      return false;
-    }
-    // crea los detalles de la factura
-    const resultadoDetalles = await this.crearDetallesFactura(transaccionId, Articulos);
-    // si hay algun error en crear los detalle sde la facura, se elimina la factura
-    if (!resultadoDetalles) {
-      // Eliminar la trasaccion creada
-      await this.EliminarTransactionErronea(transaccionId)
-
-      return false;
-    }
-    // reducir el monto de la transaccion al monto disponible del acreditado
-    return await this.ActualizarRestanteCredito((restante - monto));
-  }
 
   async RealizarPago(acreditadoId: string, Monto: number, Metodo: string, TotalRestante: number) {
 
@@ -192,83 +108,7 @@ export class ClientesServicio {
     if (error) {
       return false;
     }
-    console.log("Resultando de hacer el pago", data)
-    console.error("Resultando de hacer el pago ::::", error)
-    return await this.ActualizarRestanteCredito(TotalRestante);
-
-  }
-
-// REDUCE EL MONTO DE LA TRANSACCION AL CREDITO DEL ACREDITADO
-  private async ActualizarRestanteCredito(total: number) {
-    const clienteId = this.AutServicio.usuarioActual()?.id;
-    let resultActualizar = await this.supabase
-      .from('Acreditados')
-      .update({'Restante': total})
-      .eq("clientId", clienteId)
-      .select();
-    console.log("Resultado de actualizar el restante", resultActualizar);
-    return resultActualizar.error === null;
-  };
-
-  // crea el registro de la transaccion
-  private async CrearTransaccion(Monto: number) {
-    const clienteId = this.AutServicio.usuarioActual()?.id;
-    if (clienteId === null) {
-      return null;
-    }
-
-    let resultadoAcreditado = await this.supabase
-      .from('Acreditados')
-      .select('id')
-      .eq("clientId", clienteId);
-    if (resultadoAcreditado.data === null) {
-      return null;
-    }
-    const result = resultadoAcreditado as { data: { id: string }[], error: any };
-
-    const acreditadoId = result.data[0].id;
-    const {data, error} = await this.supabase
-      .from('Transacciones')
-      .insert([
-        {
-          "AcreditadoId": acreditadoId,
-          "Monto": Monto,
-          "Estado": EstadoPedido.Pendiente
-        },
-      ]).select('id') as { data: { id: string }[], error: any };
-
-    return data[0].id;
-
-  }
-
-// Crea los detalles de la transaccion / Factura
-  private async crearDetallesFactura(transacionId: string, Articulos: { articulo: Articulo, cantidad: number }[]) {
-
-    const datosIngresar = Articulos.map(art => {
-      return {
-        TransactionId: transacionId,
-        ArticuloId: art.articulo.id,
-        Cantidad: art.cantidad,
-        Precio: art.articulo.Precio
-      };
-    });
-
-    const {data, error} = await this.supabase
-      .from('DetalleTransacion')
-      .insert(datosIngresar)
-      .select();
-
-    return error === null;
-  }
-
-// Elimina LA TRANSACCION EN CASO DE ALGUN ERROR
-  private async EliminarTransactionErronea(id: string) {
-    const r = await this.supabase
-      .from('Transacciones')
-      .delete()
-      .eq("id", id);
-
-    return r.error === null;
+    return await this.pedidoServ.ActualizarRestanteCredito(TotalRestante);
   }
 
 
