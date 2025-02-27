@@ -112,7 +112,7 @@ export class ComercioServicio {
         }
       )
       .select();
-    return error !== null;
+    return error === null;
   }
   async EliminarArticulo(articuloId: number) {
     const {data, error} = await this.supabase

@@ -141,7 +141,6 @@ export class ArticulosComponent implements OnInit {
       Descripcion: datos.descripcion
     }
     const result = await this.comercioServ.GuardarArticulo(registrar);
-
     if (!result) {
       this.notificar.Error("Error al guardar al articulo");
     } else {
