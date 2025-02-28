@@ -10,6 +10,7 @@ import {EstadoAcreditado} from '@constantes/EstadoAcreditado';
 import {EstadoSolicitud} from '@constantes/EstadoSolicitud';
 import {ClienteComercio} from '@modelos/Cliente';
 import {Transaccion} from '@modelos/Transaccion';
+import {informe} from '@modelos/Informes';
 
 export interface RespuestaSolicitud {
   id: number
@@ -121,7 +122,7 @@ export class ComercioServicio {
       .eq('id', articuloId);
     return error;
   }
-  async ObtenerReporte() {
+  async ObtenerReporte() : Promise<informe>{
     const comercioId = this.authServ.usuarioActual()?.id ?? 0;
 
     let {data: acreditados, error} = await this.supabase

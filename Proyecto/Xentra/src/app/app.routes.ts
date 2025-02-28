@@ -20,6 +20,9 @@ import {ComprarComponent} from './Pages/Clientes/comprar/comprar.component';
 import {PagarComponent} from './Pages/Clientes/pagar/pagar.component';
 import {PedidosClienteComponent} from './Pages/Clientes/pedidos/pedidos.component';
 import {PedidosComercioComponent} from './Pages/Comercios/pedidos/pedidos.component';
+import {DashboardComercioComponent} from './Pages/Comercios/dashboard/dashboard.component';
+import {PerfilComercioComponent} from './Pages/Comercios/perfil/perfil.component';
+import {DashboardClienteComponent} from './Pages/Clientes/dashboard/dashboard.component';
 
 export const routes: Routes = [
 
@@ -75,7 +78,8 @@ export const routes: Routes = [
       {path: "clientes", component: ClientesComercioComponent},
       {path: "solicitudes", component: SolicitudesComercioComponent},
       {path: "reportes", component: ReportesComponent},
-      {path: "pedidos", component: PedidosComercioComponent}
+      {path: "pedidos", component: PedidosComercioComponent},
+      {path: "perfil", component: PerfilComercioComponent},
     ]
   },
   // no tiene permiso

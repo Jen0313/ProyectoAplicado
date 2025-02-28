@@ -36,6 +36,7 @@ export class ReportesComponent implements OnInit {
       totalRegistros: result.totalRegistros,
       creditoSinUtilizar: result.totalRestante
     }
+
     const configGraficoVentas: ChartConfiguration = {
       data: {
         labels: result.ventasDiarias.map(x => x.fecha),
@@ -52,6 +53,7 @@ export class ReportesComponent implements OnInit {
       plugins: [],
       type: "line"
     }
+
     const configClientes: ChartConfiguration = {
       data: {
         labels: result.estadosCount.map(x => x.estado),

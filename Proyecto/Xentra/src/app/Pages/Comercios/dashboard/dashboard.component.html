@@ -1,0 +1,181 @@
+
+<section class="container-fluid p-4">
+  <!-- Encabezado con información del usuario -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold mb-0">Dashboard</h2>
+      <p class="text-muted">Bienvenido, {{ comercio()?.Nombre }}</p>
+    </div>
+    <button routerLink="/AdminComercios/perfil" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+      <i class="bi-person"></i> Perfil
+    </button>
+  </div>
+
+  <!-- Tarjetas de métricas clave -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted small">Crédito Total</span>
+            <div class="rounded-circle bg-primary bg-opacity-10 p-2">
+              <i class="bi bi-cash text-primary"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold mb-0">{{ datosInforme.totalMonto | currency }}</h3>
+          <span class="text-muted small">Total acreditado</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted small">Crédito Disponible</span>
+            <div class="rounded-circle bg-success bg-opacity-10 p-2">
+              <i class="bi bi-wallet2 text-success"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold mb-0">{{ datosInforme.totalRestante | currency }}</h3>
+          <span class="text-muted small">Sin utilizar</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted small">Solicitudes</span>
+            <div class="rounded-circle bg-info bg-opacity-10 p-2">
+              <i class="bi bi-bell text-info"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold mb-0">{{ SolicitudesPendientes.length }}</h3>
+          <span class="text-muted small">Pendientes de revisión</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted small">Artículos</span>
+            <div class="rounded-circle bg-warning bg-opacity-10 p-2">
+              <i class="bi bi-box text-warning"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold mb-0">{{ totalArticulos }}</h3>
+          <span class="text-muted small">En inventario</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráficos -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0 fw-semibold">Ventas Recientes</h6>
+            <div class="dropdown">
+              <button class="btn btn-sm btn-link text-muted" type="button" data-bs-toggle="dropdown">
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Esta semana</a></li>
+                <li><a class="dropdown-item" href="#">Este mes</a></li>
+                <li><a class="dropdown-item" href="#">Este año</a></li>
+              </ul>
+            </div>
+          </div>
+          <div style="height: 200px;">
+            <canvas id="ventasChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0 fw-semibold">Distribución de Créditos</h6>
+            <div class="dropdown">
+              <button class="btn btn-sm btn-link text-muted" type="button" data-bs-toggle="dropdown">
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Detalles</a></li>
+                <li><a class="dropdown-item" href="#">Exportar</a></li>
+              </ul>
+            </div>
+          </div>
+          <div style="height: 200px;">
+            <canvas id="creditoChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solicitudes Pendientes -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="mb-0 fw-semibold">Solicitudes Pendientes</h6>
+        <button routerLink="/AdminComercios/solicitudes" class="btn btn-sm btn-primary rounded-pill px-3">
+          Ver Todas
+        </button>
+      </div>
+
+      @if (SolicitudesPendientes.length === 0) {
+        <div class="text-center py-4">
+          <p class="text-muted">No hay solicitudes pendientes actualmente</p>
+        </div>
+      } @else {
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+            <tr>
+              <th class="border-0">Cliente</th>
+              <th class="border-0">Monto</th>
+              <th class="border-0">Fecha</th>
+              <th class="border-0 text-end">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+              @for (solicitud of SolicitudesPendientes; track $index) {
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="bg-light rounded-circle p-2 me-2">
+                        <i class="bi bi-person"></i>
+                      </div>
+                      <span>{{ solicitud.Clientes.Nombre }}</span>
+                    </div>
+                  </td>
+                  <td>{{ solicitud.Monto | currency }}</td>
+                  <td>{{ solicitud.fecha | date:'dd MMM, yyyy' }}</td>
+                  <td class="text-end">
+                    <button (click)="gestionarSolicitud(solicitud.id, true)"
+                            class="btn btn-sm btn-success me-1 rounded-pill">
+                      <i class="bi bi-check-lg me-1"></i> Aprobar
+                    </button>
+                    <button (click)="gestionarSolicitud(solicitud.id, false)"
+                            class="btn btn-sm btn-outline-danger rounded-pill">
+                      <i class="bi bi-x-lg me-1"></i> Rechazar
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+  </div>
+</section>

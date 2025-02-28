@@ -23,6 +23,7 @@ export class ServicioAutenticacion {
     this.ChequearCambioUsuario();
   }
 
+
   async IniciarSeccion(email: string, password: string) {
 
     const result = await this.supabase.auth.signInWithPassword({
@@ -215,7 +216,8 @@ export class ServicioAutenticacion {
         result.data.forEach(x=>x.Rol = Roles.Cliente);
         this._usuarioActual.set(result.data?.[0]);
       }
-    } else if (roleActual == Roles.Comercio) {
+    }
+    else if (roleActual == Roles.Comercio) {
       const result = await this.supabase
         .from("Comercios")
         .select("*")
@@ -227,7 +229,8 @@ export class ServicioAutenticacion {
         result.data.forEach(x=>x.Rol = Roles.Comercio);
         this._usuarioActual.set(result.data?.[0]);
       }
-    } else {
+    }
+    else {
       this._usuarioActual.set(null);
     }
   }

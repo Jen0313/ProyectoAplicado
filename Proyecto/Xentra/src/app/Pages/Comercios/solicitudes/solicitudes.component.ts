@@ -30,7 +30,6 @@ export class SolicitudesComercioComponent implements OnInit {
 
   async aceptarSolicitud(id: number) {
     const result = await this.comercioServ.CambiarEstadoSolicitud(id.toString(), EstadoSolicitud.Aprobada);
-
     if (!result) {
       this.notificar.Error("Error al manejar la solicitud");
     } else {

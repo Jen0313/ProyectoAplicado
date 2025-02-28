@@ -34,6 +34,7 @@ export class IngresarComponent {
           this.notificar.Error(result.error.message);
         }
       } else {
+        this.notificar.Ok("Bienvenido");
         await this.router.navigate(['']);
         this.notificar.quitar();
       }
