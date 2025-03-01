@@ -44,7 +44,6 @@ export class ReportesComponent implements OnInit {
           label: 'Ventas Diarias',
           data: result.ventasDiarias.map(x => x.totalMonto),
           fill: false,
-          borderColor: 'rgb(75, 192, 192)',
           tension: 0.1
         }]
 
@@ -61,7 +60,6 @@ export class ReportesComponent implements OnInit {
           label: `Clientes ${result.estadosCount.map(x => x.estado)}`,
           data: result.estadosCount.map(x => x.cantidad),
           fill: false,
-          borderColor: 'rgb(0, 0, 0)',
           tension: 0.1
         }]
 
