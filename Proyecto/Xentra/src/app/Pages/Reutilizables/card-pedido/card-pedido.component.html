@@ -67,11 +67,7 @@
 
   <div class="mb-3 d-flex gap-2">
     <app-imprimir [pedido]="pedido"></app-imprimir>
-    @if (pedido.estado === EstadoPedido.Pendiente) {
-      <button class="btn btn-sm btn-outline-danger flex-grow-1">
-        <i class="bi bi-trash"></i> Cancelar
-      </button>
-    }
+    <ng-content></ng-content>
   </div>
 
   <ng-content></ng-content>

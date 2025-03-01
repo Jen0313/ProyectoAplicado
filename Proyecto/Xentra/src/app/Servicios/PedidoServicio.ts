@@ -5,6 +5,7 @@ import {environment} from '@environment/environment';
 import {Pedido, PedidoSolicitud} from '@modelos/Pedido';
 import {EstadoPedido} from '@constantes/EstadoPedido';
 import {Articulo} from '@modelos/Articulo';
+import {SolicitudCliente} from '@modelos/Solicitud';
 
 
 @Injectable({providedIn: 'root'})
@@ -39,6 +40,7 @@ export class PedidoServicio {
       .from('DetalleTransacion')
       .select("*,Articulos(Nombre),Transacciones(*,Acreditados(id,Comercios(id,Nombre),Clientes(*)))")
       .eq("Transacciones.AcreditadoId", acreditadoId) as { data: PedidoSolicitud[], error: any };
+
     if (error !== null) {
       return null;
     }
@@ -59,9 +61,36 @@ export class PedidoServicio {
     return this.FormatearDatosPedidos(r);
   }
 
-  async CambiarEstadoPedido(pedidoId: number, estado: string) {
+  async CancelarPedido(pedido: Pedido) {
+    let {data, error} = await this.supabase
+      .from('Acreditados')
+      .select('Restante')
+      .eq("id", pedido.acreditadoId) as { data: { Restante: number }[], error: any };
+    if (error !== null) {
+      return false;
+    }
+    let totalRestanteUsuario = data[0].Restante + pedido.monto;
 
-    const { error} = await this.supabase
+
+    let resultActualizar = await this.supabase
+      .from('Acreditados')
+      .update({'Restante': totalRestanteUsuario})
+      .eq("clientId", pedido.cliente.id)
+      .select();
+    if (resultActualizar) {
+      const {error} = await this.supabase
+        .from('Transacciones')
+        .update({"Estado": EstadoPedido.Cancelado})
+        .eq('id', pedido.id)
+        .select();
+      return error === null;
+    } else {
+      return false;
+    }
+  }
+
+  async CambiarEstadoPedido(pedidoId: number, estado: string) {
+    const {error} = await this.supabase
       .from('Transacciones')
       .update({"Estado": estado})
       .eq('id', pedidoId)
@@ -85,33 +114,39 @@ export class PedidoServicio {
     Object.entries(pedidosPorTransaccion).forEach(([transactionId, pedidosDeTransaccion]) => {
       const infoTransaccion = pedidosDeTransaccion[0].Transacciones;
 
-      const articulos = pedidosDeTransaccion.map(pedido => ({
-        id: pedido.ArticuloId,
-        nombre: pedido.Articulos.Nombre,
-        cantidad: pedido.Cantidad,
-        precio: pedido.Precio,
-        subtotal: pedido.Cantidad * pedido.Precio
-      }));
+      if (infoTransaccion) {
+        const articulos = pedidosDeTransaccion.map(pedido => ({
+          id: pedido.ArticuloId,
+          nombre: pedido.Articulos.Nombre,
+          cantidad: pedido.Cantidad,
+          precio: pedido.Precio,
+          subtotal: pedido.Cantidad * pedido.Precio
+        }));
 
-      transaccionesConArticulos.push({
-        id: infoTransaccion.id,
-        monto: infoTransaccion.Monto,
-        fecha: infoTransaccion.fecha,
-        estado: infoTransaccion.Estado,
-        comercio: infoTransaccion.Acreditados?.Comercios?.Nombre || 'No cargado...',
-        acreditadoId: infoTransaccion.AcreditadoId,
-        articulos: articulos,
-        cliente: {
-          id: infoTransaccion.Acreditados.Clientes.id,
-          Cedula: infoTransaccion.Acreditados.Clientes.Cedula,
-          Imagen: infoTransaccion.Acreditados.Clientes.Imagen,
-          Nombre: infoTransaccion.Acreditados.Clientes.Nombre,
-          Telefono: infoTransaccion.Acreditados.Clientes.Telefono,
-          Direccion: infoTransaccion.Acreditados.Clientes.Direccion,
-          UsuarioId: infoTransaccion.Acreditados.Clientes.UsuarioId
-        }
-      });
+        const clienteInfo = infoTransaccion.Acreditados?.Clientes;
+        const comercioNombre = infoTransaccion.Acreditados?.Comercios?.Nombre || 'No cargado...';
+
+        transaccionesConArticulos.push(<Pedido>{
+          id: infoTransaccion.id,
+          monto: infoTransaccion.Monto,
+          fecha: infoTransaccion.fecha,
+          estado: infoTransaccion.Estado,
+          comercio: comercioNombre,
+          acreditadoId: infoTransaccion.AcreditadoId,
+          articulos: articulos,
+          cliente: clienteInfo ? {
+            id: clienteInfo.id,
+            Cedula: clienteInfo.Cedula,
+            Imagen: clienteInfo.Imagen,
+            Nombre: clienteInfo.Nombre,
+            Telefono: clienteInfo.Telefono,
+            Direccion: clienteInfo.Direccion,
+            UsuarioId: clienteInfo.UsuarioId
+          } : null
+        });
+      }
     });
+
     return transaccionesConArticulos;
   }
 
@@ -153,7 +188,6 @@ export class PedidoServicio {
           "Estado": EstadoPedido.Pendiente
         },
       ]).select('id') as { data: { id: string }[], error: any };
-
     return data[0].id;
 
   }

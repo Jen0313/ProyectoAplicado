@@ -17,6 +17,7 @@ export class ClientesServicio {
   constructor() {
     this.supabase = createClient(environment.SupabaseUrl, environment.SupabaseKey);
   }
+
   async ObtenerComerciosCreditoCliente() {
     const clienteId = this.AutServicio.usuarioActual()?.id;
     let result = await this.supabase
@@ -61,6 +62,16 @@ export class ClientesServicio {
 
   }
 
+  async CancelarSolicitud(solicitudId: number) {
+    const {error} = await this.supabase.from("Solicitudes")
+      .delete()
+      .eq("id", solicitudId)
+      .select();
+    return error === null;
+
+
+  }
+
   async ObtenerSolicitdes() {
     const clienteId = this.AutServicio.usuarioActual()?.id;
     let {data: Solicitudes, error} = await this.supabase
@@ -71,7 +82,6 @@ export class ClientesServicio {
   }
 
   async ObtenerCredito() {
-
     const clienteId = this.AutServicio.usuarioActual()?.id;
     let {data: Acreditados, error} = await this.supabase
       .from('Acreditados')

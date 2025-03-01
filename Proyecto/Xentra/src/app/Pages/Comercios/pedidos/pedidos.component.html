@@ -13,7 +13,7 @@
             <div class="text-end">
               <p class="text-muted small mb-1">Estado</p>
               <div class="dropdown">
-                <button class="badge rounded-pill dropdown-toggle"
+                <button [disabled]="pedido.estado === EstadoPedido.Cancelado" class="badge rounded-pill dropdown-toggle"
                         type="button"
                         id="dropdownEstado-{{pedido.id}}"
                         data-bs-toggle="dropdown"
@@ -34,14 +34,15 @@
                           '❌'
                   }}
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end" id="dropdownEstado-{{pedido.id}}">
-                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.Pendiente, pedido.id)">Pendiente
+                <ul  class="dropdown-menu dropdown-menu-end" id="dropdownEstado-{{pedido.id}}">
+
+                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.Pendiente, pedido)">Pendiente
                     🕒</a></li>
-                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.EnCamino, pedido.id)">En Camino 🚚</a>
+                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.EnCamino, pedido)">En Camino 🚚</a>
                   </li>
-                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.Entregado, pedido.id)">Entregado
+                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.Entregado, pedido)">Entregado
                     ✅</a></li>
-                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.Cancelado, pedido.id)">Cancelado
+                  <li><a class="dropdown-item" (click)="cambiarEstado(EstadoPedido.Cancelado, pedido)">Cancelado
                     ❌</a></li>
                 </ul>
               </div>

@@ -25,9 +25,13 @@ export class PedidosClienteComponent implements OnInit {
   private router = inject(Router);
   private pedidosServ = inject(PedidoServicio);
   private notificar = inject(NotificacionServicio);
-   pedidos: Pedido[] = [];
+  pedidos: Pedido[] = [];
 
   async ngOnInit() {
+    await this.cargarPedidos();
+  }
+  async cargarPedidos(){
+
     const result = await this.pedidosServ.ObtenerPedidosCliente();
     if (result) {
       this.pedidos = result;
@@ -37,4 +41,14 @@ export class PedidosClienteComponent implements OnInit {
   }
 
   protected readonly EstadoPedido = EstadoPedido;
+
+  async CancelarPedido(pedido : Pedido) {
+    const result = await this.pedidosServ.CancelarPedido(pedido);
+    if (result) {
+      this.notificar.Ok("Pedido Cancelado!");
+      await this.cargarPedidos();
+    } else {
+      this.notificar.Error("Error al cancelar el pedido");
+    }
+  }
 }

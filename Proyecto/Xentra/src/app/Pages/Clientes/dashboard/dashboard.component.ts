@@ -10,14 +10,15 @@ import {SolicitudCliente} from '@modelos/Solicitud';
 import {PedidoServicio} from '@servicios/PedidoServicio';
 import {Pedido} from '@modelos/Pedido';
 import {EstadoSolicitud} from '@constantes/EstadoSolicitud';
-import {CurrencyPipe, DatePipe} from '@angular/common';
+import {CurrencyPipe, DatePipe, DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-cliente',
   imports: [
     RouterLink,
     CurrencyPipe,
-    DatePipe
+    DatePipe,
+    DecimalPipe
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'

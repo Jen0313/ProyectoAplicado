@@ -48,8 +48,15 @@ export class PedidosComercioComponent implements OnInit {
     this.mostrarTodos = !this.mostrarTodos;
   }
 
-  async cambiarEstado(estado: string, pedidoId: number) {
-    const result = await this.pedidoServ.CambiarEstadoPedido(pedidoId, estado);
+  async cambiarEstado(estado: string, pedido: Pedido) {
+    let result: boolean;
+
+    if (estado === EstadoPedido.Cancelado) {
+      result = await this.pedidoServ.CancelarPedido(pedido);
+    } else {
+      result = await this.pedidoServ.CambiarEstadoPedido(pedido.id, estado);
+    }
+
     if (result) {
       this.notificar.Ok("Estado cambiado ✅");
       await this.CargarPedidos();

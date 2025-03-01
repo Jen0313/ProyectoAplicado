@@ -1,46 +1,76 @@
+/*.solicitud-card {*/
+/*  background: #ffffff;*/
+/*  border-radius: 10px;*/
+/*  padding: 15px;*/
+/*  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);*/
+/*  transition: transform 0.2s;*/
+/*}*/
+
+/*.solicitud-card:hover {*/
+/*  transform: scale(1.02);*/
+/*}*/
+
+/*.solicitud-header {*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  align-items: center;*/
+/*}*/
+
+/*.status-dot {*/
+/*  width: 12px;*/
+/*  height: 12px;*/
+/*  border-radius: 50%;*/
+/*  display: inline-block;*/
+/*}*/
+
+/*.Aprobado {*/
+/*  background-color: green;*/
+/*}*/
+
+/*.Rechazado {*/
+/*  background-color: red;*/
+/*}*/
+
+/*.Pendiente {*/
+/*  background-color: orange;*/
+/*}*/
+
+/*.solicitud-actions {*/
+/*  display: flex;*/
+/*  color : #ffffff !important;*/
+/*  gap: 10px;*/
+/*}*/
+
+/*.solicitud-actions button {*/
+/*  flex: 1;*/
+/*}*/
 .solicitud-card {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
 }
-
 .solicitud-card:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.solicitud-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Estilos de estado */
+.status-Pendiente {
+  background-color: #ffc107;
+  color: #212529;
+}
+.status-Aprobada {
+  background-color: #28a745;
+  color: white;
+}
+.status-Rechazada {
+  background-color: #dc3545;
+  color: white;
 }
 
-.status-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: inline-block;
+/* Botones con animación en hover */
+.action-button {
+  transition: all 0.3s ease;
 }
-
-.Aprobado {
-  background-color: green;
-}
-
-.Rechazado {
-  background-color: red;
-}
-
-.Pendiente {
-  background-color: orange;
-}
-
-.solicitud-actions {
-  display: flex;
-  color : #ffffff !important;
-  gap: 10px;
-}
-
-.solicitud-actions button {
-  flex: 1;
+.action-button:hover {
+  transform: translateY(-2px);
 }
