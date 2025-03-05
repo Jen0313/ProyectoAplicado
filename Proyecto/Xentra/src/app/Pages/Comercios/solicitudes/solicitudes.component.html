@@ -1,74 +1,58 @@
+<!--<div class="container py-5">-->
+<!--  <h1 class="text-center mb-4">Solicitudes crédito</h1>-->
 
+<!--  <div class="row">-->
+<!--    @for (solicitud of Solicitudes; track $index) {-->
 
+<!--      <div class="col-md-4">-->
+<!--        <div class="solicitud-card shadow-sm p-3 mb-3 rounded">-->
+<!--          <div class="solicitud-header d-flex justify-content-between align-items-center">-->
+<!--            <h5 class="fw-bold">{{ solicitud.Clientes.Nombre }}</h5>-->
+<!--            <span class="status-dot {{solicitud.Estado}}"></span>-->
+<!--          </div>-->
+<!--          <p class="amount fw-bold text-primary">${{ solicitud.Monto }}</p>-->
+<!--          <p class="status-text text-muted text-decoration-underline">{{ solicitud.Estado }}</p>-->
+<!--          @if (solicitud.Estado === EstadoSolicitud.Pendiente) {-->
+<!--            <div class="solicitud-actions d-flex justify-content-between mt-3">-->
+<!--              <button class="btn btn-success btn-sm" (click)="aceptarSolicitud(solicitud.id)">✔</button>-->
+<!--              <button class="btn btn-danger btn-sm " (click)="rechazarSolicitud(solicitud.id)">✖</button>-->
+<!--            </div>-->
+<!--          }-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    }-->
+<!--  </div>-->
+
+<!--</div>-->
 <div class="container py-5">
-  <h1 class="text-center mb-4">Solicitudes crédito</h1>
-  <div class="row">
-    <!-- Left Column -->
-    <div class="col-md-6">
-      <div class="solicitud-card">
-        <div>
-          <p><strong>Francisco R.</strong></p>
-          <p class="amount">400 Dop</p>
-        </div>
-        <div class="status-icons">
-          <span class="rejected">&#10006;</span>
-          <span class="accepted">&#10004;</span>
-        </div>
-      </div>
-      <div class="solicitud-card">
-        <div>
-          <p><strong>Francisca R.</strong></p>
-          <p class="amount">400 Dop</p>
-          <p class="status-text">Aceptada</p>
-        </div>
-        <div class="status-icons">
-          <span class="accepted">&#10004;</span>
-        </div>
-      </div>
-      <div class="solicitud-card">
-        <div>
-          <p><strong>Pedro</strong></p>
-          <p class="amount">400 Dop</p>
-          <p class="status-text">Aceptada</p>
-        </div>
-        <div class="status-icons">
-          <span class="accepted">&#10004;</span>
-        </div>
-      </div>
-    </div>
+  <h1 class="text-center mb-4 text-primary fw-bold">Solicitudes de Crédito</h1>
 
-    <!-- Right Column -->
-    <div class="col-md-6">
-      <div class="solicitud-card">
-        <div>
-          <p><strong>Mario</strong></p>
-          <p class="amount">600 Dop</p>
-        </div>
-        <div class="status-icons">
-          <span class="rejected">&#10006;</span>
-          <span class="accepted">&#10004;</span>
-        </div>
-      </div>
-      <div class="solicitud-card">
-        <div>
-          <p><strong>Maria</strong></p>
-          <p class="amount">600 Dop</p>
-          <p class="status-text">Rechazada</p>
-        </div>
-        <div class="status-icons">
-          <span class="rejected">&#10006;</span>
-        </div>
-      </div>
-      <div class="solicitud-card">
-        <div>
-          <p><strong>Estefanu</strong></p>
-          <p class="amount">600 Dop</p>
-          <p class="status-text">Rechazada</p>
-        </div>
-        <div class="status-icons">
-          <span class="rejected">&#10006;</span>
+  <div class="row justify-content-center">
+    @for (solicitud of Solicitudes; track $index) {
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm solicitud-card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="fw-bold text-dark">{{ solicitud.Clientes.Nombre }}</h5>
+              <span class="badge status-{{solicitud.Estado}}">{{ solicitud.Estado }}</span>
+            </div>
+
+            <p class="amount fw-bold text-success mt-2 fs-5">${{ solicitud.Monto }}</p>
+
+            @if (solicitud.Estado === EstadoSolicitud.Pendiente) {
+              <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-outline-success btn-sm action-button" (click)="aceptarSolicitud(solicitud.id)">
+                  <i class="bi bi-check-circle"></i> Aceptar
+                </button>
+                <button class="btn btn-outline-danger btn-sm action-button" (click)="rechazarSolicitud(solicitud.id)">
+                  <i class="bi bi-x-circle"></i> Rechazar
+                </button>
+              </div>
+            }
+          </div>
         </div>
       </div>
-    </div>
+    }
   </div>
 </div>
+

@@ -22,7 +22,7 @@
 
             <hr>
             <p class="text-muted">
-              <i class="bi bi-person-fill"></i> <strong>Dueño:</strong> {{ comercio.Dueno }}
+              <i class="bi bi-person-fill"></i> <strong>Dueñ&#64;:</strong> {{ comercio.Dueno }}
             </p>
           </div>
         </div>
@@ -33,10 +33,11 @@
         <h5 class="text-center">Monto a requerir</h5>
         <form>
           <div class="mb-3">
-            <input type="number" class="form-control text-center" value="5000">
+            <input type="number" [(ngModel)]="MontoSolicitar" [ngModelOptions]="{standalone:true}"
+                   class="form-control text-center" min="1" value="5000">
           </div>
           <div class="d-grid">
-            <button type="submit" class="btn btn-success">Requerir</button>
+            <button (click)="Solicitar()" class="btn btn-success">Requerir</button>
           </div>
         </form>
       </div>

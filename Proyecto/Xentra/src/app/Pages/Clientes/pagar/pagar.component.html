@@ -1,0 +1,82 @@
+
+<div class="container min-vh-100 d-flex flex-column justify-content-center">
+  <h2 class="fw-bold text-center text-primary mb-4">💳 Realizar Abono</h2>
+
+  <div class="row d-flex align-items-center">
+    <!--  Tarjeta de Crédito -->
+    <div class="col-md-6 d-flex justify-content-center">
+      <card-credito [credito]="credito">
+        <p class="mb-3"><strong>Debes:</strong> ${{ credito.Monto - credito.Restante }}</p>
+      </card-credito>
+    </div>
+
+    <!--  Formulario de Pago -->
+    <div class="col-md-6">
+      <form [formGroup]="pagoForm" (ngSubmit)="simularPago()" class="card p-4 shadow-sm">
+        <h5 class="fw-bold text-primary mb-3">💰 Pago con Tarjeta</h5>
+
+        <!--  Número de Tarjeta -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">Número de tarjeta</label>
+          <input type="text" class="form-control" placeholder="•••• •••• •••• ••••"
+                 formControlName="numeroTarjeta">
+          @if (pagoForm.controls.numeroTarjeta.invalid && pagoForm.get("numeroTarjeta")?.touched) {
+            <div class="invalid-feedback d-block">⚠️ Ingrese un número de tarjeta válido.</div>
+          }
+        </div>
+
+        <!--  Fecha de Expiración y CVV -->
+        <div class="row">
+          <div class="col-6">
+            <label class="form-label fw-bold">Fecha de expiración</label>
+            <input type="text" class="form-control" placeholder="MM/YY"
+                   formControlName="fechaExp">
+            @if (pagoForm.controls.fechaExp.invalid && pagoForm.get("fechaExp")?.touched) {
+              <div class="invalid-feedback d-block">⚠️ Ingrese una fecha válida (MM/YY).</div>
+            }
+          </div>
+          <div class="col-6">
+            <label class="form-label fw-bold">CVV</label>
+            <input type="text" class="form-control" placeholder="•••"
+                   formControlName="cvv">
+            @if (pagoForm.controls.cvv.invalid && pagoForm.get("cvv")?.touched) {
+              <div class="invalid-feedback d-block">⚠️ Ingrese un CVV válido (3 dígitos).</div>
+            }
+          </div>
+        </div>
+
+        <!--  Monto a Abonar -->
+        <div class="mt-3">
+          <label class="form-label fw-bold">Monto a abonar</label>
+          <input type="number" class="form-control"
+                 formControlName="abono" [max]="credito.Monto - credito.Restante">
+          @if (pagoForm.controls.abono.invalid && pagoForm.get("abono")?.touched) {
+            <div class="invalid-feedback d-block">⚠️ Ingresa un monto válido dentro del límite.</div>
+          }
+        </div>
+
+        <!--  Botón de Pago -->
+        <button class="btn btn-success w-100 mt-3"
+                [disabled]="pagoForm.invalid">
+          <i class="bi bi-credit-card"></i> Pagar
+        </button>
+
+        <!--  Animación de Procesamiento -->
+        @if (procesandoPago) {
+          <div class="text-center mt-3">
+            <div class="spinner-border text-primary"></div>
+            <p class="mt-2 text-muted">Procesando pago...</p>
+          </div>
+        }
+
+        <!--  Mensaje de Pago Exitoso -->
+        @if (pagoExitoso) {
+          <div class="text-center mt-3">
+            <h4 class="text-success fw-bold"><i class="bi bi-check-circle"></i> Pago realizado con éxito</h4>
+            <p>Gracias por tu pago. Tu crédito ha sido actualizado.</p>
+          </div>
+        }
+      </form>
+    </div>
+  </div>
+</div>

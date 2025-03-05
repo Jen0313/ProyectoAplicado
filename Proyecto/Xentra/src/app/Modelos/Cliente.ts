@@ -30,3 +30,25 @@ export interface ClienteRegistrar {
   Direccion: string
   Imagen: File
 }
+
+
+// export interface Cliente {
+//   id: number;
+//   Cedula: string;
+//   Imagen: string;
+//   Nombre: string;
+//   Telefono: string;
+//   Direccion: string;
+//   UsuarioId: string;
+// }
+
+export interface ClienteComercio {
+  id: number;
+  fecha: string;
+  clientId: number;
+  comercioId: number;
+  Monto: number;
+  Restante: number;
+  Estado: string;
+  Clientes: Cliente;
+}

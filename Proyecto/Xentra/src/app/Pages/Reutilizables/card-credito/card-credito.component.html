@@ -1,0 +1,23 @@
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  <div class="col mb-4">
+    <div class="card credito-card border border-primary rounded-3 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title fw-bold mb-0 text-decoration-underline"
+              [routerLink]="['/comercios', credito.comercioId]" role="button">
+            {{ credito.Comercios.Nombre }}
+          </h5>
+          <div class="d-flex align-items-center">
+            <span class="status-circle status-{{credito.Estado}} me-2"></span>
+            <p class="text-muted mb-0">{{ credito.Estado }}</p>
+          </div>
+        </div>
+
+        <p class="card-text mb-2"><strong>Monto:</strong> ${{ credito.Monto }}</p>
+        <p class="card-text mb-3"><strong>Disponible:</strong> ${{ credito.Restante }}</p>
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

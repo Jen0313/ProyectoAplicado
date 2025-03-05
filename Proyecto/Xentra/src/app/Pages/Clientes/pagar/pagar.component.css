@@ -1,0 +1,13 @@
+
+.status-Activo { border-left-color: #4caf50; }
+.status-Maximo { border-left-color: #fbc02d; }
+.status-Cancelado { border-left-color: #e53935; }
+
+.status-badge {
+  font-size: 0.85rem;
+  padding: 5px 10px;
+}
+
+.status-Activo .status-badge { background: #d4edda; color: #155724; }
+.status-Maximo .status-badge { background: #fff3cd; color: #856404; }
+.status-Cancelado .status-badge { background: #f8d7da; color: #721c24; }

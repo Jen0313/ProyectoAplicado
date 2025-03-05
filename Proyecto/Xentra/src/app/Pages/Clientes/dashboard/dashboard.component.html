@@ -1,0 +1,140 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Main Content -->
+    <div class="col-md-12 col-lg-12 p-4">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h4 class="mb-1">Bienvenido, {{ cliente()?.Nombre }}</h4>
+          <p class="text-muted mb-0">Aquí tienes un resumen de tu actividad</p>
+        </div>
+        <button routerLink="/comercios" class="btn btn-primary shadow-sm">
+          <i class="bi bi-plus-lg me-1"></i> Nueva Solicitud
+        </button>
+      </div>
+
+      <!-- Estadísticas -->
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <div class="card stats-card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <i class="bi bi-wallet2 fs-4 text-primary"></i>
+              </div>
+              <h5 class="card-title">{{ totalRestante }}</h5>
+              <p class="card-text text-muted">Crédito disponible</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card stats-card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <i class="bi bi-bag-check fs-4 text-muted"></i>
+              </div>
+              <h5 class="card-title">{{ pedidos.length }}</h5>
+              <p class="card-text text-muted">Compras Realizadas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card stats-card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <i class="bi bi-shop fs-4 text-success"></i>
+
+              </div>
+              <h5 class="card-title">{{credito.length   }}</h5>
+              <p class="card-text text-muted">Negocios Acreditados</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card stats-card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <i class="bi bi-hourglass-split fs-4 text-danger-emphasis"></i>
+              </div>
+              <h5 class="card-title">{{ solicitudesPendiente }}</h5>
+              <p class="card-text text-muted">Solicitudes Pendientes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Créditos Activos -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Créditos Activos</h5>
+          @for (cre of credito; track $index) {
+            @let Usado = ((cre.Monto - cre.Restante) * 100) / cre.Monto;
+            <div class="mb-4">
+              <div class="d-flex justify-content-between mb-2">
+                <div>
+                  <h6 class="mb-0">{{ cre.Comercios.Nombre }}</h6>
+                  <small class="text-muted">Límite: {{ cre.Monto | currency }}</small>
+                </div>
+                <div class="text-end">
+                  <h6 class="mb-0">{{ cre.Restante | currency }} / {{ cre.Monto | currency }}</h6>
+                  <small class="text-success">{{ Usado | number : "1.1-1" }}% utilizado</small>
+                </div>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" [style.width.%]="Usado" aria-valuemin="0"
+                     aria-valuemax="100"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Compras recientes -->
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Compras Recientes</h5>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Negocio</th>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th>Estado</th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (ped of pedidos; track $index) {
+                  <tr>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="business-logo bg-primary-subtle me-2 p-2 rounded-circle">
+                          <i class="bi bi-shop-window fs-5 text-primary"></i>
+                        </div>
+                        <div>
+                          <h6 class="mb-0">{{ ped.comercio }}</h6>
+                          <small class="text-muted">Compra</small>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{{ ped.fecha | date }}</td>
+                    <td>{{ ped.monto | currency }}</td>
+                    <td><span class="badge bg-success">{{ ped.estado }}</span></td>
+                  </tr>
+                } @empty {
+                  <tr class="text-center">
+                    <td colspan="4">Sin Pedidos Aún</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -23,40 +23,6 @@ export class ServicioAutenticacion {
     this.ChequearCambioUsuario();
   }
 
-  async ObtenerUsuarioActual() {
-    let devolver: Cliente | Comercio | null = null;
-    const {data: {user}} = await this.supabase.auth.getUser();
-
-    if (user?.id === null || user?.id === undefined || this.roleActual() === null) {
-      devolver = null;
-    } else {
-      if (this.roleActual() == Roles.Cliente) {
-        const result = await this.supabase
-          .from("Clientes")
-          .select("*")
-          .eq("UsuarioId", user.id)
-          .limit(1) as { data: Cliente[], error: any };
-        if (result.data == null) {
-          devolver = null;
-        } else {
-          devolver = result.data?.[0];
-        }
-      } else if (this.roleActual() == Roles.Comercio) {
-        const result = await this.supabase
-          .from("Comercios")
-          .select("*")
-          .eq("UserId", user.id)
-          .limit(1) as { data: Comercio[], error: any };
-        if (result.data == null) {
-          devolver = null;
-        } else {
-          devolver = result.data?.[0];
-        }
-      }
-    }
-    return devolver;
-
-  }
 
   async IniciarSeccion(email: string, password: string) {
 
@@ -225,47 +191,11 @@ export class ServicioAutenticacion {
     });
   }
 
-  // async VerificarSeccion() {
-  //   const {data: {session}} = await this.supabase.auth.getSession();
-  //   if (session?.user) {
-  //     session.user.id
-  //     const role = session.user.user_metadata['role'] as string;
-  //     this._role.set(role);
-  //
-  //   } else {
-  //     this._role.set(null);
-  //   }
-  //}
   async VerificarSeccion() {
     const {data: {session}} = await this.supabase.auth.getSession();
     if (session?.user) {
       const roleActual = session.user.user_metadata['role'] as string;
       await this.ActualizarUsuarioActual(roleActual, session.user.id);
-      // if (roleActual == Roles.Cliente) {
-      //   const result = await this.supabase
-      //     .from("Clientes")
-      //     .select("*")
-      //     .eq("UsuarioId", session.user.id)
-      //     .limit(1) as { data: Cliente[], error: any };
-      //   if (result.data == null) {
-      //     this._usuarioActual.set(null);
-      //   } else {
-      //     this._usuarioActual.set(result.data?.[0]);
-      //   }
-      // } else if (roleActual == Roles.Comercio) {
-      //   const result = await this.supabase
-      //     .from("Comercios")
-      //     .select("*")
-      //     .eq("UserId", session.user.id)
-      //     .limit(1) as { data: Comercio[], error: any };
-      //   if (result.data == null) {
-      //     this._usuarioActual.set(null);
-      //   } else {
-      //     this._usuarioActual.set(result.data?.[0]);
-      //   }
-      // } else {
-      //   this._usuarioActual.set(null);
-      // }
 
     } else {
       this._usuarioActual.set(null);
@@ -286,7 +216,8 @@ export class ServicioAutenticacion {
         result.data.forEach(x=>x.Rol = Roles.Cliente);
         this._usuarioActual.set(result.data?.[0]);
       }
-    } else if (roleActual == Roles.Comercio) {
+    }
+    else if (roleActual == Roles.Comercio) {
       const result = await this.supabase
         .from("Comercios")
         .select("*")
@@ -298,7 +229,8 @@ export class ServicioAutenticacion {
         result.data.forEach(x=>x.Rol = Roles.Comercio);
         this._usuarioActual.set(result.data?.[0]);
       }
-    } else {
+    }
+    else {
       this._usuarioActual.set(null);
     }
   }

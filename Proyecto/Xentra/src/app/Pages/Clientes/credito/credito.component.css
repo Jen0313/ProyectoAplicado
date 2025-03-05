@@ -1,28 +1,25 @@
-.search-container {
-  max-width: 400px;
-  margin: 20px auto;
-  position: relative;
-}
-.search-container input {
-  width: 100%;
-  padding: 8px 15px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-}
-.search-container i {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-.status-dot {
+
+/*.status-Activo { border-left-color: #4caf50; }*/
+/*.status-Maximo { border-left-color: #fbc02d; }*/
+/*.status-Cancelado { border-left-color: #e53935; }*/
+
+/*.status-badge {*/
+/*  font-size: 0.85rem;*/
+/*  padding: 5px 10px;*/
+/*}*/
+
+.status-circle {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   display: inline-block;
-  margin-left: 5px;
 }
-.status-activo { background-color: green; }
-.status-maximo { background-color: orange; }
-.status-cancelado { background-color: red; }
+.status-Activo { background-color: green; }
+.status-Maximo { background-color: yellow; }
+.status-Cancelado { background-color: red; }
+
+
+
+/*.status-Activo .status-badge { background: #d4edda; color: #155724; }*/
+/*.status-Maximo .status-badge { background: #fff3cd; color: #856404; }*/
+/*.status-Cancelado .status-badge { background: #f8d7da; color: #721c24; }*/

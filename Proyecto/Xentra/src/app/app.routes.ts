@@ -11,12 +11,18 @@ import {SolicitarCreditoComponent} from './Pages/Clientes/solicitar/solicitar.co
 import {ComerciosComponent} from './Pages/Compartido/comercios/comercios.component';
 import {DetalleComercioComponent} from './Pages/Compartido/detalle-comercio/detalle-comercio.component';
 import {CreditoComponent} from './Pages/Clientes/credito/credito.component';
-import {TransaccionesClienteComponent} from './Pages/Clientes/transacciones/transacciones.component';
 import {SolicitudesClienteComponent} from './Pages/Clientes/solicitudes/solicitudes.component';
 import {ClientesComercioComponent} from './Pages/Comercios/clientes/clientes.component';
-import {TransaccionesComercioComponent} from './Pages/Comercios/transacciones/transacciones.component';
 import {SolicitudesComercioComponent} from './Pages/Comercios/solicitudes/solicitudes.component';
 import {ReportesComponent} from './Pages/Comercios/reportes/reportes.component';
+import {ArticulosComponent} from './Pages/Compartido/articulos/articulos.component';
+import {ComprarComponent} from './Pages/Clientes/comprar/comprar.component';
+import {PagarComponent} from './Pages/Clientes/pagar/pagar.component';
+import {PedidosClienteComponent} from './Pages/Clientes/pedidos/pedidos.component';
+import {PedidosComercioComponent} from './Pages/Comercios/pedidos/pedidos.component';
+import {DashboardComercioComponent} from './Pages/Comercios/dashboard/dashboard.component';
+import {PerfilComercioComponent} from './Pages/Comercios/perfil/perfil.component';
+import {DashboardClienteComponent} from './Pages/Clientes/dashboard/dashboard.component';
 
 export const routes: Routes = [
 
@@ -32,26 +38,35 @@ export const routes: Routes = [
     path: 'registrar/comercio',
     component: ComercioRegistrarComponent,
   },
+
+  {
+    path: 'articulos/:id',
+    canActivate: [roleGuardGuard([Roles.Comercio, Roles.Cliente])],
+    component: ArticulosComponent
+  },
+  // Comercios - publico
   {
     path: "comercios",
     children: [
       {path: "", component: ComerciosComponent},
       {path: ":id", component: DetalleComercioComponent},
       {
-     //   canActivate: [roleGuardGuard([Roles.Cliente])],
+        //   canActivate: [roleGuardGuard([Roles.Cliente])],
         path: "solicitar/:id", component: SolicitarCreditoComponent
-      }
+      },
     ]
   },
-  // CLIENTES
+  // para los CLIENTES
   {
     path: "clientes",
     canActivate: [roleGuardGuard([Roles.Cliente])],
     children: [
       {path: "", redirectTo: 'credito', pathMatch: 'full'},
       {path: "credito", component: CreditoComponent},
-      {path: "historialTransacciones", component: TransaccionesClienteComponent},
       {path: "solicitudes", component: SolicitudesClienteComponent},
+      {path: "comprar", component: ComprarComponent},
+      {path: "pagar/:id", component: PagarComponent},
+      {path: "pedidos", component: PedidosClienteComponent},
     ]
   },
   // para los comerciantes
@@ -61,9 +76,10 @@ export const routes: Routes = [
     children: [
       {path: "", redirectTo: 'clientes', pathMatch: 'full'},
       {path: "clientes", component: ClientesComercioComponent},
-      {path: "transacciones", component: TransaccionesComercioComponent},
       {path: "solicitudes", component: SolicitudesComercioComponent},
       {path: "reportes", component: ReportesComponent},
+      {path: "pedidos", component: PedidosComercioComponent},
+      {path: "perfil", component: PerfilComercioComponent},
     ]
   },
   // no tiene permiso
@@ -72,7 +88,6 @@ export const routes: Routes = [
     component: SinPermisoComponent,
   },
   // Inicio
-
   {
     path: 'inicio',
     component: InicioComponent,

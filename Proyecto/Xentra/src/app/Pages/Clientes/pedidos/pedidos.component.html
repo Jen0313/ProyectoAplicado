@@ -1,0 +1,36 @@
+<div class="container mt-5">
+  <h3 class="text-center mb-4">Pedidos</h3>
+  <div class="row mt-4 justify-content-center">
+
+    @for (pedido of pedidos; track $index) {
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+        <card-pedido [pedido]="pedido">
+          @if (pedido.estado === EstadoPedido.Pendiente) {
+            <button (click)="CancelarPedido(pedido)" class="btn btn-sm btn-outline-danger flex-grow-1">
+              <i class="bi bi-trash"></i> Cancelar
+            </button>
+          }
+        </card-pedido>
+      </div>
+    } @empty {
+      <div class="card shadow-sm">
+        <div class="card-body text-center p-5">
+          <!-- Ícono decorativo -->
+          <i class="bi bi-cart-x text-warning mb-3" style="font-size: 3rem;"></i>
+
+          <h2 class="mb-3">¡Sin pedidos aún!</h2>
+
+          <p class="text-muted mb-4">Parece que no has realizado ningún pedido todavía. ¿Qué tal si compras algo?</p>
+
+          <!-- Botón de acción principal -->
+          <button class="btn btn-warning btn-lg px-4" routerLink="/clientes/comprar">
+            <i class="bi bi-shop me-2"></i>Comprar algo
+          </button>
+
+
+        </div>
+      </div>
+    }
+
+  </div>
+</div>

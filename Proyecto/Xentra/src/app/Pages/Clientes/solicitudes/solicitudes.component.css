@@ -5,6 +5,49 @@
   display: inline-block;
   margin-left: 5px;
 }
-.status-aceptada { background-color: green; }
-.status-pendiente { background-color: orange; }
-.status-rechazada { background-color: red; }
+.status-Aprobada { background-color: green; }
+.status-Pendiente { background-color: orange; }
+.status-Denegada { background-color: red; }
+
+card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Animación en el botón */
+button {
+  transition: all 0.3s ease;
+}
+button:hover {
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  transform: translateY(-2px);
+}
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Animación en el botón de navegación */
+.hover-button {
+  transition: all 0.3s ease;
+}
+.hover-button:hover {
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Animación en el botón de cancelar */
+.cancel-button {
+  transition: all 0.3s ease;
+}
+.cancel-button:hover {
+  background-color: #dc3545;
+  color: white;
+  transform: translateY(-2px);
+}

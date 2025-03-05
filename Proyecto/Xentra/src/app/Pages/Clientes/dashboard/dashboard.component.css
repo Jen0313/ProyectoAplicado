@@ -1,0 +1,25 @@
+/* Estilos base para las tarjetas */
+.stats-card, .card {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+
+.stats-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  border-color: rgba(0,0,0,0.15);
+}
+
+.card:not(.stats-card):hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  border-color: rgba(0,0,0,0.2);
+}
+
+.table tr {
+  transition: background-color 0.2s ease;
+}
+
+.table tr:hover {
+  background-color: rgba(0,0,0,0.02);
+}

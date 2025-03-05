@@ -1,119 +1,46 @@
-
-
 <div class="container mt-5">
-  <h3 class="text-center">Mis solicitudes</h3>
+  <h3 class="text-center mb-4 fw-bold text-primary">Mis Solicitudes</h3>
 
-  <div class="row mt-4 justify-content-center">
-    <!-- Card 1 -->
-    <div class="col-md-4 mb-3">
-      <div class="card p-3 shadow-sm">
-        <div class="d-flex justify-content-between">
-          <div>
-            <p class="text-muted small">Comercio</p>
-            <h6><strong>Colmadon</strong></h6>
-          </div>
-          <div>
-            <p class="text-muted small">Estado</p>
-            <h6><strong>Aceptada</strong> <span class="status-dot status-aceptada"></span></h6>
-          </div>
+  <div class="d-flex justify-content-center mb-4">
+    <button class="btn btn-outline-primary btn-sm d-flex align-items-center hover-button" routerLink="/comercios">
+      <i class="bi bi-shop me-2"></i> Ir a Comercios
+    </button>
+  </div>
+
+  <div class="row mt-3 justify-content-center">
+    @for (sol of Solicitudes; track $index) {
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm rounded-4 hover-card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <p class="text-muted small mb-1">Comercio</p>
+                <h6 class="fw-bold text-dark">{{ sol.Comercios.Nombre | titlecase }}</h6>
+              </div>
+              <div class="text-end">
+                <p class="text-muted small mb-1">Estado</p>
+                <span
+                  class="badge bg-{{sol.Estado === 'En Camino' ? 'warning' : sol.Estado === 'Entregado' ? 'success' : 'secondary'}}">
+                  {{ sol.Estado }}
+                </span>
+              </div>
+            </div>
+            <p class="mb-2"><strong>Monto:</strong> ${{ sol.Monto }}</p>
+            <p class="text-muted small"><strong>Fecha:</strong> {{ sol.fecha | date }}</p>
+
+            <!-- Botón para cancelar solicitud -->
+            @if (sol.Estado === EstadoSolicitud.Pendiente) {
+
+              <button class="btn btn-outline-danger btn-sm mt-3 cancel-button"
+                      (click)="cancelarSolicitud(sol.id)">
+                <i class="bi bi-x-circle"></i> Cancelar Solicitud
+              </button>
+            }</div>
         </div>
-        <p><strong>Monto:</strong> 500</p>
-        <p><strong>Fecha:</strong> 20/07/2025</p>
       </div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="col-md-4 mb-3">
-      <div class="card p-3 shadow-sm">
-        <div class="d-flex justify-content-between">
-          <div>
-            <p class="text-muted small">Comercio</p>
-            <h6><strong>Floristería</strong></h6>
-          </div>
-          <div>
-            <p class="text-muted small">Estado</p>
-            <h6><strong>Rechazada</strong> <span class="status-dot status-rechazada"></span></h6>
-          </div>
-        </div>
-        <p><strong>Monto:</strong> 4500</p>
-        <p><strong>Fecha:</strong> 2/07/2025</p>
-      </div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="col-md-4 mb-3">
-      <div class="card p-3 shadow-sm">
-        <div class="d-flex justify-content-between">
-          <div>
-            <p class="text-muted small">Comercio</p>
-            <h6><strong>Colmadon2</strong></h6>
-          </div>
-          <div>
-            <p class="text-muted small">Estado</p>
-            <h6><strong>Pendiente</strong> <span class="status-dot status-pendiente"></span></h6>
-          </div>
-        </div>
-        <p><strong>Monto:</strong> 890</p>
-        <p><strong>Fecha:</strong> 20/01/2025</p>
-      </div>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="col-md-4 mb-3">
-      <div class="card p-3 shadow-sm">
-        <div class="d-flex justify-content-between">
-          <div>
-            <p class="text-muted small">Comercio</p>
-            <h6><strong>Carnicería</strong></h6>
-          </div>
-          <div>
-            <p class="text-muted small">Estado</p>
-            <h6><strong>Aceptada</strong> <span class="status-dot status-aceptada"></span></h6>
-          </div>
-        </div>
-        <p><strong>Monto:</strong> 700</p>
-        <p><strong>Fecha:</strong> 20/02/2025</p>
-      </div>
-    </div>
-
-    <!-- Duplicate cards (Optional) -->
-    <div class="col-md-4 mb-3">
-      <div class="card p-3 shadow-sm">
-        <div class="d-flex justify-content-between">
-          <div>
-            <p class="text-muted small">Comercio</p>
-            <h6><strong>Colmadon2</strong></h6>
-          </div>
-          <div>
-            <p class="text-muted small">Estado</p>
-            <h6><strong>Pendiente</strong> <span class="status-dot status-pendiente"></span></h6>
-          </div>
-        </div>
-        <p><strong>Monto:</strong> 890</p>
-        <p><strong>Fecha:</strong> 20/01/2025</p>
-      </div>
-    </div>
-
-    <div class="col-md-4 mb-3">
-      <div class="card p-3 shadow-sm">
-        <div class="d-flex justify-content-between">
-          <div>
-            <p class="text-muted small">Comercio</p>
-            <h6><strong>Carnicería</strong></h6>
-          </div>
-          <div>
-            <p class="text-muted small">Estado</p>
-            <h6><strong>Aceptada</strong> <span class="status-dot status-aceptada"></span></h6>
-          </div>
-        </div>
-        <p><strong>Monto:</strong> 700</p>
-        <p><strong>Fecha:</strong> 20/02/2025</p>
-      </div>
-    </div>
-
+    }
   </div>
 </div>
-
 
 
 

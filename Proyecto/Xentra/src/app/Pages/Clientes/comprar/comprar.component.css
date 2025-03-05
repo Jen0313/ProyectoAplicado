@@ -1,0 +1,10 @@
+
+.status-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.status-Activo { background-color: green; }
+.status-Maximo { background-color: yellow; }
+.status-Cancelado { background-color: red; }

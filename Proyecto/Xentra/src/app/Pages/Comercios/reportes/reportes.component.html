@@ -1,1 +1,35 @@
-<p>reportes works!</p>
+
+<div class="container">
+  <!-- Título centrado con estilo -->
+  <h3 class="text-center my-4 text-primary fw-bold">📊 Reporte de Ventas</h3>
+
+  <!-- Contenedor principal con disposición de columnas -->
+  <div class="row">
+    <!-- Columna para la información de clientes -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow p-4 border rounded-4 bg-light">
+        <h5 class="card-title text-center">Resumen de Clientes</h5>
+        <p><strong>Total Clientes:</strong> {{ datosGenerales.totalRegistros }}</p>
+        <p><strong>Total Acreditado:</strong> {{ datosGenerales.totalAcreditado | currency }}</p>
+        <p><strong>Crédito Usado:</strong> {{ datosGenerales.totalAcreditado - datosGenerales.creditoSinUtilizar | currency}}</p>
+        <p><strong>Crédito Aprobado sin usar:</strong> {{ datosGenerales.creditoSinUtilizar | currency}}</p>
+      </div>
+    </div>
+
+    <!-- Gráfico de Ventas -->
+    <div class="col-md-4 mb-4">
+      <div class="chart-container border rounded-4 shadow p-4 bg-white">
+        <canvas id="graficoVentas">{{ graficoVentasDiarias }}</canvas>
+      </div>
+    </div>
+
+    <!-- Gráfico de Estado de Clientes -->
+    <div class="col-md-4 mb-4">
+      <div class="chart-container border rounded-4 shadow p-4 bg-white">
+        <h5 class="card-title text-center">Estado credito clientes</h5>
+
+        <canvas id="graficoEstadoClientes">{{ graficoEstadoClientes }}</canvas>
+      </div>
+    </div>
+  </div>
+</div>

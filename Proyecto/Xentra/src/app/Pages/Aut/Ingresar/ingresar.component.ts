@@ -26,7 +26,7 @@ export class IngresarComponent {
     if (this.formulario.valid) {
       const usuario = this.formulario.value;
       const result = await this.autenticacion.IniciarSeccion(usuario.email!, usuario.password!);
-      console.log(result);
+
       if (result.error) {
         if (result.error.code === "invalid_credentials") {
           this.notificar.Error("Correo o contraseña invalido.");
@@ -34,6 +34,7 @@ export class IngresarComponent {
           this.notificar.Error(result.error.message);
         }
       } else {
+        this.notificar.Ok("Bienvenido");
         await this.router.navigate(['']);
         this.notificar.quitar();
       }
